@@ -1,3 +1,4 @@
 syntax: glob
 deps/src/
 deps/usr/
+deps/downloads/
