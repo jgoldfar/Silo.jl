@@ -5,15 +5,15 @@
 import Clang.wrap_c
 
 silo_includes = map(
-  x->joinpath("/Users/jgoldfar/Documents/work/projects/deps/usr/include", x),
+  x->joinpath("/home/jgoldfar/Documents/work/projects/deps/usr/include", x),
   [
-    "ioperf.h",
-    "pmpio.h",
     "silo.h",
     ])
+clang_args = ["-D", "__STDC_LIMIT_MACROS", "-D", "__STDC_CONSTANT_MACROS"]
+context = Clang.wrap_c.init(clang_diagnostics = true, clang_args = clang_args, common_file = "silo_common.jl", output_file = "libsilo.jl")
+context.options.wrap_structs = true
 
-# check_use_header(path) = true
-context = Clang.wrap_c.init()
+
 wrap_c.wrap_c_headers(context, silo_includes)
 
-mv("silo.jl", "libsilo.jl")  # avoid a name conflict for case-insensitive file systems
+#mv("silo.jl", "libsilo.jl")  # avoid a name conflict for case-insensitive file systems
