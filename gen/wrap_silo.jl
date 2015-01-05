@@ -23,7 +23,7 @@ clang_includes = [joinpath(LLVM_PATH,f)::ASCIIString for f in (
 check_use_header(path) = true
 
 clang_extraargs = ["-D", "__STDC_LIMIT_MACROS", "-D", "__STDC_CONSTANT_MACROS"]
-context = wrap_c.init(output_file = "silo.jl", clang_args = clang_extraargs, clang_includes = clang_includes, common_file = "libsilo_common.jl")
+context = wrap_c.init(output_file = "silo.jl", clang_args = clang_extraargs, clang_includes = clang_includes, common_file = "libsilo_common.jl", clang_diagnostics = true)
 context.options.wrap_structs = true
 
 path = "/home/jgoldfar/Documents/work/projects/deps/usr/include"
