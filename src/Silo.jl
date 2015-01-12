@@ -6,6 +6,27 @@ else
     error("Silo not properly installed. Please run Pkg.build(\"Silo\")")
 end
 
+# "Sections" of code based on documentation
+
+include("globlib.jl")
+
+include("file.jl")
+
+include("mesh_var_mat.jl")
+
+include("multiblock.jl")
+
+include("pmpio.jl")
+
+include("arbitrary_mesh.jl")
+
+include("obj_alloc.jl")
+
+include("calculation.jl")
+
+include("optlists.jl")
+
+include("userdef.jl")
 
 # DBfile       *dbfile = NULL;
 #     DBoptlist	*dbopt = DBMakeOptlist(1);
