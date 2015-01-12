@@ -48,4 +48,13 @@ include("userdef.jl")
 
 # 	DBFreeOptlist(dbopt);
 
+#TODO: Create rough wrapper for main Silo functions we need, and a uniform(ish) interface to them per e.g. the HDF5.jl package.
+
+# MAIN Interface:
+#	- siloopen(..., "w") mode: creates and initializes
+#	- overload write(file, name, values) / silowrite(...)
+#	- siloclose(...)
+#	- names(file): values contained in file
+#	- overload read(file, name) / siloread(...)
+
 end # module
