@@ -227,7 +227,8 @@ const DB_USERDEF = 700
 end # module
 
 #= Data types =#
-baremodule DBdatatype
+baremodule DBdatatype # Note: correspondence here is complicated by platform issues.
+# See http://julia.readthedocs.org/en/release-0.3/manual/calling-c-and-fortran-code/
 const DB_INT = 16
 const DB_SHORT = 17
 const DB_LONG = 18
@@ -236,6 +237,11 @@ const DB_DOUBLE = 20
 const DB_CHAR = 21
 const DB_LONG_LONG = 22
 const DB_NOTYPE = 25           #=unknown type =#
+
+const JuliaSilotypemap=[:Int64 => DB_LONG_LONG, ]
+const SiloJuliatypemap=[DB_LONG_LONG => :Int64, ] # Previous inverse
+const enummap=[:DB_INT => DB_INT,]
+const enummapinv=[DB_INT => :DB_INT] # Previous inverse
 end #module
 
 #= Flags for DBCreate =#
@@ -780,7 +786,7 @@ typealias DBmultimesh DBmultimesh_
  =#
 
 type DBmultimeshadj_
-#=----------- Multi-Block Mesh Adjacency -----------=#
+  #=----------- Multi-Block Mesh Adjacency -----------=#
   nblocks::Cint     #= Number of blocks in mesh =#
   blockorigin::Cint #= Origin (0 or 1) of block numbers =#
   meshtypes::Ptr{Cint}   #= Array of mesh-type indicators [nblocks] =#
@@ -790,10 +796,10 @@ type DBmultimeshadj_
   back::Ptr{Cint}        #= Array [lneighbors] neighbor block back =#
   totlnodelists::Cint
   lnodelists::Ptr{Cint}  #= Array [lneighbors] of node counts shared =#
-nodelists::Ptr{Ptr{Cint}}   #= Array [lneighbors] nodelists shared =#
+  nodelists::Ptr{Ptr{Cint}}   #= Array [lneighbors] nodelists shared =#
   totlzonelists::Cint
   lzonelists::Ptr{Cint}  #= Array [lneighbors] of zone counts adjacent =#
-zonelists::Ptr{Ptr{Cint}}   #= Array [lneighbors] zonelists adjacent =#
+  zonelists::Ptr{Ptr{Cint}}   #= Array [lneighbors] zonelists adjacent =#
 end #type
 typealias DBmultimeshadj DBmultimeshadj_
 
@@ -803,18 +809,18 @@ typealias DBmultimeshadj DBmultimeshadj_
  =#
 
 type DBmultivar_
-#=----------- Multi-Block Variable -----------=#
+  #=----------- Multi-Block Variable -----------=#
   id::Cint          #= Identifier for this object  =#
   nvars::Cint       #= Number of variables   =#
   ngroups::Cint     #= Number of block groups in mesh =#
-    varnames::Ptr{Ptr{Uint8}}
+  varnames::Ptr{Ptr{Uint8}}
   vartypes::Ptr{Cint}    #= variable types   =#
   blockorigin::Cint #= Origin (0 or 1) of block numbers =#
   grouporigin::Cint #= Origin (0 or 1) of group numbers =#
   extentssize::Cint #= size of each extent tuple =#
-extents::Ptr{Cdouble}     #= min/max extents of each block =#
+  extents::Ptr{Cdouble}     #= min/max extents of each block =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-    region_pnames::Ptr{Ptr{Uint8}}
+  region_pnames::Ptr{Ptr{Uint8}}
   mmesh_name::Ptr{Uint8}
   tensor_rank::Cint    #= DB_VARTYPE_XXX =#
   conserved::Cint   #= indicates if the variable should be conserved
@@ -839,7 +845,7 @@ type DBmultimat_
   id::Cint          #= Identifier for this object  =#
   nmats::Cint       #= Number of materials   =#
   ngroups::Cint     #= Number of block groups in mesh =#
-    matnames::Ptr{Ptr{Uint8}}
+  matnames::Ptr{Ptr{Uint8}}
   blockorigin::Cint #= Origin (0 or 1) of block numbers =#
   grouporigin::Cint #= Origin (0 or 1) of group numbers =#
   mixlens::Ptr{Cint}     #= array of mixlen values in each mat =#
@@ -848,8 +854,8 @@ type DBmultimat_
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
   nmatnos::Cint     #= global number of materials over all pieces =#
   matnos::Ptr{Cint}      #= global list of material numbers =#
-    matcolors::Ptr{Ptr{Uint8}}
-    material_names::Ptr{Ptr{Uint8}}
+  matcolors::Ptr{Ptr{Uint8}}
+  material_names::Ptr{Ptr{Uint8}}
   allowmat0::Cint   #= Flag to allow material "0" =#
   mmesh_name::Ptr{Uint8}
   file_ns::Ptr{Uint8}     #= namescheme for files (in lieu of meshnames) =#
@@ -870,14 +876,14 @@ type DBmultimatspecies_
   id::Cint          #= Identifier for this object  =#
   nspec::Cint       #= Number of species   =#
   ngroups::Cint     #= Number of block groups in mesh =#
-    specnames::Ptr{Ptr{Uint8}}
+  specnames::Ptr{Ptr{Uint8}}
   blockorigin::Cint #= Origin (0 or 1) of block numbers =#
   grouporigin::Cint #= Origin (0 or 1) of group numbers =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
   nmat::Cint        #= equiv. to nmatnos of a DBmultimat =#
   nmatspec::Ptr{Cint}    #= equiv. to matnos of a DBmultimat =#
-    species_names::Ptr{Ptr{Uint8}}
-    speccolors::Ptr{Ptr{Uint8}}
+  species_names::Ptr{Ptr{Uint8}}
+  speccolors::Ptr{Ptr{Uint8}}
   file_ns::Ptr{Uint8}     #= namescheme for files (in lieu of meshnames) =#
   block_ns::Ptr{Uint8}    #= namescheme for block objects (in lieu of meshnames) =#
   empty_list::Ptr{Cint}  #= list of empty block #'s (option for namescheme) =#
@@ -918,9 +924,9 @@ type DBzonelist_
   min_index::Cint   #= Index of first real zone =#
   max_index::Cint   #= Index of last real zone =#
 
-#=--------- Optional zone attributes ---------=#
+  #=--------- Optional zone attributes ---------=#
   zoneno::Ptr{Cint}      #= [nzones] zone number of each zone =#
-gzoneno::Ptr{Void}     #= [nzones] global zone number of each zone =#
+  gzoneno::Ptr{Void}     #= [nzones] global zone number of each zone =#
   gnznodtype::Cint  #= datatype for global node/zone ids =#
 end #type
 typealias DBzonelist DBzonelist_
@@ -940,36 +946,36 @@ type DBphzonelist_
   lo_offset::Cint   #= Index of first non-ghost zone =#
   hi_offset::Cint   #= Index of last non-ghost zone =#
 
-#=--------- Optional zone attributes ---------=#
+  #=--------- Optional zone attributes ---------=#
   zoneno::Ptr{Cint}      #= [nzones] zone number of each zone =#
-gzoneno::Ptr{Void}     #= [nzones] global zone number of each zone =#
+  gzoneno::Ptr{Void}     #= [nzones] global zone number of each zone =#
   gnznodtype::Cint  #= datatype for global node/zone ids =#
 end #type
 typealias DBphzonelist DBphzonelist_
 
 
 type DBfacelist_
-#=----------- Required components ------------=#
+  #=----------- Required components ------------=#
   ndims::Cint       #= Number of dimensions (2,3) =#
   nfaces::Cint      #= Number of faces in list =#
   origin::Cint      #= '0' or '1' =#
   nodelist::Ptr{Cint}    #= Sequent list of nodes comprise faces =#
   lnodelist::Cint   #= Number of nodes in nodelist =#
 
-#=----------- 3D components ------------------=#
+  #=----------- 3D components ------------------=#
   nshapes::Cint     #= Number of face shapes =#
   shapecnt::Ptr{Cint}    #= [nshapes] Num of occurences of each shape =#
   shapesize::Ptr{Cint}   #= [nshapes] Number of nodes per shape =#
 
-#=----------- Optional type component---------=#
+  #=----------- Optional type component---------=#
   ntypes::Cint      #= Number of face types =#
   typelist::Ptr{Cint}    #= [ntypes] Type ID for each type =#
   types::Ptr{Cint}       #= [nfaces] Type info for each face =#
 
-#=--------- Optional node attributes ---------=#
+  #=--------- Optional node attributes ---------=#
   nodeno::Ptr{Cint}      #= [lnodelist] node number of each node =#
 
-#=----------- Optional zone-reference component---------=#
+  #=----------- Optional zone-reference component---------=#
   zoneno::Ptr{Cint}      #= [nfaces] Zone number for each face =#
 end #type
 typealias DBfacelist DBfacelist_
@@ -985,7 +991,7 @@ typealias DBedgelist DBedgelist_
 
 
 type DBquadmesh_
-#=----------- Quad Mesh -----------=#
+  #=----------- Quad Mesh -----------=#
   id::Cint          #= Identifier for this object =#
   block_no::Cint    #= Block number for this mesh =#
   group_no::Cint    #= Block group number for this mesh =#
@@ -998,11 +1004,11 @@ type DBquadmesh_
                                  * non-collinear =#
   facetype::Cint    #= Zone face type: rect, curv =#
   planar::Cint      #= Sentinel: zones represent area or volume? =#
-coords::Ptr{Ptr{DB_DTPTR}}#[3]   #= Mesh node coordinate ptrs [ndims] =#
+  coords::Ptr{Ptr{DB_DTPTR}}#[3]   #= Mesh node coordinate ptrs [ndims] =#
   datatype::Cint    #= Type of coordinate arrays (double,float) =#
   time::Cfloat        #= Problem time =#
-dtime::Cdouble       #= Problem time, double data type =#
-   #=
+  dtime::Cdouble       #= Problem time, double data type =#
+  #=
     * The following two fields really only contain 3 elements.  However, silo
     * contains a bug in PJ_ReadVariable() as called by DBGetQuadmesh() which
     * can cause three doubles to be stored there instead of three floats.
@@ -1017,14 +1023,14 @@ dtime::Cdouble       #= Problem time, double data type =#
   dims::Ptr{Cint}#[3]     #= Number of nodes per dimension =#
   origin::Cint      #= '0' or '1' =#
   min_index::Ptr{Cint}#[3]   #= Index in each dimension of 1st
-#                                     * non-phoney =#
+  #                                     * non-phoney =#
   max_index::Ptr{Cint}#[3]   #= Index in each dimension of last
-#                                     * non-phoney =#
+  #                                     * non-phoney =#
   base_index::Ptr{Cint}#[3]  #= Lowest real i,j,k value for this block =#
   start_index::Ptr{Cint}#[3] #= i,j,k values corresponding to original
-#                                     * mesh =#
+  #                                     * mesh =#
   size_index::Ptr{Cint}#[3]  #= Number of nodes per dimension for
-#                                     * original mesh =#
+  #                                     * original mesh =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
   mrgtree_name::Ptr{Uint8} #= optional name of assoc. mrgtree object =#
 end #type
@@ -1032,7 +1038,7 @@ typealias DBquadmesh DBquadmesh_
 
 
 type DBucdmesh_
-#=----------- Unstructured Cell Data (UCD) Mesh -----------=#
+  #=----------- Unstructured Cell Data (UCD) Mesh -----------=#
   id::Cint          #= Identifier for this object =#
   block_no::Cint    #= Block number for this mesh =#
   group_no::Cint    #= Block group number for this mesh =#
@@ -1042,11 +1048,11 @@ type DBucdmesh_
   topo_dim::Cint    #= Topological dimension. =#
   units::Ptr{Ptr{Uint8}}#[3]    #= Units for variable, e.g, 'mm/ms' =#
   labels::Ptr{Ptr{Uint8}}#[3]   #= Label associated with each dimension =#
-coords::Ptr{Ptr{DB_DTPTR}}#[3]   #= Mesh node coordinates =#
+  coords::Ptr{Ptr{DB_DTPTR}}#[3]   #= Mesh node coordinates =#
   datatype::Cint    #= Type of coordinate arrays (double,float) =#
   time::Cfloat        #= Problem time =#
-dtime::Cdouble       #= Problem time, double data type =#
-   #=
+  dtime::Cdouble       #= Problem time, double data type =#
+  #=
     * The following two fields really only contain 3 elements.  However, silo
     * contains a bug in PJ_ReadVariable() as called by DBGetUcdmesh() which
     * can cause three doubles to be stored there instead of three floats.
@@ -1056,19 +1062,19 @@ dtime::Cdouble       #= Problem time, double data type =#
   ndims::Cint       #= Number of computational dimensions =#
   nnodes::Cint      #= Total number of nodes =#
   origin::Cint      #= '0' or '1' =#
-faces::Ptr{DBfacelist}       #= Data structure describing mesh faces =#
-zones::Ptr{DBzonelist}       #= Data structure describing mesh zones =#
-edges::Ptr{DBedgelist}       #= Data struct describing mesh edges
+  faces::Ptr{DBfacelist}       #= Data structure describing mesh faces =#
+  zones::Ptr{DBzonelist}       #= Data structure describing mesh zones =#
+  edges::Ptr{DBedgelist}       #= Data struct describing mesh edges
                                  * (option) =#
 
-#=--------- Optional node attributes ---------=#
-gnodeno::Ptr{Void}     #= [nnodes] global node number of each node =#
+  #=--------- Optional node attributes ---------=#
+  gnodeno::Ptr{Void}     #= [nnodes] global node number of each node =#
 
-#=--------- Optional zone attributes ---------=#
+  #=--------- Optional zone attributes ---------=#
   nodeno::Ptr{Cint}      #= [nnodes] node number of each node =#
 
-#=--------- Optional polyhedral zonelist ---------=#
-phzones::Ptr{DBphzonelist}     #= Data structure describing mesh zones =#
+  #=--------- Optional polyhedral zonelist ---------=#
+  phzones::Ptr{DBphzonelist}     #= Data structure describing mesh zones =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
   mrgtree_name::Ptr{Uint8} #= optional name of assoc. mrgtree object =#
   tv_connectivity::Cint
@@ -1083,14 +1089,14 @@ typealias DBucdmesh DBucdmesh_
  *---------------------------------------------------------------------------
  =#
 type DBquadvar_
-#=----------- Quad Variable -----------=#
+  #=----------- Quad Variable -----------=#
   id::Cint          #= Identifier for this object =#
   name::Ptr{Uint8}        #= Name of variable =#
   units::Ptr{Uint8}       #= Units for variable, e.g, 'mm/ms' =#
   label::Ptr{Uint8}       #= Label (perhaps for editing purposes) =#
   cycle::Cint       #= Problem cycle number =#
   meshid::Cint      #= Identifier for associated mesh (Deprecated Sep2005) =#
-vals::Ptr{Ptr{DB_DTPTR}}        #= Array of pointers to data arrays =#
+  vals::Ptr{Ptr{DB_DTPTR}}        #= Array of pointers to data arrays =#
   datatype::Cint    #= Type of data pointed to by 'val' =#
   nels::Cint        #= Number of elements in each array =#
   nvals::Cint       #= Number of arrays pointed to by 'vals' =#
@@ -1099,19 +1105,19 @@ vals::Ptr{Ptr{DB_DTPTR}}        #= Array of pointers to data arrays =#
   major_order::Cint #= 1 indicates row-major for multi-d arrays =#
   stride::Ptr{Cint}#[3]   #= Offsets to adjacent elements  =#
   min_index::Ptr{Cint}#[3]  #= Index in each dimension of 1st
-#                                    * non-phoney =#
+  #                                    * non-phoney =#
   max_index::Ptr{Cint}#[3]  #= Index in each dimension of last
-#                                    * non-phoney =#
+  #                                    * non-phoney =#
   origin::Cint      #= '0' or '1' =#
   time::Cfloat        #= Problem time =#
-dtime::Cdouble       #= Problem time, double data type =#
-   #=
+  dtime::Cdouble       #= Problem time, double data type =#
+  #=
     * The following field really only contains 3 elements.  However, silo
     * contains a bug in PJ_ReadVariable() as called by DBGetQuadvar() which
     * can cause three doubles to be stored there instead of three floats.
     =#
   align::Ptr{Cfloat}#[6]    #= Centering and alignment per dimension =#
-mixvals::Ptr{Ptr{DB_DTPTR}}     #= nvals ptrs to data arrays for mixed zones =#
+  mixvals::Ptr{Ptr{DB_DTPTR}}     #= nvals ptrs to data arrays for mixed zones =#
   mixlen::Cint      #= Num of elmts in each mixed zone data
                                  * array =#
   use_specmf::Cint  #= Flag indicating whether to apply species
@@ -1121,7 +1127,7 @@ mixvals::Ptr{Ptr{DB_DTPTR}}     #= nvals ptrs to data arrays for mixed zones =#
                                    the range [0, 255] =#
   meshname::Ptr{Uint8}    #= Name of associated mesh =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-    region_pnames::Ptr{Ptr{Uint8}}
+  region_pnames::Ptr{Ptr{Uint8}}
   conserved::Cint   #= indicates if the variable should be conserved
                                    under various operations such as interp. =#
   extensive::Cint   #= indicates if the variable reprsents an extensiv
@@ -1133,23 +1139,23 @@ typealias DBquadvar DBquadvar_
 
 
 type DBucdvar_
-#=----------- Unstructured Cell Data (UCD) Variable -----------=#
+  #=----------- Unstructured Cell Data (UCD) Variable -----------=#
   id::Cint          #= Identifier for this object =#
   name::Ptr{Uint8}        #= Name of variable =#
   cycle::Cint       #= Problem cycle number =#
   units::Ptr{Uint8}       #= Units for variable, e.g, 'mm/ms' =#
   label::Ptr{Uint8}       #= Label (perhaps for editing purposes) =#
   time::Cfloat        #= Problem time =#
-dtime::Cdouble       #= Problem time, double data type =#
+  dtime::Cdouble       #= Problem time, double data type =#
   meshid::Cint      #= Identifier for associated mesh (Deprecated Sep2005) =#
-vals::Ptr{Ptr{DB_DTPTR}}        #= Array of pointers to data arrays =#
+  vals::Ptr{Ptr{DB_DTPTR}}        #= Array of pointers to data arrays =#
   datatype::Cint    #= Type of data pointed to by 'vals' =#
   nels::Cint        #= Number of elements in each array =#
   nvals::Cint       #= Number of arrays pointed to by 'vals' =#
   ndims::Cint       #= Rank of variable =#
   origin::Cint      #= '0' or '1' =#
   centering::Cint   #= Centering within mesh (nodal or zonal) =#
-mixvals::Ptr{Ptr{DB_DTPTR}}     #= nvals ptrs to data arrays for mixed zones =#
+  mixvals::Ptr{Ptr{DB_DTPTR}}     #= nvals ptrs to data arrays for mixed zones =#
   mixlen::Cint      #= Num of elmts in each mixed zone data
                                  * array =#
   use_specmf::Cint  #= Flag indicating whether to apply species
@@ -1159,7 +1165,7 @@ mixvals::Ptr{Ptr{DB_DTPTR}}     #= nvals ptrs to data arrays for mixed zones =#
                                    the range [0, 255] =#
   meshname::Ptr{Uint8}    #= Name of associated mesh =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-    region_pnames::Ptr{Ptr{Uint8}}
+  region_pnames::Ptr{Ptr{Uint8}}
   conserved::Cint   #= indicates if the variable should be conserved
                                    under various operations such as interp. =#
   extensive::Cint   #= indicates if the variable reprsents an extensiv
@@ -1169,14 +1175,14 @@ typealias DBucdvar DBucdvar_
 
 
 type DBmeshvar_
-#=----------- Generic Mesh-Data Variable -----------=#
+  #=----------- Generic Mesh-Data Variable -----------=#
   id::Cint          #= Identifier for this object =#
   name::Ptr{Uint8}        #= Name of variable =#
   units::Ptr{Uint8}       #= Units for variable, e.g, 'mm/ms' =#
   label::Ptr{Uint8}       #= Label (perhaps for editing purposes) =#
   cycle::Cint       #= Problem cycle number =#
   meshid::Cint      #= Identifier for associated mesh (Deprecated Sep2005) =#
-vals::Ptr{Ptr{DB_DTPTR}}        #= Array of pointers to data arrays =#
+  vals::Ptr{Ptr{DB_DTPTR}}        #= Array of pointers to data arrays =#
   datatype::Cint    #= Type of data pointed to by 'val' =#
   nels::Cint        #= Number of elements in each array =#
   nvals::Cint       #= Number of arrays pointed to by 'vals' =#
@@ -1185,34 +1191,34 @@ vals::Ptr{Ptr{DB_DTPTR}}        #= Array of pointers to data arrays =#
   origin::Cint      #= '0' or '1' =#
   centering::Cint   #= Centering within mesh (nodal,zonal,other) =#
   time::Cfloat        #= Problem time =#
-dtime::Cdouble       #= Problem time, double data type =#
-   #=
+  dtime::Cdouble       #= Problem time, double data type =#
+  #=
     * The following field really only contains 3 elements.  However, silo
     * contains a bug in PJ_ReadVariable() as called by DBGetPointvar() which
     * can cause three doubles to be stored there instead of three floats.
     =#
   align::Ptr{Cfloat}#[6]    #= Alignmnt per dimension if
-#                                  * centering==other =#
+  #                                  * centering==other =#
 
-    #= Stuff for multi-dimensional arrays (ndims > 1) =#
+  #= Stuff for multi-dimensional arrays (ndims > 1) =#
   dims::Ptr{Cint}#[3]     #= Number of elements in each dimension =#
   major_order::Cint #= 1 indicates row-major for multi-d arrays =#
   stride::Ptr{Cint}#[3]   #= Offsets to adjacent elements  =#
-   #=
+  #=
     * The following two fields really only contain 3 elements.  However, silo
     * contains a bug in PJ_ReadVariable() as called by DBGetUcdmesh() which
     * can cause three doubles to be stored there instead of three floats.
     =#
   min_index::Ptr{Cint}#[6]  #= Index in each dimension of 1st
-#                                    * non-phoney =#
+  #                                    * non-phoney =#
   max_index::Ptr{Cint}#[6]  #= Index in each dimension of last
-#                                     non-phoney =#
+  #                                     non-phoney =#
   ascii_labels::Cint#= Treat variable values as ASCII values
                                    by rounding to the nearest integer in
                                    the range [0, 255] =#
   meshname::Ptr{Uint8}      #= Name of associated mesh =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-    region_pnames::Ptr{Ptr{Uint8}}
+  region_pnames::Ptr{Ptr{Uint8}}
   conserved::Cint   #= indicates if the variable should be conserved
                                    under various operations such as interp. =#
   extensive::Cint   #= indicates if the variable reprsents an extensiv
@@ -1224,7 +1230,7 @@ typealias DBmeshvar DBmeshvar_
 typealias DBpointvar DBmeshvar
 
 type DBmaterial_
-#=----------- Material Information -----------=#
+  #=----------- Material Information -----------=#
   id::Cint          #= Identifier =#
   name::Ptr{Uint8}        #= Name of this material information block =#
   ndims::Cint       #= Rank of 'matlist' variable =#
@@ -1234,16 +1240,16 @@ type DBmaterial_
   stride::Ptr{Cint}#[3]   #= Offsets to adjacent elements in matlist =#
   nmat::Cint        #= Number of materials =#
   matnos::Ptr{Cint}      #= Array [nmat] of valid material numbers =#
-    matnames::Ptr{Ptr{Uint8}}
+  matnames::Ptr{Ptr{Uint8}}
   matlist::Ptr{Cint}     #= Array[nzone] w/ mat. number or mix index =#
   mixlen::Cint      #= Length of mixed data arrays (mix_xxx) =#
   datatype::Cint    #= Type of volume-fractions (double,float) =#
-mix_vf::Ptr{DB_DTPTR}      #= Array [mixlen] of volume fractions =#
+  mix_vf::Ptr{DB_DTPTR}      #= Array [mixlen] of volume fractions =#
   mix_next::Ptr{Cint}    #= Array [mixlen] of mixed data indeces =#
   mix_mat::Ptr{Cint}     #= Array [mixlen] of material numbers =#
   mix_zone::Ptr{Cint}    #= Array [mixlen] of back pointers to mesh =#
 
-    matcolors::Ptr{Ptr{Uint8}}
+  matcolors::Ptr{Ptr{Uint8}}
   meshname::Ptr{Uint8}    #= Name of associated mesh =#
   allowmat0::Cint   #= Flag to allow material "0" =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
@@ -1252,7 +1258,7 @@ typealias DBmaterial DBmaterial_
 
 
 type DBmatspecies_
-#=----------- Species Information -----------=#
+  #=----------- Species Information -----------=#
   id::Cint          #= Identifier =#
   name::Ptr{Uint8}        #= Name of this matspecies information block =#
   matname::Ptr{Uint8}     #= Name of material object with which the
@@ -1262,11 +1268,11 @@ type DBmatspecies_
 #                                  * species associated with each material. =#
   ndims::Cint       #= Rank of 'speclist' variable =#
   dims::Ptr{Cint}#[3]     #= Number of elements in each dimension of the
-#                                  * 'speclist' variable. =#
+  #                                  * 'speclist' variable. =#
   major_order::Cint #= 1 indicates row-major for multi-d arrays =#
   stride::Ptr{Cint}#[3]   #= Offsts to adjacent elmts in 'speclist'  =#
   nspecies_mf::Cint #= Total number of species mass fractions. =#
-species_mf::Ptr{DB_DTPTR}  #= Array of length nspecies_mf of mass
+  species_mf::Ptr{DB_DTPTR}  #= Array of length nspecies_mf of mass
 #                                  * fractions of the material species. =#
   speclist::Ptr{Cint}    #= Zone array of dimensions described by ndims
 #                                  * and dims.  Each element of the array is an
@@ -1291,20 +1297,20 @@ species_mf::Ptr{DB_DTPTR}  #= Array of length nspecies_mf of mass
                                    * mix_mat[j]. =#
   datatype::Cint    #= Datatype of mass fraction data. =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-    specnames::Ptr{Ptr{Uint8}}
-    speccolors::Ptr{Ptr{Uint8}}
+  specnames::Ptr{Ptr{Uint8}}
+  speccolors::Ptr{Ptr{Uint8}}
 end #type DBmatspecies
 typealias DBmatspecies DBmatspecies_
 
 
 type DBcsgzonelist_
-#=----------- CSG Zonelist -----------=#
+  #=----------- CSG Zonelist -----------=#
   nregs::Cint       #= Number of regions in regionlist =#
   origin::Cint      #= '0' or '1' =#
   typeflags::Ptr{Cint}   #= [nregs] type info about each region =#
   leftids::Ptr{Cint}     #= [nregs] left operand region refs =#
   rightids::Ptr{Cint}    #= [nregs] right operand region refs =#
-xform::Ptr{Void}       #= [lxforms] transformation coefficients =#
+  xform::Ptr{Void}       #= [lxforms] transformation coefficients =#
   lxform::Cint      #= length of xforms array =#
   datatype::Cint    #= type of data in xforms array =#
   nzones::Cint      #= number of zones =#
@@ -1312,15 +1318,15 @@ xform::Ptr{Void}       #= [lxforms] transformation coefficients =#
   min_index::Cint   #= Index of first real zone =#
   max_index::Cint   #= Index of last real zone =#
 
-#=--------- Optional zone attributes ---------=#
-    regnames::Ptr{Ptr{Uint8}}
-    zonenames::Ptr{Ptr{Uint8}}
+  #=--------- Optional zone attributes ---------=#
+  regnames::Ptr{Ptr{Uint8}}
+  zonenames::Ptr{Ptr{Uint8}}
 end #type DBcsgzonelist
 typealias DBcsgzonelist DBcsgzonelist_
 
 
 type DBcsgmesh_
-#=----------- CSG Mesh -----------=#
+  #=----------- CSG Mesh -----------=#
   block_no::Cint    #= Block number for this mesh =#
   group_no::Cint    #= Block group number for this mesh =#
   name::Ptr{Uint8}        #= Name associated with mesh =#
@@ -1330,22 +1336,22 @@ type DBcsgmesh_
   nbounds::Cint     #= Total number of boundaries =#
   typeflags::Ptr{Cint}   #= nbounds boundary type info flags =#
   bndids::Ptr{Cint}      #= optional, nbounds explicit ids =#
-coeffs::Ptr{Void}      #= coefficients in the representation of
+  coeffs::Ptr{Void}      #= coefficients in the representation of
                                    each boundary =#
   lcoeffs::Cint     #= length of coeffs array =#
   coeffidx::Ptr{Cint}    #= array of nbounds offsets into coeffs
                                    for each boundary's coefficients =#
   datatype::Cint    #= data type of coeffs data =#
   time::Cfloat        #= Problem time =#
-dtime::Cdouble       #= Problem time, double data type =#
-min_extents::Ptr{Cdouble}#[3]  #= Min mesh extents [ndims] =#
-max_extents::Ptr{Cdouble}#[3]  #= Max mesh extents [ndims] =#
+  dtime::Cdouble       #= Problem time, double data type =#
+  min_extents::Ptr{Cdouble}#[3]  #= Min mesh extents [ndims] =#
+  max_extents::Ptr{Cdouble}#[3]  #= Max mesh extents [ndims] =#
   ndims::Cint       #= Number of spatial & topological dimensions =#
   origin::Cint      #= '0' or '1' =#
-zones::Ptr{DBcsgzonelist}       #= Data structure describing mesh zones =#
+  zones::Ptr{DBcsgzonelist}       #= Data structure describing mesh zones =#
 
-#=--------- Optional boundary attributes ---------=#
-    bndnames::Ptr{Ptr{Uint8}}
+  #=--------- Optional boundary attributes ---------=#
+  bndnames::Ptr{Ptr{Uint8}}
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
   mrgtree_name::Ptr{Uint8} #= optional name of assoc. mrgtree object =#
   tv_connectivity::Cint
@@ -1355,14 +1361,14 @@ typealias DBcsgmesh DBcsgmesh_
 
 
 type DBcsgvar_
-#=----------- CSG Variable -----------=#
+  #=----------- CSG Variable -----------=#
   name::Ptr{Uint8}        #= Name of variable =#
   cycle::Cint       #= Problem cycle number =#
   units::Ptr{Uint8}       #= Units for variable, e.g, 'mm/ms' =#
   label::Ptr{Uint8}       #= Label (perhaps for editing purposes) =#
   time::Cfloat        #= Problem time =#
-dtime::Cdouble       #= Problem time, double data type =#
-vals::Ptr{Ptr{Void}}        #= Array of pointers to data arrays =#
+  dtime::Cdouble       #= Problem time, double data type =#
+  vals::Ptr{Ptr{Void}}        #= Array of pointers to data arrays =#
   datatype::Cint    #= Type of data pointed to by 'vals' =#
   nels::Cint        #= Number of elements in each array =#
   nvals::Cint       #= Number of arrays pointed to by 'vals' =#
@@ -1374,7 +1380,7 @@ vals::Ptr{Ptr{Void}}        #= Array of pointers to data arrays =#
                                    the range [0, 255] =#
   meshname::Ptr{Uint8}    #= Name of associated mesh =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-    region_pnames::Ptr{Ptr{Uint8}}
+  region_pnames::Ptr{Ptr{Uint8}}
   conserved::Cint   #= indicates if the variable should be conserved
                                    under various operations such as interp. =#
   extensive::Cint   #= indicates if the variable reprsents an extensiv
@@ -1394,10 +1400,10 @@ typealias DBcsgvar DBcsgvar_
 type DBcompoundarray_
   id::Cint          #=identifier of the compound array =#
   name::Ptr{Uint8}        #=name of te compound array  =#
-    elemnames::Ptr{Ptr{Uint8}}
+  elemnames::Ptr{Ptr{Uint8}}
   elemlengths::Ptr{Cint} #=lengths of the simple arrays  =#
   nelems::Cint      #=number of simple arrays  =#
-values::Ptr{Void}      #=simple array values   =#
+  values::Ptr{Void}      #=simple array values   =#
   nvalues::Cint     #=sum reduction of `elemlengths' vector =#
   datatype::Cint    #=simple array element data type =#
 end #type DBcompoundarray
@@ -1406,7 +1412,7 @@ typealias DBcompoundarray DBcompoundarray_
 
 type DBoptlist_
   options::Ptr{Cint}     #= Vector of option identifiers =#
-values::Ptr{Ptr{Void}}      #= Vector of pointers to option values =#
+  values::Ptr{Ptr{Void}}      #= Vector of pointers to option values =#
   numopts::Cint     #= Number of options defined =#
   maxopts::Cint     #= Total length of option/value arrays =#
 end #type DBoptlist
@@ -1428,7 +1434,7 @@ warn("In objects of type DBobject, internal field \"type\" is called \"dtype\" i
 type _DBmrgtnode
   name::Ptr{Uint8}
   narray::Cint
-    names::Ptr{Ptr{Uint8}}
+  names::Ptr{Ptr{Uint8}}
   type_info_bits::Cint
   max_children::Cint
   maps_name::Ptr{Uint8}
@@ -1439,9 +1445,9 @@ type _DBmrgtnode
   num_children::Cint
   children::Ptr{Ptr{_DBmrgtnode}}
 
-    #= internal stuff to support updates, i/o, etc. =#
+  #= internal stuff to support updates, i/o, etc. =#
   walk_order::Cint
-	parent::Ptr{_DBmrgtnode}
+  parent::Ptr{_DBmrgtnode}
 end #type DBmrgtnode
 typealias DBmrgtnode _DBmrgtnode
 
@@ -1456,11 +1462,11 @@ type _DBmrgtree
   src_mesh_type::Cint
   type_info_bits::Cint
   num_nodes::Cint
-root::Ptr{DBmrgtnode}
-cwr::Ptr{DBmrgtnode}
+  root::Ptr{DBmrgtnode}
+  cwr::Ptr{DBmrgtnode}
 
-    mrgvar_onames::Ptr{Ptr{Uint8}}
-    mrgvar_rnames::Ptr{Ptr{Uint8}}
+  mrgvar_onames::Ptr{Ptr{Uint8}}
+  mrgvar_rnames::Ptr{Ptr{Uint8}}
 end #type DBmrgtree
 typealias DBmrgtree _DBmrgtree
 
@@ -1469,11 +1475,11 @@ type _DBmrgvar
   name::Ptr{Uint8}
   mrgt_name::Ptr{Uint8}
   ncomps::Cint
-    compnames::Ptr{Ptr{Uint8}}
+  compnames::Ptr{Ptr{Uint8}}
   nregns::Cint
-    reg_pnames::Ptr{Ptr{Uint8}}
+  reg_pnames::Ptr{Ptr{Uint8}}
   datatype::Cint
-data::Ptr{Ptr{Void}}
+  data::Ptr{Ptr{Void}}
 end #type DBmrgvar
 typealias DBmrgvar _DBmrgvar
 
@@ -1484,8 +1490,8 @@ type _DBgroupelmap
   groupel_types::Ptr{Cint}
   segment_lengths::Ptr{Cint}
   segment_ids::Ptr{Cint}
-segment_data::Ptr{Ptr{Cint}}
-segment_fracs::Ptr{Ptr{Void}}
+  segment_data::Ptr{Ptr{Cint}}
+  segment_fracs::Ptr{Ptr{Void}}
   fracs_data_type::Cint
 end #type DBgroupelmap
 typealias DBgroupelmap _DBgroupelmap
@@ -1494,21 +1500,21 @@ const DB_MAX_EXPSTRS = 8 #= NO_FORTRAN_DEFINE =#
 
 type _DBnamescheme
   fmt::Ptr{Uint8}              #= orig. format string =#
-#     char const **
-    fmtptrs::Ptr{Ptr{Uint8}}
-       #= ptrs into first (printf) part of fmt for each conversion spec. =#
+  #     char const **
+  fmtptrs::Ptr{Ptr{Uint8}}
+  #= ptrs into first (printf) part of fmt for each conversion spec. =#
   fmtlen::Cint             #= len of first part of fmt =#
   ncspecs::Cint            #= # of conversion specs in first part of fmt =#
-#     char
-    delim::Uint8             #= delimiter char used for parts of fmt =#
+  #     char
+  delim::Uint8             #= delimiter char used for parts of fmt =#
   nembed::Cint             #= number of last embedded string encountered =#
   embedstrs::Ptr{Ptr{Uint8}}#[DB_MAX_EXPSTRS] #= ptrs to copies of embedded strings =#
   arralloc::Cint           #= flag indicating if Silo allocated the arrays or not =#
   narrefs::Cint            #= number of array refs in conversion specs =#
-    arrnames::Ptr{Ptr{Uint8}}
-arrvals::Ptr{Ptr{Void}}         #= pointer to actual array data assoc. with each name =#
+  arrnames::Ptr{Ptr{Uint8}}
+  arrvals::Ptr{Ptr{Void}}         #= pointer to actual array data assoc. with each name =#
   arrsizes::Ptr{Cint}         #= size of each array (only needed for deallocating external arrays of strings) =#
-    exprstrs::Ptr{Ptr{Uint8}}
+  exprstrs::Ptr{Ptr{Uint8}}
 end #type DBnamescheme
 typealias DBnamescheme _DBnamescheme
 
@@ -1524,174 +1530,174 @@ typedef struct DBfile *___DUMMY_TYPE  #= Satisfy ANSI scope rules =#
 
 type DBfile_pub
 
-    #= Public Properties =#
+  #= Public Properties =#
   name::Ptr{Uint8}        #=name of file    =#
   dtype::Cint        #=file type.     =#
-#     DBtoc         *
-    toc::Ptr{DBtoc}         #=table of contents   =#
+  #     DBtoc         *
+  toc::Ptr{DBtoc}         #=table of contents   =#
   dirid::Cint       #=directory ID    =#
   fileid::Cint      #=unique file id [0,DB_NFILES-1] =#
   pathok::Cint      #=driver handles paths in names =#
   Grab::Cint        #=drive has access to low-level interface =#
-GrabId::Ptr{Void}      #=pointer to low-level driver descriptor =#
+  GrabId::Ptr{Void}      #=pointer to low-level driver descriptor =#
   file_lib_version::Ptr{Uint8} #= version of lib file was created with =#
 
-#     #= Public Methods =#
-#     int            (*close)(struct DBfile *)
-#     int            (*exist)(struct DBfile *, char const *)
-#     int            (*pause)(struct DBfile *)
-#     int            (*cont)(struct DBfile *)
-#     int            (*newtoc)(struct DBfile *)
-#     DBObjectType   (*inqvartype)(struct DBfile *, char const *)
-#     int            (*uninstall)(struct DBfile *)
-#     DBobject      *(*g_obj)(struct DBfile *, char const *)
-#     int            (*c_obj)(struct DBfile *, DBobject const *, int)
-#     int            (*w_obj)(struct DBfile *, DBobject const *, int)
-#     void          *(*g_comp)(struct DBfile *, char const *, char const *)
-#     int            (*g_comptyp)(struct DBfile *, char const *, char const *)
-#     int            (*w_comp)(struct DBfile *, DBobject *, char const *, char const *,
-#                              char const *, void const *, int, long const *)
-#     int            (*write) (struct DBfile *, char const *, void const *, int const *, int, int)
-#
-#
-#
-#
-#     int            (*writeslice)(struct DBfile *, char *, void *, int,
-#                                  int[], int[], int[], int[], int)
-#     void          *(*g_attr)(struct DBfile *, char *, char *)
-#     int            (*g_dir)(struct DBfile *, char *)
-#     int            (*mkdir)(struct DBfile *, char *)
-#     int            (*cd)(struct DBfile *, char *)
-#     int            (*cdid)(struct DBfile *, int)
-#     int            (*r_att)(struct DBfile *, char *, char *, void *)
-#     int            (*r_var)(struct DBfile *, char *, void *)
-#     int            (*r_var1)(struct DBfile *, char *, int, void *)
-#     int            (*module)(struct DBfile *, FILE *)
-#     int            (*r_varslice)(struct DBfile *, char *, int *, int *, int *,
-#                                  int, void *)
-#     int            (*g_compnames)(struct DBfile *, char *, char ***, char ***)
-#     DBcompoundarray *(*g_ca)(struct DBfile *, char *)
-#     DBcurve       *(*g_cu)(struct DBfile *, char *)
-#     DBdefvars     *(*g_defv)(struct DBfile *, char const *)
-#     DBmaterial    *(*g_ma)(struct DBfile *, char *)
-#     DBmatspecies  *(*g_ms)(struct DBfile *, char *)
-#     DBmultimesh   *(*g_mm)(struct DBfile *, char *)
-#     DBmultivar    *(*g_mv)(struct DBfile *, char *)
-#     DBmultimat    *(*g_mt)(struct DBfile *, char *)
-#     DBmultimatspecies *(*g_mms)(struct DBfile *, char *)
-#     DBpointmesh   *(*g_pm)(struct DBfile *, char *)
-#     DBmeshvar     *(*g_pv)(struct DBfile *, char *)
-#     DBquadmesh    *(*g_qm)(struct DBfile *, char *)
-#     DBquadvar     *(*g_qv)(struct DBfile *, char *)
-#     DBucdmesh     *(*g_um)(struct DBfile *, char *)
-#     DBucdvar      *(*g_uv)(struct DBfile *, char *)
-#     DBfacelist    *(*g_fl)(struct DBfile *, char *)
-#     DBzonelist    *(*g_zl)(struct DBfile *, char *)
-#     void          *(*g_var)(struct DBfile *, char *)
-#     int            (*g_varbl)(struct DBfile *, char *)  #=byte length =#
-#     int            (*g_varlen)(struct DBfile *, char *)  #=nelems =#
-#     int            (*g_vardims)(struct DBfile*, char*, int, int*) #=dims=#
-#     int            (*g_vartype)(struct DBfile *, char *)
-#     int            (*i_meshname)(struct DBfile *, char *, char *)
-#     int            (*i_meshtype)(struct DBfile *, char *)
-#     int            (*p_ca)(struct DBfile *, char *, char **, int *, int,
-#                            void *, int, int, DBoptlist *)
-#     int            (*p_cu)(struct DBfile *, char *, void *, void *, int, int,
-#                            DBoptlist *)
-#     int            (*p_defv)(struct DBfile *, char const *, int,
-#                            char **, int const *, char **,
-#                            DBoptlist **)
-#     int            (*p_fl)(struct DBfile *, char *, int, int, int *, int, int,
-#                            int *, int *, int *, int, int *, int *, int)
-#     int            (*p_ma)(struct DBfile *, char *, char *, int, int *, int *,
-#                            int *, int, int *, int *, int *, DB_DTPTR1, int, int,
-#                            DBoptlist *)
-#     int            (*p_ms)(struct DBfile *, char *, char *, int, int *, int *,
-#                            int *, int, int, DB_DTPTR1, int *, int, int,
-#                            DBoptlist *)
-#     int            (*p_mm)(struct DBfile *, char const*, int, char const *const *, int const *,
-#                            DBoptlist const *)
-#     int            (*p_mv)(struct DBfile *, char *, int, char **, int *,
-#                            DBoptlist *)
-#     int            (*p_mt)(struct DBfile *, char *, int, char **, DBoptlist *)
-#     int            (*p_mms)(struct DBfile *, char *, int, char **, DBoptlist *)
-#     int            (*p_pm)(struct DBfile *, char *, int, DB_DTPTR2, int, int,
-#                            DBoptlist *)
-#     int            (*p_pv)(struct DBfile *, char *, char *, int, DB_DTPTR2, int,
-#                            int, DBoptlist *)
-#     int            (*p_qm)(struct DBfile *, char *, char **, DB_DTPTR2, int *,
-#                            int, int, int, DBoptlist *)
-#     int            (*p_qv)(struct DBfile *, char *, char *, int, char **,
-#                            DB_DTPTR2, int *, int, DB_DTPTR2, int, int, int,
-#                            DBoptlist *)
-#     int            (*p_um)(struct DBfile *, char *, int, char **, DB_DTPTR2,
-#                            int, int, char *, char *, int, DBoptlist *)
-#     int            (*p_sm)(struct DBfile *, char *, char *,
-#                            int, char *, char *, DBoptlist *)
-#     int            (*p_uv)(struct DBfile *, char *, char *, int, char **,
-#                            DB_DTPTR2, int, DB_DTPTR2, int, int, int,
-#                            DBoptlist *)
-#     int            (*p_zl)(struct DBfile *, char *, int, int, int *, int, int,
-#                            int *, int *, int)
-#     int            (*p_zl2)(struct DBfile *, char *, int, int, int *, int, int,
-#                             int, int, int *, int *, int *, int, DBoptlist *)
-#     #= MCM-27Jul04: We added these to the end to avert potential
-#        link-time compatibility issues with older versions of the
-#        library. Some user's of Silo circumvent its version check
-#        which would ordinarily keep different versions from being
-#        mixed by defining an appropriate global symbol. =#
-#     DBphzonelist  *(*g_phzl)(struct DBfile *, char *)
-#     int            (*p_phzl)(struct DBfile *, char *,
-#                              int, int *, int, int *, char *,
-#                              int, int *, int, int *,
-#                              int, int, int,
-#                              DBoptlist *)
-#     int            (*p_csgzl)(struct DBfile *, char const *, int, int const *,
-#   const::Cint *, int const *, void const *, int, int,
-#                               int, int const *, DBoptlist *)
-#     DBcsgzonelist *(*g_csgzl)(struct DBfile *, char const *)
-#     int            (*p_csgm)(struct DBfile *, char const *, int, int,
-#   const::Cint *, int const *,
-#                              void const *, int, int, double const *,
-#                              char const *, DBoptlist *)
-#     DBcsgmesh     *(*g_csgm)(struct DBfile *, char const *)
-#     int            (*p_csgv)(struct DBfile *, char const *, char const *, int,
-#                              char **, void **, int, int, int,
-#                              DBoptlist *)
-#     DBcsgvar      *(*g_csgv)(struct DBfile *, char const *)
-#     DBmultimeshadj *(*g_mmadj)(struct DBfile *, char const *, int, int const *)
-#     int            (*p_mmadj)(struct DBfile *, char const *, int, int const *,
-#   const::Cint *, int const *, int const *, int const *,
-#   DB_CONSTARR2::Cint, int const *, int DB_CONSTARR2,
-#                               DBoptlist const *optlist)
-#     int            (*p_mrgt)(struct DBfile *dbfile, char const *name, char const *mesh_name,
-#                              DBmrgtree *tree, DBoptlist *opts)
-#     DBmrgtree     *(*g_mrgt)(struct DBfile *, char const *name)
-#     int            (*p_grplm)(struct DBfile *dbfile, char const *map_name,
-#   num_segments::Cint, int *groupel_types,
-#   segment_lengths::Ptr{Cint}, int *segment_ids,
-# segment_data::Ptr{Ptr{Cint}}, void **segment_fracs,
-#   fracs_data_type::Cint, DBoptlist *opts)
-#     DBgroupelmap  *(*g_grplm)(struct DBfile *dbfile, char const *name)
-#     int            (*p_mrgv)(struct DBfile *dbfile, char const *name,
-#                              char const *mrgt_name,
-#   ncomps::Cint, compnames::Ptr{Ptr{Uint8}}
-#   nregns::Cint, reg_pnames::Ptr{Ptr{Uint8}}
-#   datatype::Cint, void **data, DBoptlist *opts)
-#     DBmrgvar      *(*g_mrgv)(struct DBfile *dbfile, char const *name)
-#     int            (*free_z)(struct DBfile *, char const *)
-#     int            (*cpdir)(struct DBfile *, char const *,
-#                             struct DBfile *, char const *)
-#
-#     int          (*sort_obo)(struct DBfile *dbfile, int nobjs,
-#                              char const *const *obj_names, int *ranks)
+  #     #= Public Methods =#
+  #     int            (*close)(struct DBfile *)
+  #     int            (*exist)(struct DBfile *, char const *)
+  #     int            (*pause)(struct DBfile *)
+  #     int            (*cont)(struct DBfile *)
+  #     int            (*newtoc)(struct DBfile *)
+  #     DBObjectType   (*inqvartype)(struct DBfile *, char const *)
+  #     int            (*uninstall)(struct DBfile *)
+  #     DBobject      *(*g_obj)(struct DBfile *, char const *)
+  #     int            (*c_obj)(struct DBfile *, DBobject const *, int)
+  #     int            (*w_obj)(struct DBfile *, DBobject const *, int)
+  #     void          *(*g_comp)(struct DBfile *, char const *, char const *)
+  #     int            (*g_comptyp)(struct DBfile *, char const *, char const *)
+  #     int            (*w_comp)(struct DBfile *, DBobject *, char const *, char const *,
+  #                              char const *, void const *, int, long const *)
+  #     int            (*write) (struct DBfile *, char const *, void const *, int const *, int, int)
+  #
+  #
+  #
+  #
+  #     int            (*writeslice)(struct DBfile *, char *, void *, int,
+  #                                  int[], int[], int[], int[], int)
+  #     void          *(*g_attr)(struct DBfile *, char *, char *)
+  #     int            (*g_dir)(struct DBfile *, char *)
+  #     int            (*mkdir)(struct DBfile *, char *)
+  #     int            (*cd)(struct DBfile *, char *)
+  #     int            (*cdid)(struct DBfile *, int)
+  #     int            (*r_att)(struct DBfile *, char *, char *, void *)
+  #     int            (*r_var)(struct DBfile *, char *, void *)
+  #     int            (*r_var1)(struct DBfile *, char *, int, void *)
+  #     int            (*module)(struct DBfile *, FILE *)
+  #     int            (*r_varslice)(struct DBfile *, char *, int *, int *, int *,
+  #                                  int, void *)
+  #     int            (*g_compnames)(struct DBfile *, char *, char ***, char ***)
+  #     DBcompoundarray *(*g_ca)(struct DBfile *, char *)
+  #     DBcurve       *(*g_cu)(struct DBfile *, char *)
+  #     DBdefvars     *(*g_defv)(struct DBfile *, char const *)
+  #     DBmaterial    *(*g_ma)(struct DBfile *, char *)
+  #     DBmatspecies  *(*g_ms)(struct DBfile *, char *)
+  #     DBmultimesh   *(*g_mm)(struct DBfile *, char *)
+  #     DBmultivar    *(*g_mv)(struct DBfile *, char *)
+  #     DBmultimat    *(*g_mt)(struct DBfile *, char *)
+  #     DBmultimatspecies *(*g_mms)(struct DBfile *, char *)
+  #     DBpointmesh   *(*g_pm)(struct DBfile *, char *)
+  #     DBmeshvar     *(*g_pv)(struct DBfile *, char *)
+  #     DBquadmesh    *(*g_qm)(struct DBfile *, char *)
+  #     DBquadvar     *(*g_qv)(struct DBfile *, char *)
+  #     DBucdmesh     *(*g_um)(struct DBfile *, char *)
+  #     DBucdvar      *(*g_uv)(struct DBfile *, char *)
+  #     DBfacelist    *(*g_fl)(struct DBfile *, char *)
+  #     DBzonelist    *(*g_zl)(struct DBfile *, char *)
+  #     void          *(*g_var)(struct DBfile *, char *)
+  #     int            (*g_varbl)(struct DBfile *, char *)  #=byte length =#
+  #     int            (*g_varlen)(struct DBfile *, char *)  #=nelems =#
+  #     int            (*g_vardims)(struct DBfile*, char*, int, int*) #=dims=#
+  #     int            (*g_vartype)(struct DBfile *, char *)
+  #     int            (*i_meshname)(struct DBfile *, char *, char *)
+  #     int            (*i_meshtype)(struct DBfile *, char *)
+  #     int            (*p_ca)(struct DBfile *, char *, char **, int *, int,
+  #                            void *, int, int, DBoptlist *)
+  #     int            (*p_cu)(struct DBfile *, char *, void *, void *, int, int,
+  #                            DBoptlist *)
+  #     int            (*p_defv)(struct DBfile *, char const *, int,
+  #                            char **, int const *, char **,
+  #                            DBoptlist **)
+  #     int            (*p_fl)(struct DBfile *, char *, int, int, int *, int, int,
+  #                            int *, int *, int *, int, int *, int *, int)
+  #     int            (*p_ma)(struct DBfile *, char *, char *, int, int *, int *,
+  #                            int *, int, int *, int *, int *, DB_DTPTR1, int, int,
+  #                            DBoptlist *)
+  #     int            (*p_ms)(struct DBfile *, char *, char *, int, int *, int *,
+  #                            int *, int, int, DB_DTPTR1, int *, int, int,
+  #                            DBoptlist *)
+  #     int            (*p_mm)(struct DBfile *, char const*, int, char const *const *, int const *,
+  #                            DBoptlist const *)
+  #     int            (*p_mv)(struct DBfile *, char *, int, char **, int *,
+  #                            DBoptlist *)
+  #     int            (*p_mt)(struct DBfile *, char *, int, char **, DBoptlist *)
+  #     int            (*p_mms)(struct DBfile *, char *, int, char **, DBoptlist *)
+  #     int            (*p_pm)(struct DBfile *, char *, int, DB_DTPTR2, int, int,
+  #                            DBoptlist *)
+  #     int            (*p_pv)(struct DBfile *, char *, char *, int, DB_DTPTR2, int,
+  #                            int, DBoptlist *)
+  #     int            (*p_qm)(struct DBfile *, char *, char **, DB_DTPTR2, int *,
+  #                            int, int, int, DBoptlist *)
+  #     int            (*p_qv)(struct DBfile *, char *, char *, int, char **,
+  #                            DB_DTPTR2, int *, int, DB_DTPTR2, int, int, int,
+  #                            DBoptlist *)
+  #     int            (*p_um)(struct DBfile *, char *, int, char **, DB_DTPTR2,
+  #                            int, int, char *, char *, int, DBoptlist *)
+  #     int            (*p_sm)(struct DBfile *, char *, char *,
+  #                            int, char *, char *, DBoptlist *)
+  #     int            (*p_uv)(struct DBfile *, char *, char *, int, char **,
+  #                            DB_DTPTR2, int, DB_DTPTR2, int, int, int,
+  #                            DBoptlist *)
+  #     int            (*p_zl)(struct DBfile *, char *, int, int, int *, int, int,
+  #                            int *, int *, int)
+  #     int            (*p_zl2)(struct DBfile *, char *, int, int, int *, int, int,
+  #                             int, int, int *, int *, int *, int, DBoptlist *)
+  #     #= MCM-27Jul04: We added these to the end to avert potential
+  #        link-time compatibility issues with older versions of the
+  #        library. Some user's of Silo circumvent its version check
+  #        which would ordinarily keep different versions from being
+  #        mixed by defining an appropriate global symbol. =#
+  #     DBphzonelist  *(*g_phzl)(struct DBfile *, char *)
+  #     int            (*p_phzl)(struct DBfile *, char *,
+  #                              int, int *, int, int *, char *,
+  #                              int, int *, int, int *,
+  #                              int, int, int,
+  #                              DBoptlist *)
+  #     int            (*p_csgzl)(struct DBfile *, char const *, int, int const *,
+  #   const::Cint *, int const *, void const *, int, int,
+  #                               int, int const *, DBoptlist *)
+  #     DBcsgzonelist *(*g_csgzl)(struct DBfile *, char const *)
+  #     int            (*p_csgm)(struct DBfile *, char const *, int, int,
+  #   const::Cint *, int const *,
+  #                              void const *, int, int, double const *,
+  #                              char const *, DBoptlist *)
+  #     DBcsgmesh     *(*g_csgm)(struct DBfile *, char const *)
+  #     int            (*p_csgv)(struct DBfile *, char const *, char const *, int,
+  #                              char **, void **, int, int, int,
+  #                              DBoptlist *)
+  #     DBcsgvar      *(*g_csgv)(struct DBfile *, char const *)
+  #     DBmultimeshadj *(*g_mmadj)(struct DBfile *, char const *, int, int const *)
+  #     int            (*p_mmadj)(struct DBfile *, char const *, int, int const *,
+  #   const::Cint *, int const *, int const *, int const *,
+  #   DB_CONSTARR2::Cint, int const *, int DB_CONSTARR2,
+  #                               DBoptlist const *optlist)
+  #     int            (*p_mrgt)(struct DBfile *dbfile, char const *name, char const *mesh_name,
+  #                              DBmrgtree *tree, DBoptlist *opts)
+  #     DBmrgtree     *(*g_mrgt)(struct DBfile *, char const *name)
+  #     int            (*p_grplm)(struct DBfile *dbfile, char const *map_name,
+  #   num_segments::Cint, int *groupel_types,
+  #   segment_lengths::Ptr{Cint}, int *segment_ids,
+  # segment_data::Ptr{Ptr{Cint}}, void **segment_fracs,
+  #   fracs_data_type::Cint, DBoptlist *opts)
+  #     DBgroupelmap  *(*g_grplm)(struct DBfile *dbfile, char const *name)
+  #     int            (*p_mrgv)(struct DBfile *dbfile, char const *name,
+  #                              char const *mrgt_name,
+  #   ncomps::Cint, compnames::Ptr{Ptr{Uint8}}
+  #   nregns::Cint, reg_pnames::Ptr{Ptr{Uint8}}
+  #   datatype::Cint, void **data, DBoptlist *opts)
+  #     DBmrgvar      *(*g_mrgv)(struct DBfile *dbfile, char const *name)
+  #     int            (*free_z)(struct DBfile *, char const *)
+  #     int            (*cpdir)(struct DBfile *, char const *,
+  #                             struct DBfile *, char const *)
+  #
+  #     int          (*sort_obo)(struct DBfile *dbfile, int nobjs,
+  #                              char const *const *obj_names, int *ranks)
 end #type DBfile_pub
 warn("In objects of type DBfile_pub, internal field \"type\" is called \"dtype\" in Julia.")
 
 
 type DBfile
-    pub::DBfile_pub
-    #=private part follows per device driver =#
+  pub::DBfile_pub
+  #=private part follows per device driver =#
 end #type DBfile
 
 
