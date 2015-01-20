@@ -178,56 +178,57 @@ const DB_QUAD_RECT = DB_COLLINEAR
 const DB_QUAD_CURV = DB_NONCOLLINEAR
 
 #= Objects that can be stored in a data file =#
-#=
-typedef enum {
-    DB_INVALID_OBJECT= -1,       #=causes enum to be signed, do not remove,
+# Process "typedef enum" after conversion to baremodule with grep regexp:
+# (\S+?)=(\S+?), -> const \1 = \2
+baremodule DBObjectType
+    const DB_INVALID_OBJECT= -1       #=causes enum to be signed, do not remove,
                                    space before minus sign necessary for lint=#
-    DB_QUADRECT = DB_QUAD_RECT,
-    DB_QUADCURV = DB_QUAD_CURV,
-    DB_QUADMESH=500,
-    DB_QUADVAR=501,
-    DB_UCDMESH=510,
-    DB_UCDVAR=511,
-    DB_MULTIMESH=520,
-    DB_MULTIVAR=521,
-    DB_MULTIMAT=522,
-    DB_MULTIMATSPECIES=523,
-    DB_MULTIBLOCKMESH=DB_MULTIMESH,
-    DB_MULTIBLOCKVAR=DB_MULTIVAR,
-    DB_MULTIMESHADJ=524,
-    DB_MATERIAL=530,
-    DB_MATSPECIES=531,
-    DB_FACELIST=550,
-    DB_ZONELIST=551,
-    DB_EDGELIST=552,
-    DB_PHZONELIST=553,
-    DB_CSGZONELIST=554,
-    DB_CSGMESH=555,
-    DB_CSGVAR=556,
-    DB_CURVE=560,
-    DB_DEFVARS=565,
-    DB_POINTMESH=570,
-    DB_POINTVAR=571,
-    DB_ARRAY=580,
-    DB_DIR=600,
-    DB_VARIABLE=610,
-    DB_MRGTREE=611,
-    DB_GROUPELMAP=612,
-    DB_MRGVAR=613,
-    DB_USERDEF=700
-} DBObjectType;
+    const DB_QUADRECT = DB_QUAD_RECT
+    const DB_QUADCURV = DB_QUAD_CURV
+    const DB_QUADMESH = 500
+    const DB_QUADVAR = 501
+    const DB_UCDMESH = 510
+    const DB_UCDVAR = 511
+    const DB_MULTIMESH = 520
+    const DB_MULTIVAR = 521
+    const DB_MULTIMAT = 522
+    const DB_MULTIMATSPECIES = 523
+    const DB_MULTIBLOCKMESH = DB_MULTIMESH
+    const DB_MULTIBLOCKVAR = DB_MULTIVAR
+    const DB_MULTIMESHADJ = 524
+    const DB_MATERIAL = 530
+    const DB_MATSPECIES = 531
+    const DB_FACELIST = 550
+    const DB_ZONELIST = 551
+    const DB_EDGELIST = 552
+    const DB_PHZONELIST = 553
+    const DB_CSGZONELIST = 554
+    const DB_CSGMESH = 555
+    const DB_CSGVAR = 556
+    const DB_CURVE = 560
+    const DB_DEFVARS = 565
+    const DB_POINTMESH = 570
+    const DB_POINTVAR = 571
+    const DB_ARRAY = 580
+    const DB_DIR = 600
+    const DB_VARIABLE = 610
+    const DB_MRGTREE = 611
+    const DB_GROUPELMAP = 612
+    const DB_MRGVAR = 613
+    const DB_USERDEF = 700
+end
 
 #= Data types =#
-typedef enum {
-    DB_INT=16,
-    DB_SHORT=17,
-    DB_LONG=18,
-    DB_FLOAT=19,
-    DB_DOUBLE=20,
-    DB_CHAR=21,
-    DB_LONG_LONG=22,
-    DB_NOTYPE=25           #=unknown type =#
-} DBdatatype;=#
+baremodule DBdatatype
+    const DB_INT = 16
+    const DB_SHORT = 17
+    const DB_LONG = 18
+    const DB_FLOAT = 19
+    const DB_DOUBLE = 20
+    const DB_CHAR = 21
+    const DB_LONG_LONG = 22
+    const DB_NOTYPE = 25           #=unknown type =#
+end
 
 #= Flags for DBCreate =#
 const DB_CLOBBER = 0
@@ -542,9 +543,9 @@ const I2D(s,i,j) = (j)*s[1]+(i)*s[0] =#
 
 
 #=
-#=
  * Database table of contents for the current directory only.
  =#
+#=
 typedef struct DBtoc_ {
 
     char         **curve_names;
@@ -620,11 +621,13 @@ typedef struct DBtoc_ {
     int            nmrgvar;
 
 } DBtoc;
-
+=#
 #=----------------------------------------------------------------------------
  * Database Curve Object
  *--------------------------------------------------------------------------
  =#
+ 
+#=
 typedef struct DBcurve_ {
 #=----------- X vs. Y (Curve) Data -----------=#
     int            id;          #= Identifier for this object =#
@@ -643,7 +646,9 @@ typedef struct DBcurve_ {
     int            guihide;     #= Flag to hide from post-processor's GUI =#
     char          *reference;   #= Label to reference object =#
 } DBcurve;
+=#
 
+#=
 typedef struct DBdefvars_ {
     int            ndefs;       #= number of definitions =#
     char         **names;       #= [ndefs] derived variable names =#
@@ -652,7 +657,9 @@ typedef struct DBdefvars_ {
     int        *guihides;       #= [ndefs] flags to hide from
                                    post-processor's GUI =#
 } DBdefvars;
+=#
 
+#=
 typedef struct DBpointmesh_ {
 #=----------- Point Mesh -----------=#
     int            id;          #= Identifier for this object =#
@@ -684,11 +691,14 @@ typedef struct DBpointmesh_ {
     char          *mrgtree_name; #= optional name of assoc. mrgtree object =#
     int            gnznodtype;  #= datatype for global node/zone ids =#
 } DBpointmesh;
+=#
 
 #=----------------------------------------------------------------------------
  * Multi-Block Mesh Object
  *--------------------------------------------------------------------------
  =#
+
+#=
 typedef struct DBmultimesh_ {
 #=----------- Multi-Block Mesh -----------=#
     int            id;          #= Identifier for this object =#
@@ -719,11 +729,14 @@ typedef struct DBmultimesh_ {
     int            empty_cnt;   #= size of empty list =#
     int            repr_block_idx; #= index of a 'representative' block =#
 } DBmultimesh;
+=#
 
 #=----------------------------------------------------------------------------
  * Multi-Block Mesh Adjacency Object
  *--------------------------------------------------------------------------
  =#
+
+#=
 typedef struct DBmultimeshadj_ {
 #=----------- Multi-Block Mesh Adjacency -----------=#
     int            nblocks;     #= Number of blocks in mesh =#
@@ -743,11 +756,13 @@ typedef struct DBmultimeshadj_ {
     int           *lzonelists;  #= Array [lneighbors] of zone counts adjacent =#
     int          **zonelists;   #= Array [lneighbors] zonelists adjacent =#
 } DBmultimeshadj;
+=#
 
 #=----------------------------------------------------------------------------
  * Multi-Block Variable Object
  *--------------------------------------------------------------------------
  =#
+ #=
 typedef struct DBmultivar_ {
 #=----------- Multi-Block Variable -----------=#
     int            id;          #= Identifier for this object  =#
@@ -774,11 +789,13 @@ typedef struct DBmultivar_ {
     int            empty_cnt;   #= size of empty list =#
     int            repr_block_idx; #= index of a 'representative' block =#
 } DBmultivar;
+=#
 
 #=-------------------------------------------------------------------------
  * Multi-material
  *-------------------------------------------------------------------------
  =#
+#=
 typedef struct DBmultimat_ {
     int            id;          #= Identifier for this object  =#
     int            nmats;       #= Number of materials   =#
@@ -802,11 +819,13 @@ typedef struct DBmultimat_ {
     int            empty_cnt;   #= size of empty list =#
     int            repr_block_idx; #= index of a 'representative' block =#
 } DBmultimat;
+=#
 
 #=-------------------------------------------------------------------------
  * Multi-species
  *-------------------------------------------------------------------------
  =#
+#=
 typedef struct DBmultimatspecies_ {
     int            id;          #= Identifier for this object  =#
     int            nspec;       #= Number of species   =#
@@ -825,6 +844,7 @@ typedef struct DBmultimatspecies_ {
     int            empty_cnt;   #= size of empty list =#
     int            repr_block_idx; #= index of a 'representative' block =#
 } DBmultimatspecies;
+=#
 
 #=----------------------------------------------------------------------
  *  Definitions for the FaceList, ZoneList, and EdgeList structures
@@ -864,7 +884,9 @@ typedef struct DBzonelist_ {
     void          *gzoneno;     #= [nzones] global zone number of each zone =#
     int            gnznodtype;  #= datatype for global node/zone ids =#
 } DBzonelist;
+=#
 
+#=
 typedef struct DBphzonelist_ {
     int            nfaces;      #= Number of faces in facelist (aka "facetable") =#
     int           *nodecnt;     #= Count of nodes in each face =#
@@ -884,7 +906,9 @@ typedef struct DBphzonelist_ {
     void          *gzoneno;     #= [nzones] global zone number of each zone =#
     int            gnznodtype;  #= datatype for global node/zone ids =#
 } DBphzonelist;
+=#
 
+#=
 typedef struct DBfacelist_ {
 #=----------- Required components ------------=#
     int            ndims;       #= Number of dimensions (2,3) =#
@@ -909,7 +933,9 @@ typedef struct DBfacelist_ {
 #=----------- Optional zone-reference component---------=#
     int           *zoneno;      #= [nfaces] Zone number for each face =#
 } DBfacelist;
+=#
 
+#=
 typedef struct DBedgelist_ {
     int            ndims;       #= Number of dimensions (2,3) =#
     int            nedges;      #= Number of edges =#
@@ -917,7 +943,9 @@ typedef struct DBedgelist_ {
     int           *edge_end;    #= [nedges] =#
     int            origin;      #= '0' or '1' =#
 } DBedgelist;
+=#
 
+#=
 typedef struct DBquadmesh_ {
 #=----------- Quad Mesh -----------=#
     int            id;          #= Identifier for this object =#
@@ -965,7 +993,9 @@ typedef struct DBquadmesh_ {
     int            guihide;     #= Flag to hide from post-processor's GUI =#
     char          *mrgtree_name; #= optional name of assoc. mrgtree object =#
 } DBquadmesh;
+=#
 
+#=
 typedef struct DBucdmesh_ {
 #=----------- Unstructured Cell Data (UCD) Mesh -----------=#
     int            id;          #= Identifier for this object =#
@@ -1014,11 +1044,13 @@ typedef struct DBucdmesh_ {
     int            disjoint_mode;
     int            gnznodtype;  #= datatype for global node/zone ids =#
 } DBucdmesh;
+=#
 
 #=----------------------------------------------------------------------------
  * Database Mesh-Variable Object
  *---------------------------------------------------------------------------
  =#
+#=
 typedef struct DBquadvar_ {
 #=----------- Quad Variable -----------=#
     int            id;          #= Identifier for this object =#
@@ -1071,7 +1103,9 @@ typedef struct DBquadvar_ {
     int            centering;   #= explicit centering knowledge; should agree
                                    with alignment. =#
 } DBquadvar;
+=#
 
+#=
 typedef struct DBucdvar_ {
 #=----------- Unstructured Cell Data (UCD) Variable -----------=#
     int            id;          #= Identifier for this object =#
@@ -1108,7 +1142,9 @@ typedef struct DBucdvar_ {
     int            extensive;   #= indicates if the variable reprsents an extensiv
                                    physical property (as opposed to intensive) =#
 } DBucdvar;
+=#
 
+#=
 typedef struct DBmeshvar_ {
 #=----------- Generic Mesh-Data Variable -----------=#
     int            id;          #= Identifier for this object =#
@@ -1162,8 +1198,11 @@ typedef struct DBmeshvar_ {
     int            extensive;   #= indicates if the variable reprsents an extensiv
                                    physical property (as opposed to intensive) =#
 } DBmeshvar;
-typedef DBmeshvar DBpointvar; #= better named alias for pointvar =#
 
+=#
+# typedef DBmeshvar DBpointvar; #= better named alias for pointvar =#
+
+#=
 typedef struct DBmaterial_ {
 #=----------- Material Information -----------=#
     int            id;          #= Identifier =#
@@ -1190,7 +1229,9 @@ typedef struct DBmaterial_ {
     int            allowmat0;   #= Flag to allow material "0" =#
     int            guihide;     #= Flag to hide from post-processor's GUI =#
 } DBmaterial;
+=#
 
+#=
 typedef struct DBmatspecies_ {
 #=----------- Species Information -----------=#
     int            id;          #= Identifier =#
@@ -1236,7 +1277,9 @@ typedef struct DBmatspecies_ {
     char         **specnames;   #= Array of species names; length is sum of nmatspec   =#
     char         **speccolors;  #= Array of species colors; length is sum of nmatspec =#
 } DBmatspecies;
+=#
 
+#=
 typedef struct DBcsgzonelist_ {
 #=----------- CSG Zonelist -----------=#
     int            nregs;       #= Number of regions in regionlist =#
@@ -1258,7 +1301,9 @@ typedef struct DBcsgzonelist_ {
     char         **regnames;   #= [nregs] names of each region =#
     char         **zonenames;  #= [nzones] names of each zone =#
 } DBcsgzonelist;
+=#
 
+#=
 typedef struct DBcsgmesh_ {
 #=----------- CSG Mesh -----------=#
     int            block_no;    #= Block number for this mesh =#
@@ -1296,7 +1341,9 @@ typedef struct DBcsgmesh_ {
     int            tv_connectivity;
     int            disjoint_mode;
 } DBcsgmesh;
+=#
 
+#=
 typedef struct DBcsgvar_ {
 #=----------- CSG Variable -----------=#
     char          *name;        #= Name of variable =#
@@ -1326,6 +1373,7 @@ typedef struct DBcsgvar_ {
     int            extensive;   #= indicates if the variable reprsents an extensiv
                                    physical property (as opposed to intensive) =#
 } DBcsgvar;
+=#
 
 #=-------------------------------------------------------------------------
  * A compound array is an array whose elements are simple arrays. A simple
@@ -1334,6 +1382,7 @@ typedef struct DBcsgvar_ {
  * a compound array have elements of the same data type.
  *-------------------------------------------------------------------------
  =#
+#=
 typedef struct DBcompoundarray_ {
     int            id;          #=identifier of the compound array =#
     char          *name;        #=name of te compound array  =#
@@ -1344,7 +1393,9 @@ typedef struct DBcompoundarray_ {
     int            nvalues;     #=sum reduction of `elemlengths' vector =#
     int            datatype;    #=simple array element data type =#
 } DBcompoundarray;
+=#
 
+#=
 typedef struct DBoptlist_ {
 
     int           *options;     #= Vector of option identifiers =#
@@ -1353,7 +1404,9 @@ typedef struct DBoptlist_ {
     int            maxopts;     #= Total length of option/value arrays =#
 
 } DBoptlist;
+=#
 
+#=
 typedef struct DBobject_ {
 
     char          *name;
@@ -1364,7 +1417,9 @@ typedef struct DBobject_ {
     int            maxcomponents;  #= Max number of components =#
 
 } DBobject;
+=#
 
+#=
 typedef struct _DBmrgtnode {
     char *name;
     int  narray;
@@ -1383,9 +1438,13 @@ typedef struct _DBmrgtnode {
     int walk_order;
     struct _DBmrgtnode  *parent;
 } DBmrgtnode;
+=#
 
+#=
 typedef void (*DBmrgwalkcb)(DBmrgtnode *tnode, int nat_node_num, void *data);
+=#
 
+#=
 typedef struct _DBmrgtree {
     char *name;
     char *src_mesh_name;
@@ -1398,7 +1457,9 @@ typedef struct _DBmrgtree {
     char **mrgvar_onames;
     char **mrgvar_rnames;
 } DBmrgtree;
+=#
 
+#=
 typedef struct _DBmrgvar {
     char *name;
     char *mrgt_name;
@@ -1409,7 +1470,9 @@ typedef struct _DBmrgvar {
     int datatype;
     void **data;
 } DBmrgvar ;
+=#
 
+#=
 typedef struct _DBgroupelmap {
     char *name;
     int num_segments;
@@ -1441,13 +1504,18 @@ typedef struct _DBnamescheme
     int  *arrsizes;         #= size of each array (only needed for deallocating external arrays of strings) =#
     char **exprstrs;        #= expressions to be evaluated for each conv. spec. =#
 } DBnamescheme;
+=#
 
+#=
 typedef struct DBfile *___DUMMY_TYPE;  #= Satisfy ANSI scope rules =#
+=#
+
 
 #=
  * All file formats are now anonymous except for the public properties
  * and public methods.
  =#
+#=
 typedef struct DBfile_pub {
 
     #= Public Properties =#
@@ -1611,14 +1679,18 @@ typedef struct DBfile_pub {
     int          (*sort_obo)(struct DBfile *dbfile, int nobjs,
                              char const *const *obj_names, int *ranks);
 } DBfile_pub;
+=#
 
+#=
 typedef struct DBfile {
     DBfile_pub     pub;
     #=private part follows per device driver =#
 } DBfile;
+=#
 
+#=
 typedef void (*DBErrFunc_t)(char*);
-
+=#
 
 #= The first prototypes here are the functions by which client code first
  * gets into Silo.  They are separated out because they do a version number
