@@ -77,23 +77,23 @@ const DB_H5VFD_SILO = 10
 #= Macro for defining various HDF5 vfds as 'type' arg in create/open.
    The 11 bit shift is to avoid possible collision with older versions
    of Silo header file where VFDs where specified in bits 8-11. Their
-   obsoleted values are listed above. =# 
+   obsoleted values are listed above. =#
 const DB_HDF5_OPTS(OptsId) = (DB_HDF5X|((OptsId&0x3F)<<11))
 
 #= Monikers for default file options sets =#
 #= We just make the default options sets the same as the vfd is =#
 
-const DB_FILE_OPTS_H5_DEFAULT_DEFAULT = DB_H5VFD_DEFAULT 
-const DB_FILE_OPTS_H5_DEFAULT_SEC2 = DB_H5VFD_SEC2 
-const DB_FILE_OPTS_H5_DEFAULT_STDIO = DB_H5VFD_STDIO 
-const DB_FILE_OPTS_H5_DEFAULT_CORE = DB_H5VFD_CORE 
-const DB_FILE_OPTS_H5_DEFAULT_LOG = DB_H5VFD_LOG 
-const DB_FILE_OPTS_H5_DEFAULT_SPLIT = DB_H5VFD_SPLIT 
-const DB_FILE_OPTS_H5_DEFAULT_DIRECT = DB_H5VFD_DIRECT 
-const DB_FILE_OPTS_H5_DEFAULT_FAMILY = DB_H5VFD_FAMILY 
+const DB_FILE_OPTS_H5_DEFAULT_DEFAULT = DB_H5VFD_DEFAULT
+const DB_FILE_OPTS_H5_DEFAULT_SEC2 = DB_H5VFD_SEC2
+const DB_FILE_OPTS_H5_DEFAULT_STDIO = DB_H5VFD_STDIO
+const DB_FILE_OPTS_H5_DEFAULT_CORE = DB_H5VFD_CORE
+const DB_FILE_OPTS_H5_DEFAULT_LOG = DB_H5VFD_LOG
+const DB_FILE_OPTS_H5_DEFAULT_SPLIT = DB_H5VFD_SPLIT
+const DB_FILE_OPTS_H5_DEFAULT_DIRECT = DB_H5VFD_DIRECT
+const DB_FILE_OPTS_H5_DEFAULT_FAMILY = DB_H5VFD_FAMILY
 const DB_FILE_OPTS_H5_DEFAULT_MPIO = DB_H5VFD_MPIO
 const DB_FILE_OPTS_H5_DEFAULT_MPIP = DB_H5VFD_MPIP
-const DB_FILE_OPTS_H5_DEFAULT_SILO = DB_H5VFD_SILO 
+const DB_FILE_OPTS_H5_DEFAULT_SILO = DB_H5VFD_SILO
 const DB_FILE_OPTS_LAST = DB_FILE_OPTS_H5_DEFAULT_SILO
 
 #= Various default HDF5 driver options. Users can define their own
@@ -178,7 +178,8 @@ const DB_QUAD_RECT = DB_COLLINEAR
 const DB_QUAD_CURV = DB_NONCOLLINEAR
 
 #= Objects that can be stored in a data file =#
-#=typedef enum {
+#=
+typedef enum {
     DB_INVALID_OBJECT= -1,       #=causes enum to be signed, do not remove,
                                    space before minus sign necessary for lint=#
     DB_QUADRECT = DB_QUAD_RECT,
@@ -452,7 +453,7 @@ const DB_VARTYPE_MATERIAL = 205
 const DB_VARTYPE_SPECIES = 206
 const DB_VARTYPE_LABEL = 207
 
-#= Definitions for CSG boundary types 
+#= Definitions for CSG boundary types
    Designed so low-order 16 bits are unused.
 
    The last few characters of the symbol are intended
@@ -710,7 +711,7 @@ typedef struct DBmultimesh_ {
     char          *mrgtree_name;#= optional name of assoc. mrgtree object =#
     int            tv_connectivity;
     int            disjoint_mode;
-    int            topo_dim;    #= Topological dimension; max of all blocks. =# 
+    int            topo_dim;    #= Topological dimension; max of all blocks. =#
     char          *file_ns;     #= namescheme for files (in lieu of meshnames) =#
     char          *block_ns;    #= namescheme for block objects (in lieu of meshnames) =#
     int            block_type;  #= constant block type for all blocks (in lieu of meshtypes) =#
@@ -810,7 +811,7 @@ typedef struct DBmultimatspecies_ {
     int            id;          #= Identifier for this object  =#
     int            nspec;       #= Number of species   =#
     int            ngroups;     #= Number of block groups in mesh =#
-    char         **specnames;   #= Species object names   =#    
+    char         **specnames;   #= Species object names   =#
     int            blockorigin; #= Origin (0 or 1) of block numbers =#
     int            grouporigin; #= Origin (0 or 1) of group numbers =#
     int            guihide;     #= Flag to hide from post-processor's GUI =#
@@ -959,7 +960,7 @@ typedef struct DBquadmesh_ {
     int            base_index[3];  #= Lowest real i,j,k value for this block =#
     int            start_index[3]; #= i,j,k values corresponding to original
                                     * mesh =#
-    int            size_index[3];  #= Number of nodes per dimension for 
+    int            size_index[3];  #= Number of nodes per dimension for
                                     * original mesh =#
     int            guihide;     #= Flag to hide from post-processor's GUI =#
     char          *mrgtree_name; #= optional name of assoc. mrgtree object =#
@@ -973,7 +974,7 @@ typedef struct DBucdmesh_ {
     char          *name;        #= Name associated with mesh =#
     int            cycle;       #= Problem cycle number =#
     int            coord_sys;   #= Coordinate system =#
-    int            topo_dim;    #= Topological dimension. =# 
+    int            topo_dim;    #= Topological dimension. =#
     char          *units[3];    #= Units for variable, e.g, 'mm/ms' =#
     char          *labels[3];   #= Label associated with each dimension =#
 
@@ -1522,7 +1523,7 @@ typedef struct DBfile_pub {
                            void *, int, int, DBoptlist *);
     int            (*p_cu)(struct DBfile *, char *, void *, void *, int, int,
                            DBoptlist *);
-    int            (*p_defv)(struct DBfile *, char const *, int, 
+    int            (*p_defv)(struct DBfile *, char const *, int,
                            char **, int const *, char **,
                            DBoptlist **);
     int            (*p_fl)(struct DBfile *, char *, int, int, int *, int, int,
@@ -1586,7 +1587,7 @@ typedef struct DBfile_pub {
     DBmultimeshadj *(*g_mmadj)(struct DBfile *, char const *, int, int const *);
     int            (*p_mmadj)(struct DBfile *, char const *, int, int const *,
                               int const *, int const *, int const *, int const *,
-                              int DB_CONSTARR2, int const *, int DB_CONSTARR2, 
+                              int DB_CONSTARR2, int const *, int DB_CONSTARR2,
                               DBoptlist const *optlist);
     int            (*p_mrgt)(struct DBfile *dbfile, char const *name, char const *mesh_name,
                              DBmrgtree *tree, DBoptlist *opts);
