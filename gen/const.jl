@@ -78,7 +78,7 @@ const DB_H5VFD_SILO = 10
    The 11 bit shift is to avoid possible collision with older versions
    of Silo header file where VFDs where specified in bits 8-11. Their
    obsoleted values are listed above. =#
-const DB_HDF5_OPTS(OptsId) = (DB_HDF5X|((OptsId&0x3F)<<11))
+DB_HDF5_OPTS(OptsId) = (DB_HDF5X|((OptsId&0x3F)<<11))
 
 #= Monikers for default file options sets =#
 #= We just make the default options sets the same as the vfd is =#
@@ -181,54 +181,59 @@ const DB_QUAD_CURV = DB_NONCOLLINEAR
 # Process "typedef enum" after conversion to baremodule with grep regexp:
 # (\S+?)=(\S+?), -> const \1 = \2
 baremodule DBObjectType
-    const DB_INVALID_OBJECT= -1       #=causes enum to be signed, do not remove,
-                                   space before minus sign necessary for lint=#
-    const DB_QUADRECT = DB_QUAD_RECT
-    const DB_QUADCURV = DB_QUAD_CURV
-    const DB_QUADMESH = 500
-    const DB_QUADVAR = 501
-    const DB_UCDMESH = 510
-    const DB_UCDVAR = 511
-    const DB_MULTIMESH = 520
-    const DB_MULTIVAR = 521
-    const DB_MULTIMAT = 522
-    const DB_MULTIMATSPECIES = 523
-    const DB_MULTIBLOCKMESH = DB_MULTIMESH
-    const DB_MULTIBLOCKVAR = DB_MULTIVAR
-    const DB_MULTIMESHADJ = 524
-    const DB_MATERIAL = 530
-    const DB_MATSPECIES = 531
-    const DB_FACELIST = 550
-    const DB_ZONELIST = 551
-    const DB_EDGELIST = 552
-    const DB_PHZONELIST = 553
-    const DB_CSGZONELIST = 554
-    const DB_CSGMESH = 555
-    const DB_CSGVAR = 556
-    const DB_CURVE = 560
-    const DB_DEFVARS = 565
-    const DB_POINTMESH = 570
-    const DB_POINTVAR = 571
-    const DB_ARRAY = 580
-    const DB_DIR = 600
-    const DB_VARIABLE = 610
-    const DB_MRGTREE = 611
-    const DB_GROUPELMAP = 612
-    const DB_MRGVAR = 613
-    const DB_USERDEF = 700
-end
+  const DB_INVALID_OBJECT= -1       #=causes enum to be signed, do not remove,
+                                     space before minus sign necessary for lint=#
+
+  const DB_COLLINEAR = 130
+  const DB_NONCOLLINEAR = 131
+  const DB_QUAD_RECT = DB_COLLINEAR
+  const DB_QUAD_CURV = DB_NONCOLLINEAR
+  const DB_QUADRECT = DB_QUAD_RECT
+  const DB_QUADCURV = DB_QUAD_CURV
+  const DB_QUADMESH = 500
+  const DB_QUADVAR = 501
+  const DB_UCDMESH = 510
+  const DB_UCDVAR = 511
+  const DB_MULTIMESH = 520
+  const DB_MULTIVAR = 521
+  const DB_MULTIMAT = 522
+  const DB_MULTIMATSPECIES = 523
+  const DB_MULTIBLOCKMESH = DB_MULTIMESH
+  const DB_MULTIBLOCKVAR = DB_MULTIVAR
+  const DB_MULTIMESHADJ = 524
+  const DB_MATERIAL = 530
+  const DB_MATSPECIES = 531
+  const DB_FACELIST = 550
+  const DB_ZONELIST = 551
+  const DB_EDGELIST = 552
+  const DB_PHZONELIST = 553
+  const DB_CSGZONELIST = 554
+  const DB_CSGMESH = 555
+  const DB_CSGVAR = 556
+  const DB_CURVE = 560
+  const DB_DEFVARS = 565
+  const DB_POINTMESH = 570
+  const DB_POINTVAR = 571
+  const DB_ARRAY = 580
+  const DB_DIR = 600
+  const DB_VARIABLE = 610
+  const DB_MRGTREE = 611
+  const DB_GROUPELMAP = 612
+  const DB_MRGVAR = 613
+  const DB_USERDEF = 700
+end # module
 
 #= Data types =#
 baremodule DBdatatype
-    const DB_INT = 16
-    const DB_SHORT = 17
-    const DB_LONG = 18
-    const DB_FLOAT = 19
-    const DB_DOUBLE = 20
-    const DB_CHAR = 21
-    const DB_LONG_LONG = 22
-    const DB_NOTYPE = 25           #=unknown type =#
-end
+  const DB_INT = 16
+  const DB_SHORT = 17
+  const DB_LONG = 18
+  const DB_FLOAT = 19
+  const DB_DOUBLE = 20
+  const DB_CHAR = 21
+  const DB_LONG_LONG = 22
+  const DB_NOTYPE = 25           #=unknown type =#
+end #module
 
 #= Flags for DBCreate =#
 const DB_CLOBBER = 0
@@ -532,9 +537,9 @@ const DB_F77NULLSTRING = "NULLSTRING"  #= FORTRAN STRING =#
  * Index selection macros
  *-------------------------------------------------------------------------
  =#
-#= const I4D(s,i,j,k,l) = (l)*s[3]+(k)*s[2]+(j)*s[1]+(i)*s[0]
-# const I3D(s,i,j,k) = (k)*s[2]+(j)*s[1]+(i)*s[0]
-const I2D(s,i,j) = (j)*s[1]+(i)*s[0] =#
+I4D(s,i,j,k,l) = (l)*s[3]+(k)*s[2]+(j)*s[1]+(i)*s[0]
+I3D(s,i,j,k) = (k)*s[2]+(j)*s[1]+(i)*s[0]
+I2D(s,i,j) = (j)*s[1]+(i)*s[0]
 
 #=-------------------------------------------------------------------------
  * Structures (just the public parts).
@@ -626,10 +631,10 @@ typedef struct DBtoc_ {
  * Database Curve Object
  *--------------------------------------------------------------------------
  =#
- 
+
 #=
 typedef struct DBcurve_ {
-#=----------- X vs. Y (Curve) Data -----------=#
+  #=----------- X vs. Y (Curve) Data -----------=#
     int            id;          #= Identifier for this object =#
     int            datatype;    #= Datatype for x and y (float, double) =#
     int            origin;      #= '0' or '1' =#
@@ -762,7 +767,7 @@ typedef struct DBmultimeshadj_ {
  * Multi-Block Variable Object
  *--------------------------------------------------------------------------
  =#
- #=
+#=
 typedef struct DBmultivar_ {
 #=----------- Multi-Block Variable -----------=#
     int            id;          #= Identifier for this object  =#
@@ -850,7 +855,6 @@ typedef struct DBmultimatspecies_ {
  *  Definitions for the FaceList, ZoneList, and EdgeList structures
  *  used for describing UCD meshes.
  *----------------------------------------------------------------------
- =#
  =#
 
 const DB_ZONETYPE_BEAM = 10
@@ -1703,8 +1707,6 @@ typedef void (*DBErrFunc_t)(char*);
  * there are any Silo calls that must happen before it.  If there are not,
  * then the function is a "first-call" function and should have this
  * macro/function pair.  =#
-=#
 
 const SILO_VSTRING_NAME = "_silolibinfo"
-const SILO_VSTRING = PACKAGE_VERSION
-const DBMkdir = DBMkDir
+# const SILO_VSTRING = PACKAGE_VERSION
