@@ -3,7 +3,9 @@ Silo.jl
 
 ### What is this repository for? ###
 
-Wrapper for the [Silo file format](https://wci.llnl.gov/simulation/computer-codes/silo) in [Julia](http://julialang.org/), generated using [`Clang.jl`](https://github.com/ihnorton/Clang.jl). Inspiration for the generation scripts was taken from [Sundials.jl](https://github.com/JuliaLang/Sundials.jl) and [Cairo.jl](https://github.com/JuliaLang/Cairo.jl) (Thanks!)
+* Wrapper for the [Silo file format](https://wci.llnl.gov/simulation/computer-codes/silo) in [Julia](http://julialang.org/), generated using [`Clang.jl`](https://github.com/ihnorton/Clang.jl). Inspiration for the generation scripts was taken from [Eglib.jl](https://github.com/ihnorton/Eglib.jl/blob/master/util/wrap.jl) (Thanks!).
+
+* v0.1
 
 ### How do I get set up? ###
 
