@@ -21,18 +21,20 @@ clang_includes = map(x->joinpath(JULIAHOME, x),[
                      )
 
 path = "/home/jgoldfar/Documents/work/projects/Silo.jl/deps/usr/include"
+headerlist = ["silo.h",]
 check_use_header(path) = true
 
-clang_extraargs = ["-D", "__STDC_LIMIT_MACROS", "-D", "__STDC_CONSTANT_MACROS", "-v", "-analyze"]
-context = wrap_c.init(output_file = "silo.jl",
-                      header_library=x->"silo",
+clang_extraargs = ["-D", "__STDC_LIMIT_MACROS", "-D", "__STDC_CONSTANT_MACROS", "-v"]
+context = wrap_c.init(output_file = "libsilo.jl",
+                      headers = [joinpath(path, x) for x in headerlist],
+                      header_library=x->"libsilo",
                       clang_args = clang_extraargs,
                       clang_includes = clang_includes,
-                      common_file = "libsilo_h.jl"
+                      common_file = "libsilo_h.jl",
+#                       rewriter = x->begin
+#                         println(x)
+#                         replace(x, "DB", "")
+#                       end
                       )
-context.options.wrap_structs = true
 
-# headers = map(x->joinpath(path, x), split(readall(`ls $path`)) )
-# @show headers
-wrap_c.wrap_c_headers(context, [joinpath(path, "silo.h")])
-mv("silo.jl", "libsilo.jl")  # avoid a name conflict for case-insensitive file systems
+run(context)
