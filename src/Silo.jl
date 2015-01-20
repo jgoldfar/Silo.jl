@@ -14,6 +14,7 @@ include("libsilo_h.jl")
 
 include("libsilo.jl")
 
+println("Silo version ", _VERSION, " loaded.")
 # DBfile       *dbfile = NULL;
 #     DBoptlist	*dbopt = DBMakeOptlist(1);
 #     char         fn[100], title[100];
