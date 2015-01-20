@@ -779,7 +779,7 @@ end
 function DBPutCurve{T1<:String}(dbfile::Ptr{DBfile},curvename::T1,xvals::Vector,yvals::Vector,datatype::Int,npoints::Int,optlist::Ptr{DBoptlist})
   ccall((:DBPutCurve,libsilo),Cint,(Ptr{DBfile},Ptr{Uint8},Ptr{Void},Ptr{Void},Cint,Cint,Ptr{DBoptlist}),dbfile,curvename,xvals,yvals,datatype,npoints,optlist)
 end
-function PutCurve(dbfile::Ptr{DBfile},curvename::String,xvals::Vector,yvals::Vector,optlist::Ptr{DBoptlist})
+function PutCurve{T1<:String}(dbfile::Ptr{DBfile},xvals::Vector,yvals::Vector;optlist::Ptr{DBoptlist}=C_NULL,curvename::T1="")
   N=length(xvals)
   if length(yvals)!=N
     error("DBPutCurve requires x and y-values to be of the same length.")
@@ -794,9 +794,9 @@ function PutCurve(dbfile::Ptr{DBfile},curvename::String,xvals::Vector,yvals::Vec
   else
     error("Datatype $yvalseltype currently unsupported.")
   end
-
-  return DBPutCurve(dbfile, curvename, xvals, yvals, datatype)
+  return DBPutCurve(dbfile, curvename, xvals, yvals, datatype, N, optlist)
 end
+
 function DBPutDefvars(arg1::Ptr{DBfile},arg2::Ptr{Uint8},arg3::Cint,arg4::Ptr{Ptr{Uint8}},arg5::Ptr{Cint},arg6::Ptr{Ptr{Uint8}},arg7::Ptr{Ptr{DBoptlist}})
   ccall((:DBPutDefvars,libsilo),Cint,(Ptr{DBfile},Ptr{Uint8},Cint,Ptr{Ptr{Uint8}},Ptr{Cint},Ptr{Ptr{Uint8}},Ptr{Ptr{DBoptlist}}),arg1,arg2,arg3,arg4,arg5,arg6,arg7)
 end
