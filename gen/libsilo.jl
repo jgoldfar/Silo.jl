@@ -549,6 +549,7 @@ end
 function DBMkDir(arg1::Ptr{DBfile},arg2::Ptr{Uint8})
     ccall((:DBMkDir,libsilo),Cint,(Ptr{DBfile},Ptr{Uint8}),arg1,arg2)
 end
+const DBMkdir = DBMkDir
 
 function DBCpDir(dbfile::Ptr{DBfile},srcDir::Ptr{Uint8},dstFile::Ptr{DBfile},dstDir::Ptr{Uint8})
     ccall((:DBCpDir,libsilo),Cint,(Ptr{DBfile},Ptr{Uint8},Ptr{DBfile},Ptr{Uint8}),dbfile,srcDir,dstFile,dstDir)
