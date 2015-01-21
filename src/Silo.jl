@@ -6,10 +6,7 @@ else
     error("Silo not properly installed. Please run Pkg.build(\"Silo\")")
 end
 
-# using StrPack
-
 # "Sections" of code based on documentation
-
 include("libsilo_h.jl")
 
 include("libsilo.jl")
