@@ -639,6 +639,9 @@ end
 function DBGetCurve(arg1::Ptr{DBfile},arg2::Ptr{Uint8})
   ccall((:DBGetCurve,libsilo),Ptr{DBcurve},(Ptr{DBfile},Ptr{Uint8}),arg1,arg2)
 end
+function DBGetCurve(arg1::Ptr{DBfile},arg2::ASCIIString)
+  ccall((:DBGetCurve,libsilo),Ptr{DBcurve},(Ptr{DBfile},Ptr{Uint8}),arg1,arg2)
+end
 
 function DBGetDefvars(arg1::Ptr{DBfile},arg2::Ptr{Uint8})
   ccall((:DBGetDefvars,libsilo),Ptr{DBdefvars},(Ptr{DBfile},Ptr{Uint8}),arg1,arg2)
@@ -778,23 +781,6 @@ function DBPutCurve(arg1::Ptr{DBfile},arg2::Ptr{Uint8},arg3::Ptr{Void},arg4::Ptr
 end
 function DBPutCurve{T1<:String}(dbfile::Ptr{DBfile},curvename::T1,xvals::Vector,yvals::Vector,datatype::Int,npoints::Int,optlist::Ptr{DBoptlist})
   ccall((:DBPutCurve,libsilo),Cint,(Ptr{DBfile},Ptr{Uint8},Ptr{Void},Ptr{Void},Cint,Cint,Ptr{DBoptlist}),dbfile,curvename,xvals,yvals,datatype,npoints,optlist)
-end
-function PutCurve{T1<:String}(dbfile::Ptr{DBfile},xvals::Vector,yvals::Vector;optlist::Ptr{DBoptlist}=C_NULL,curvename::T1="")
-  N=length(xvals)
-  if length(yvals)!=N
-    error("DBPutCurve requires x and y-values to be of the same length.")
-  end
-  yvalseltype = eltype(yvals)
-  if yvalseltype==Int
-    datatype = DBdatatype.DB_INT
-  elseif yvalseltype==Float32
-    datatype = DBdatatype.DB_FLOAT
-  elseif yvalseltype==Float64
-    datatype = DBdatatype.DB_DOUBLE
-  else
-    error("Datatype $yvalseltype currently unsupported.")
-  end
-  return DBPutCurve(dbfile, curvename, xvals, yvals, datatype, N, optlist)
 end
 
 function DBPutDefvars(arg1::Ptr{DBfile},arg2::Ptr{Uint8},arg3::Cint,arg4::Ptr{Ptr{Uint8}},arg5::Ptr{Cint},arg6::Ptr{Ptr{Uint8}},arg7::Ptr{Ptr{DBoptlist}})
