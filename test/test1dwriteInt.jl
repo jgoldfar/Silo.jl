@@ -30,7 +30,7 @@ y3=y1-y2
 #     DBPutCurve(dbfile,"Numerical_Solution",x,y1,DB_FLOAT,N+1,NULL);
 Silo.DBPutCurve(dbfile, "Numerical_Solution", x, y1, Silo.DBdatatype.DB_FLOAT, N + 1, dbopt) # or C_NULL
 #     DBPutCurve(dbfile,"Analytical_Solution",x,y2,DB_FLOAT,N+1,NULL);
-Silo.DBPutCurve(dbfile, "Numerical_Solution", x, y2, Silo.DBdatatype.DB_FLOAT, N + 1, dbopt)
+Silo.DBPutCurve(dbfile, "Analytical_Solution", x, y2, Silo.DBdatatype.DB_FLOAT, N + 1, dbopt)
 #     DBPutCurve(dbfile,"Error",x,y3,DB_FLOAT,N+1,NULL);
 Silo.DBPutCurve(dbfile, "Error", x, y1, Silo.DBdatatype.DB_FLOAT, N + 1, dbopt)
 #     DBClose(dbfile);
@@ -38,3 +38,9 @@ Silo.DBClose(dbfile)
 
 # 	DBFreeOptlist(dbopt);
 Silo.DBFreeOptlist(dbopt)
+
+@test Silo.silo_is_silofile(fn)
+
+contnames = names(fn)
+@test issubset(["Numerical_Solution", "Analytical_Solution", "Error"],
+               contnames)
