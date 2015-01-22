@@ -13,7 +13,7 @@ before_install:
     - sudo apt-get update -qq -y
     - sudo apt-get install libpcre3-dev julia -y
 script:
-    - julia -e 'Pkg.init(); Pkg.checkout("git@github.com:jgoldfar/Silo.jl.git"); Pkg.build("Silo")'
+    - julia -e 'Pkg.init(); Pkg.clone("git@github.com:jgoldfar/Silo.jl.git"); Pkg.build("Silo")'
     - julia -e 'using Silo; @assert isdefined(:Silo); @assert typeof(Silo) === Module'
     - if [ $JULIAVERSION = "julianightlies" ]; then julia --code-coverage test/runtests.jl; fi
     - if [ $JULIAVERSION = "juliareleases" ]; then julia test/runtests.jl; fi
