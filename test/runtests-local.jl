@@ -1,4 +1,6 @@
 # Run package tests
+println("Testing Silo.jl in Julia version ", VERSION)
+
 using Base.Test
 include(joinpath("..", "src", "Silo.jl"))
 # using Silo

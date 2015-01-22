@@ -1,4 +1,4 @@
-baremodule DBdatatype # Note: correspondence here is complicated by platform issues.
+module DBdatatype # Note: correspondence here is complicated by platform issues.
 # See http://julia.readthedocs.org/en/release-0.3/manual/calling-c-and-fortran-code/
 const DB_INT = 16
 const DB_SHORT = 17
