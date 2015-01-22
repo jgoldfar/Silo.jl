@@ -227,7 +227,7 @@ const DB_USERDEF = 700
 end # module
 
 #= Data types =#
-if VERSION < v"0.4"
+if VERSION < v"0.4-"
   include("DBdatatypev0.3.jl")
 else
   include("DBdatatypev0.4.jl")

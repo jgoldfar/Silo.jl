@@ -6,8 +6,6 @@ else
     error("Silo not properly installed. Please run Pkg.build(\"Silo\")")
 end
 
-println(VERSION)
-
 # "Sections" of code based on documentation
 include("libsilo_h.jl")
 
@@ -93,7 +91,7 @@ end
 
 
 ## Functionality related to file names introspection
-if VERSION < v"0.4"
+if VERSION < v"0.4-"
   include("JTocv0.3.jl")
 else
   include("JTocv0.4.jl")
