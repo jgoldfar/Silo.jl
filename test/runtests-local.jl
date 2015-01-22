@@ -1,7 +1,7 @@
 # Run package tests
 using Base.Test
-# include(joinpath("..", "src", "Silo.jl"))
-using Silo
+include(joinpath("..", "src", "Silo.jl"))
+# using Silo
 # run(`cd $(dirname(@__FILE__))/files && make`)
 
 include("test1dwriteInt.jl")
