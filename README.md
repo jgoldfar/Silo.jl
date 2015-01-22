@@ -1,6 +1,6 @@
 Silo.jl
 =======
-
+[![Build Status](https://img.shields.io/travis/jgoldfar/Silo.jl.svg?style=flat-square)](https://travis-ci.org/jgoldfar/Silo.jl)
 ### What is this repository for? ###
 
 * Wrapper for the [Silo file format](https://wci.llnl.gov/simulation/computer-codes/silo) in [Julia](http://julialang.org/), generated using [`Clang.jl`](https://github.com/ihnorton/Clang.jl). Inspiration for the generation scripts was taken from [Eglib.jl](https://github.com/ihnorton/Eglib.jl/blob/master/util/wrap.jl) (Thanks!).
