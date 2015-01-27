@@ -1,4 +1,6 @@
 # write.jl: Silo variable writing
+export silowrite
+
 function silowrite{T1<:String, T2<:Real}(file::silofile, name::T1, x_values::Vector{T2}, y_values::Vector{T2}; optlist::Ptr{DBoptlist}=zero(Ptr{DBoptlist}))
   N = length(x_values)
   if length(y_values) != N

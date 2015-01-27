@@ -1,5 +1,6 @@
 # read.jl: Silo variable reading routines
 
+export siloread
 
 function siloread{T1<:String}(file::silofile, name::T1)
   curve_int = unsafe_load(DBGetCurve(file.dbfile, name))

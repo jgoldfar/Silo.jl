@@ -21,6 +21,8 @@ typealias silooptions Vector{silooption}
 
 include("optlists.jl")
 
+export silofile, isvalid, silo_is_silofile, siloopen, siloclose
+
 ## Thin Julia type wrapper around the internal DBfile pointer
 # tracks whether pointer is internally allocated, and the associated
 # filename.
