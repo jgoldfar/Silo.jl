@@ -1,5 +1,7 @@
 Silo.jl
 =======
+
+[![Join the chat at https://gitter.im/jgoldfar/Silo.jl](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jgoldfar/Silo.jl?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://img.shields.io/travis/jgoldfar/Silo.jl.svg?style=flat-square)](https://travis-ci.org/jgoldfar/Silo.jl)
 [![Coverage Status](https://coveralls.io/repos/jgoldfar/Silo.jl/badge.svg?branch=master)](https://coveralls.io/r/jgoldfar/Silo.jl?branch=master)
 ### What is this repository for? ###
