@@ -10,7 +10,7 @@ Silo.jl
 
 * Though I will continue to update this when I have time and interest, the very basic use case (in terms of high-level functionality) exemplified in the code and tests is typical for my needs. I welcome the extension of this package to the package's full generality on the high-level interface. Though it hasn't been extensively tested, the C-level wrappers output by Clang.jl should work fine for any "advanced" functionality you need from silo.
 
-* v1.0
+* v0.1.0
 
 ### How do I get set up? ###
 
