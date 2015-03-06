@@ -4,6 +4,7 @@ Silo.jl
 [![Join the chat at https://gitter.im/jgoldfar/Silo.jl](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jgoldfar/Silo.jl?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://img.shields.io/travis/jgoldfar/Silo.jl.svg?style=flat-square)](https://travis-ci.org/jgoldfar/Silo.jl)
 [![Coverage Status](https://coveralls.io/repos/jgoldfar/Silo.jl/badge.svg?branch=master)](https://coveralls.io/r/jgoldfar/Silo.jl?branch=master)
+[![Silo](http://pkg.julialang.org/badges/Silo_release.svg)](http://pkg.julialang.org/?pkg=Silo&ver=release)
 ### What is this repository for? ###
 
 * Wrapper for the [Silo file format](https://wci.llnl.gov/simulation/computer-codes/silo) in [Julia](http://julialang.org/), generated using [`Clang.jl`](https://github.com/ihnorton/Clang.jl). Inspiration for the generation scripts was taken from [Eglib.jl](https://github.com/ihnorton/Eglib.jl/blob/master/util/wrap.jl) (Thanks!).
@@ -21,3 +22,15 @@ Silo.jl
 ### Who do I talk to? ###
 
 * Jonathan Goldfarb <jgoldfar@my.fit.edu>
+
+### Roadmap ###
+
+- [0.x.0]
+    - Windows support
+    - Julia v0.4 support
+
+- [1.0.0]
+
+    - High-level Silo writing for more objects
+    - High-level Silo reading for more objects
+    - Full support for standard options used in library
