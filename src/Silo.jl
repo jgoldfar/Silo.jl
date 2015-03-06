@@ -1,9 +1,9 @@
 # Silo.jl: Wrapper around the Silo library (https://wci.llnl.gov/simulation/computer-codes/silo)
 module Silo
 if isfile(joinpath(dirname(dirname(@__FILE__)), "deps", "deps.jl"))
-    include(joinpath(dirname(dirname(@__FILE__)), "deps", "deps.jl"))
+  include(joinpath(dirname(dirname(@__FILE__)), "deps", "deps.jl"))
 else
-    error("Silo not properly installed. Please run Pkg.build(\"Silo\")")
+  error("Silo not properly installed. Please run Pkg.build(\"Silo\")")
 end
 
 # "Sections" of code based on documentation
@@ -49,12 +49,12 @@ end
 
 
 ## High-level Julia open/close functionality
-function siloopen{T1<:String}(file_name::T1,
-                                                      mode::T1;
-                                                      filetype::Int = DB_PDB,
-                                                      fileinfo::T1 = "",
-                                                      filecreatemode::Int = DB_CLOBBER,
-                                                      filecreatetarget::Int = DB_LOCAL,)
+function siloopen(file_name::String,
+                  mode::String;
+                  filetype::Int = DB_PDB,
+                  fileinfo::String = "",
+                  filecreatemode::Int = DB_CLOBBER,
+                  filecreatetarget::Int = DB_LOCAL,)
   if mode=="r"
     if !isfile(file_name)
       error("File $file_name does not exist.")
@@ -82,6 +82,7 @@ function siloopen{T1<:String}(file_name::T1,
   end
   return silofile(dbfile, mode, file_name, true)
 end
+siloopen{T1<:String, T2<:String}()
 
 function siloclose(dbfile::Ptr{DBfile})
   DBClose(dbfile)
