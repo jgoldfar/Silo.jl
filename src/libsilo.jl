@@ -12,7 +12,7 @@ end
 function DBCreateReal(arg1::Ptr{Uint8},arg2::Cint,arg3::Cint,arg4::Ptr{Uint8},arg5::Cint)
   ccall((:DBCreateReal,libsilo),Ptr{DBfile},(Ptr{Uint8},Cint,Cint,Ptr{Uint8},Cint),arg1,arg2,arg3,arg4,arg5)
 end
-function DBCreate{T1<:String}(name::T1, mode::Int, target::Int, info::T1, dtype::Int)
+function DBCreate(name::ASCIIString, mode::Int, target::Int, info::ASCIIString, dtype::Int)
   ccall((:DBCreateReal,libsilo),Ptr{DBfile},(Ptr{Uint8},Cint,Cint,Ptr{Uint8},Cint),name,mode,target,info,dtype)
 end
 

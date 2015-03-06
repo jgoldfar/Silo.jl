@@ -55,6 +55,7 @@ function siloopen(file_name::String,
                   fileinfo::String = "",
                   filecreatemode::Int = DB_CLOBBER,
                   filecreatetarget::Int = DB_LOCAL,)
+  file_name = convert(ASCIIString, file_name)
   if mode=="r"
     if !isfile(file_name)
       error("File $file_name does not exist.")
