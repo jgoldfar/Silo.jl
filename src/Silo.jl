@@ -82,7 +82,6 @@ function siloopen(file_name::String,
   end
   return silofile(dbfile, mode, file_name, true)
 end
-siloopen{T1<:String, T2<:String}()
 
 function siloclose(dbfile::Ptr{DBfile})
   DBClose(dbfile)
