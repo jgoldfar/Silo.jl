@@ -1,4 +1,5 @@
 using BinDeps
+using Compat
 
 @BinDeps.setup
 
@@ -25,4 +26,4 @@ provides(SimpleBuild, (@build_steps begin
                          end
                        end), libsilo)
 
-@BinDeps.install [:libsilo => :libsilo]
+@BinDeps.install @compat Dict(:libsilo => :libsilo)
