@@ -1,23 +1,13 @@
-language: cpp
-compiler:
-    - clang
+language: julia
+os:
+  - linux
+  - osx
+julia:
+  - release
+  - nightly
 notifications:
-    email: false
-env:
-    - JULIAVERSION="juliareleases"
-    - JULIAVERSION="julianightlies"
-matrix:
-    allow_failures:
-      - env: JULIAVERSION="julianightlies"
-before_install:
-    - sudo add-apt-repository ppa:staticfloat/julia-deps -y
-    - sudo add-apt-repository ppa:staticfloat/${JULIAVERSION} -y
-    - sudo apt-get update -qq -y
-    - sudo apt-get install libpcre3-dev gfortran julia -y
+  email: false
+# uncomment the following lines to override the default test script
 script:
-    - julia -e 'Pkg.init(); Pkg.clone("https://github.com/jgoldfar/Silo.jl.git"); Pkg.build("Silo")'
-    - julia -e 'using Silo; @assert isdefined(:Silo); @assert typeof(Silo) === Module'
-    - if [ $JULIAVERSION = "juliareleases" ]; then julia --code-coverage test/runtests.jl; fi
-    - if [ $JULIAVERSION = "julianightlies" ]; then julia test/runtests.jl; fi
-after_success:
-    - if [ $JULIAVERSION = "juliareleases" ]; then julia -e 'cd(Pkg.dir("Silo")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'; fi
+  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+  - julia --check-bounds=yes -e 'Pkg.clone(pwd()); Pkg.build("Silo"); Pkg.test("Silo"; coverage=true)'
