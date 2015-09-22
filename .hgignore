@@ -5,3 +5,6 @@ deps/downloads/
 deps/deps\.jl
 *.DS_Store
 *.tar.gz
+*.git
+*.tags
+.gitignore
