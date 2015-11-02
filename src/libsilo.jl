@@ -12,14 +12,14 @@ end
 function DBCreateReal(arg1::Ptr{UInt8},arg2::Cint,arg3::Cint,arg4::Ptr{UInt8},arg5::Cint)
   ccall((:DBCreateReal,libsilo),Ptr{DBfile},(Ptr{UInt8},Cint,Cint,Ptr{UInt8},Cint),arg1,arg2,arg3,arg4,arg5)
 end
-function DBCreate(name::ASCIIString, mode::Int, target::Int, info::ASCIIString, dtype::Int)
+function DBCreate(name::AbstractString, mode::Int, target::Int, info::AbstractString, dtype::Int)
   ccall((:DBCreateReal,libsilo),Ptr{DBfile},(Ptr{UInt8},Cint,Cint,Ptr{UInt8},Cint),name,mode,target,info,dtype)
 end
 
 function DBInqFileReal(arg1::Ptr{UInt8})
   ccall((:DBInqFileReal,libsilo),Cint,(Ptr{UInt8},),arg1)
 end
-function DBInqFile{T1<:AbstractString}(name::T1)
+function DBInqFile(name::AbstractString)
   ccall((:DBInqFileReal,libsilo),Cint,(Ptr{UInt8},),name)
 end
 
