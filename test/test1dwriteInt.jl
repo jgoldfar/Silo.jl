@@ -11,7 +11,7 @@ dbopt = Silo.DBMakeOptlist(1)
 #     sprintf(fn,"./output/u%s_step%d.silo",ndp->par.output_fn,ndp->step);
 testname = "testout"
 stepnum = 1
-fn = @sprintf "./test/u%s_step%d.silo" testname stepnum
+fn = joinpath(dirname(@__FILE__), @sprintf "u%s_step%d.silo" testname stepnum)
 #     dbfile = DBCreate(fn, DB_CLOBBER, DB_LOCAL, "Line Output", DB_PDB);
 dbfile = Silo.DBCreate(fn, Silo.DB_CLOBBER, Silo.DB_LOCAL, "Line Output", Silo.DB_PDB)
 
