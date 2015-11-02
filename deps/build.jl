@@ -3,14 +3,16 @@ using Compat
 
 @BinDeps.setup
 
-libsilo = library_dependency("libsilo", aliases=["libsilo"])
-silover="4.9.1"
-silofilebase = "silo-$(silover)-bsd"
+const libsilo = library_dependency("libsilo", aliases=["libsilo"])
+const silover = "4.9.1"
+const silofilebase = "silo-$(silover)-bsd"
 
 provides(Sources,
          URI("https://wci.llnl.gov/content/assets/docs/simulation/computer-codes/silo/silo-$(silover)/$(silofilebase).tar.gz"),
          libsilo)
+
 println(BinDeps.depsdir(libsilo))
+
 prefix = joinpath(BinDeps.depsdir(libsilo), "usr")
 srcdir = joinpath(BinDeps.depsdir(libsilo), "src", silofilebase)
 println("Installing Silo source to ", srcdir)

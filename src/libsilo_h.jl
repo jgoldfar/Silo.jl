@@ -550,11 +550,11 @@ I2D(s,i,j) = (j)*s[1]+(i)*s[0]
 
 # Struct processing regexp:
 # To process char** types:
-# char\s*\*\*(\w+).* -> \1::Ptr{Ptr{Uint8}}
+# char\s*\*\*(\w+).* -> \1::Ptr{Ptr{UInt8}}
 # To process int types:
 # ^\s*int\s*(\w+) ->   \1::Cint
 # To process char* types:
-# ^\s*char\s*\*(\w+) ->   \1::Ptr{Uint8}
+# ^\s*char\s*\*(\w+) ->   \1::Ptr{UInt8}
 # To process int* types:
 # ^\s*int\s*\*(\w+) ->   \1::Ptr{Cint}
 # To process int* types:
@@ -586,76 +586,76 @@ I2D(s,i,j) = (j)*s[1]+(i)*s[0]
 # Julia version of DBtoc_ struct defined on silo.h line 690
 type DBtoc_
 
-  curve_names::Ptr{Ptr{Uint8}}
+  curve_names::Ptr{Ptr{UInt8}}
   ncurve::Cint
 
-  multimesh_names::Ptr{Ptr{Uint8}}
+  multimesh_names::Ptr{Ptr{UInt8}}
   nmultimesh::Cint
 
-  multimeshadj_names::Ptr{Ptr{Uint8}}
+  multimeshadj_names::Ptr{Ptr{UInt8}}
   nmultimeshadj::Cint
 
-  multivar_names::Ptr{Ptr{Uint8}}
+  multivar_names::Ptr{Ptr{UInt8}}
   nmultivar::Cint
 
-  multimat_names::Ptr{Ptr{Uint8}}
+  multimat_names::Ptr{Ptr{UInt8}}
   nmultimat::Cint
 
-  multimatspecies_names::Ptr{Ptr{Uint8}}
+  multimatspecies_names::Ptr{Ptr{UInt8}}
   nmultimatspecies::Cint
 
-  csgmesh_names::Ptr{Ptr{Uint8}}
+  csgmesh_names::Ptr{Ptr{UInt8}}
   ncsgmesh::Cint
 
-  csgvar_names::Ptr{Ptr{Uint8}}
+  csgvar_names::Ptr{Ptr{UInt8}}
   ncsgvar::Cint
 
-  defvars_names::Ptr{Ptr{Uint8}}
+  defvars_names::Ptr{Ptr{UInt8}}
   ndefvars::Cint
 
-  qmesh_names::Ptr{Ptr{Uint8}}
+  qmesh_names::Ptr{Ptr{UInt8}}
   nqmesh::Cint
 
-  qvar_names::Ptr{Ptr{Uint8}}
+  qvar_names::Ptr{Ptr{UInt8}}
   nqvar::Cint
 
-  ucdmesh_names::Ptr{Ptr{Uint8}}
+  ucdmesh_names::Ptr{Ptr{UInt8}}
   nucdmesh::Cint
 
-  ucdvar_names::Ptr{Ptr{Uint8}}
+  ucdvar_names::Ptr{Ptr{UInt8}}
   nucdvar::Cint
 
-  ptmesh_names::Ptr{Ptr{Uint8}}
+  ptmesh_names::Ptr{Ptr{UInt8}}
   nptmesh::Cint
 
-  ptvar_names::Ptr{Ptr{Uint8}}
+  ptvar_names::Ptr{Ptr{UInt8}}
   nptvar::Cint
 
-  mat_names::Ptr{Ptr{Uint8}}
+  mat_names::Ptr{Ptr{UInt8}}
   nmat::Cint
 
-  matspecies_names::Ptr{Ptr{Uint8}}
+  matspecies_names::Ptr{Ptr{UInt8}}
   nmatspecies::Cint
 
-  var_names::Ptr{Ptr{Uint8}}
+  var_names::Ptr{Ptr{UInt8}}
   nvar::Cint
 
-  obj_names::Ptr{Ptr{Uint8}}
+  obj_names::Ptr{Ptr{UInt8}}
   nobj::Cint
 
-  dir_names::Ptr{Ptr{Uint8}}
+  dir_names::Ptr{Ptr{UInt8}}
   ndir::Cint
 
-  array_names::Ptr{Ptr{Uint8}}
+  array_names::Ptr{Ptr{UInt8}}
   narray::Cint
 
-  mrgtree_names::Ptr{Ptr{Uint8}}
+  mrgtree_names::Ptr{Ptr{UInt8}}
   nmrgtree::Cint
 
-  groupelmap_names::Ptr{Ptr{Uint8}}
+  groupelmap_names::Ptr{Ptr{UInt8}}
   ngroupelmap::Cint
 
-  mrgvar_names::Ptr{Ptr{Uint8}}
+  mrgvar_names::Ptr{Ptr{UInt8}}
   nmrgvar::Cint
 
 end # type
@@ -671,18 +671,18 @@ type DBcurve_
   id::Cint          #= Identifier for this object =#
   datatype::Cint    #= Datatype for x and y (float, double) =#
   origin::Cint      #= '0' or '1' =#
-  title::Ptr{Uint8}       #= Title for curve =#
-  xvarname::Ptr{Uint8}    #= Name of domain (x) variable =#
-  yvarname::Ptr{Uint8}    #= Name of range  (y) variable =#
-  xlabel::Ptr{Uint8}      #= Label for x-axis =#
-  ylabel::Ptr{Uint8}      #= Label for y-axis =#
-  xunits::Ptr{Uint8}      #= Units for domain =#
-  yunits::Ptr{Uint8}      #= Units for range  =#
+  title::Ptr{UInt8}       #= Title for curve =#
+  xvarname::Ptr{UInt8}    #= Name of domain (x) variable =#
+  yvarname::Ptr{UInt8}    #= Name of range  (y) variable =#
+  xlabel::Ptr{UInt8}      #= Label for x-axis =#
+  ylabel::Ptr{UInt8}      #= Label for y-axis =#
+  xunits::Ptr{UInt8}      #= Units for domain =#
+  yunits::Ptr{UInt8}      #= Units for range  =#
   x::Ptr{DB_DTPTR}           #= Domain values for curve =#
   y::Ptr{DB_DTPTR}           #= Range  values for curve =#
   npts::Cint        #= Number of points in curve =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-  reference::Ptr{Uint8}   #= Label to reference object =#
+  reference::Ptr{UInt8}   #= Label to reference object =#
 end #type
 
 typealias DBcurve DBcurve_
@@ -690,9 +690,9 @@ typealias DBcurve DBcurve_
 
 type DBdefvars_
   ndefs::Cint       #= number of definitions =#
-  names::Ptr{Ptr{Uint8}}
+  names::Ptr{Ptr{UInt8}}
   types::Ptr{Cint}       #= [ndefs] derived variable types =#
-  defns::Ptr{Ptr{Uint8}}
+  defns::Ptr{Ptr{UInt8}}
   guihides::Ptr{Cint}       #= [ndefs] flags to hide from
                                    post-processor's GUI =#
 end #type
@@ -704,11 +704,11 @@ type DBpointmesh_
   id::Cint          #= Identifier for this object =#
   block_no::Cint    #= Block number for this mesh =#
   group_no::Cint    #= Block group number for this mesh =#
-  name::Ptr{Uint8}        #= Name associated with this mesh =#
+  name::Ptr{UInt8}        #= Name associated with this mesh =#
   cycle::Cint       #= Problem cycle number =#
-  units::Ptr{Ptr{Uint8}}#[3]    #= Units for each axis =#
-  labels::Ptr{Ptr{Uint8}}#[3]   #= Labels for each axis =#
-  title::Ptr{Uint8}       #= Title for curve =#
+  units::Ptr{Ptr{UInt8}}#[3]    #= Units for each axis =#
+  labels::Ptr{Ptr{UInt8}}#[3]   #= Labels for each axis =#
+  title::Ptr{UInt8}       #= Title for curve =#
   coords::Ptr{Ptr{DB_DTPTR}}#[3]   #= Coordinate values =#
   time::Cfloat        #= Problem time =#
   dtime::Cdouble       #= Problem time, double data type =#
@@ -725,7 +725,7 @@ type DBpointmesh_
   origin::Cint      #= '0' or '1' =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
   gnodeno::Ptr{Void}     #= global node ids =#
-  mrgtree_name::Ptr{Uint8} #= optional name of assoc. mrgtree object =#
+  mrgtree_name::Ptr{UInt8} #= optional name of assoc. mrgtree object =#
   gnznodtype::Cint  #= datatype for global node/zone ids =#
 end #type
 typealias DBpointmesh DBpointmesh_
@@ -741,7 +741,7 @@ type DBmultimesh_
   nblocks::Cint     #= Number of blocks in mesh =#
   ngroups::Cint     #= Number of block groups in mesh =#
   meshids::Ptr{Cint}     #= Array of mesh-ids which comprise mesh =#
-  meshnames::Ptr{Ptr{Uint8}}
+  meshnames::Ptr{Ptr{UInt8}}
   meshtypes::Ptr{Cint}   #= Array of mesh-type indicators [nblocks] =#
   dirids::Ptr{Cint}      #= Array of directory ID's which contain blk =#
   blockorigin::Cint #= Origin (0 or 1) of block numbers =#
@@ -753,13 +753,13 @@ type DBmultimesh_
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
   lgroupings::Cint  #= size of groupings array =#
   groupings::Ptr{Cint}  #= Array of mesh-ids, group-ids, and counts =#
-  groupnames::Ptr{Ptr{Uint8}}
-  mrgtree_name::Ptr{Uint8}#= optional name of assoc. mrgtree object =#
+  groupnames::Ptr{Ptr{UInt8}}
+  mrgtree_name::Ptr{UInt8}#= optional name of assoc. mrgtree object =#
   tv_connectivity::Cint
   disjoint_mode::Cint
   topo_dim::Cint    #= Topological dimension max of all blocks. =#
-  file_ns::Ptr{Uint8}     #= namescheme for files (in lieu of meshnames) =#
-  block_ns::Ptr{Uint8}    #= namescheme for block objects (in lieu of meshnames) =#
+  file_ns::Ptr{UInt8}     #= namescheme for files (in lieu of meshnames) =#
+  block_ns::Ptr{UInt8}    #= namescheme for block objects (in lieu of meshnames) =#
   block_type::Cint  #= constant block type for all blocks (in lieu of meshtypes) =#
   empty_list::Ptr{Cint}  #= list of empty block #'s (option for namescheme) =#
   empty_cnt::Cint   #= size of empty list =#
@@ -801,22 +801,22 @@ type DBmultivar_
   id::Cint          #= Identifier for this object  =#
   nvars::Cint       #= Number of variables   =#
   ngroups::Cint     #= Number of block groups in mesh =#
-  varnames::Ptr{Ptr{Uint8}}
+  varnames::Ptr{Ptr{UInt8}}
   vartypes::Ptr{Cint}    #= variable types   =#
   blockorigin::Cint #= Origin (0 or 1) of block numbers =#
   grouporigin::Cint #= Origin (0 or 1) of group numbers =#
   extentssize::Cint #= size of each extent tuple =#
   extents::Ptr{Cdouble}     #= min/max extents of each block =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-  region_pnames::Ptr{Ptr{Uint8}}
-  mmesh_name::Ptr{Uint8}
+  region_pnames::Ptr{Ptr{UInt8}}
+  mmesh_name::Ptr{UInt8}
   tensor_rank::Cint    #= DB_VARTYPE_XXX =#
   conserved::Cint   #= indicates if the variable should be conserved
                                    under various operations such as interp. =#
   extensive::Cint   #= indicates if the variable reprsents an extensiv
                                    physical property (as opposed to intensive) =#
-  file_ns::Ptr{Uint8}     #= namescheme for files (in lieu of meshnames) =#
-  block_ns::Ptr{Uint8}    #= namescheme for block objects (in lieu of meshnames) =#
+  file_ns::Ptr{UInt8}     #= namescheme for files (in lieu of meshnames) =#
+  block_ns::Ptr{UInt8}    #= namescheme for block objects (in lieu of meshnames) =#
   block_type::Cint  #= constant block type for all blocks (in lieu of meshtypes) =#
   empty_list::Ptr{Cint}  #= list of empty block #'s (option for namescheme) =#
   empty_cnt::Cint   #= size of empty list =#
@@ -833,7 +833,7 @@ type DBmultimat_
   id::Cint          #= Identifier for this object  =#
   nmats::Cint       #= Number of materials   =#
   ngroups::Cint     #= Number of block groups in mesh =#
-  matnames::Ptr{Ptr{Uint8}}
+  matnames::Ptr{Ptr{UInt8}}
   blockorigin::Cint #= Origin (0 or 1) of block numbers =#
   grouporigin::Cint #= Origin (0 or 1) of group numbers =#
   mixlens::Ptr{Cint}     #= array of mixlen values in each mat =#
@@ -842,12 +842,12 @@ type DBmultimat_
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
   nmatnos::Cint     #= global number of materials over all pieces =#
   matnos::Ptr{Cint}      #= global list of material numbers =#
-  matcolors::Ptr{Ptr{Uint8}}
-  material_names::Ptr{Ptr{Uint8}}
+  matcolors::Ptr{Ptr{UInt8}}
+  material_names::Ptr{Ptr{UInt8}}
   allowmat0::Cint   #= Flag to allow material "0" =#
-  mmesh_name::Ptr{Uint8}
-  file_ns::Ptr{Uint8}     #= namescheme for files (in lieu of meshnames) =#
-  block_ns::Ptr{Uint8}    #= namescheme for block objects (in lieu of meshnames) =#
+  mmesh_name::Ptr{UInt8}
+  file_ns::Ptr{UInt8}     #= namescheme for files (in lieu of meshnames) =#
+  block_ns::Ptr{UInt8}    #= namescheme for block objects (in lieu of meshnames) =#
   empty_list::Ptr{Cint}  #= list of empty block #'s (option for namescheme) =#
   empty_cnt::Cint   #= size of empty list =#
   repr_block_idx::Cint #= index of a 'representative' block =#
@@ -864,16 +864,16 @@ type DBmultimatspecies_
   id::Cint          #= Identifier for this object  =#
   nspec::Cint       #= Number of species   =#
   ngroups::Cint     #= Number of block groups in mesh =#
-  specnames::Ptr{Ptr{Uint8}}
+  specnames::Ptr{Ptr{UInt8}}
   blockorigin::Cint #= Origin (0 or 1) of block numbers =#
   grouporigin::Cint #= Origin (0 or 1) of group numbers =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
   nmat::Cint        #= equiv. to nmatnos of a DBmultimat =#
   nmatspec::Ptr{Cint}    #= equiv. to matnos of a DBmultimat =#
-  species_names::Ptr{Ptr{Uint8}}
-  speccolors::Ptr{Ptr{Uint8}}
-  file_ns::Ptr{Uint8}     #= namescheme for files (in lieu of meshnames) =#
-  block_ns::Ptr{Uint8}    #= namescheme for block objects (in lieu of meshnames) =#
+  species_names::Ptr{Ptr{UInt8}}
+  speccolors::Ptr{Ptr{UInt8}}
+  file_ns::Ptr{UInt8}     #= namescheme for files (in lieu of meshnames) =#
+  block_ns::Ptr{UInt8}    #= namescheme for block objects (in lieu of meshnames) =#
   empty_list::Ptr{Cint}  #= list of empty block #'s (option for namescheme) =#
   empty_cnt::Cint   #= size of empty list =#
   repr_block_idx::Cint #= index of a 'representative' block =#
@@ -925,7 +925,7 @@ type DBphzonelist_
   nodecnt::Ptr{Cint}     #= Count of nodes in each face =#
   lnodelist::Cint   #= Length of nodelist used to construct faces =#
   nodelist::Ptr{Cint}    #= List of nodes used in all faces =#
-  extface::Ptr{Uint8}     #= boolean flag indicating if a face is external =#
+  extface::Ptr{UInt8}     #= boolean flag indicating if a face is external =#
   nzones::Cint      #= Number of zones in this zonelist =#
   facecnt::Ptr{Cint}     #= Count of faces in each zone =#
   lfacelist::Cint   #= Length of facelist used to construct zones =#
@@ -983,7 +983,7 @@ type DBquadmesh_
   id::Cint          #= Identifier for this object =#
   block_no::Cint    #= Block number for this mesh =#
   group_no::Cint    #= Block group number for this mesh =#
-  name::Ptr{Uint8}        #= Name associated with mesh =#
+  name::Ptr{UInt8}        #= Name associated with mesh =#
   cycle::Cint       #= Problem cycle number =#
   coord_sys::Cint   #= Cartesian, cylindrical, spherical =#
   major_order::Cint #= 1 indicates row-major for multi-d arrays =#
@@ -1003,8 +1003,8 @@ type DBquadmesh_
     =#
   min_extents::Ptr{Cfloat}#[6]  #= Min mesh extents [ndims] =#
   max_extents::Ptr{Cfloat}#[6]  #= Max mesh extents [ndims] =#
-  labels::Ptr{Ptr{Uint8}}#[3]   #= Label associated with each dimension =#
-  units::Ptr{Ptr{Uint8}}#[3]    #= Units for variable, e.g, 'mm/ms' =#
+  labels::Ptr{Ptr{UInt8}}#[3]   #= Label associated with each dimension =#
+  units::Ptr{Ptr{UInt8}}#[3]    #= Units for variable, e.g, 'mm/ms' =#
   ndims::Cint       #= Number of computational dimensions =#
   nspace::Cint      #= Number of physical dimensions =#
   nnodes::Cint      #= Total number of nodes =#
@@ -1020,7 +1020,7 @@ type DBquadmesh_
   size_index::Ptr{Cint}#[3]  #= Number of nodes per dimension for
   #                                     * original mesh =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-  mrgtree_name::Ptr{Uint8} #= optional name of assoc. mrgtree object =#
+  mrgtree_name::Ptr{UInt8} #= optional name of assoc. mrgtree object =#
 end #type
 typealias DBquadmesh DBquadmesh_
 
@@ -1030,12 +1030,12 @@ type DBucdmesh_
   id::Cint          #= Identifier for this object =#
   block_no::Cint    #= Block number for this mesh =#
   group_no::Cint    #= Block group number for this mesh =#
-  name::Ptr{Uint8}        #= Name associated with mesh =#
+  name::Ptr{UInt8}        #= Name associated with mesh =#
   cycle::Cint       #= Problem cycle number =#
   coord_sys::Cint   #= Coordinate system =#
   topo_dim::Cint    #= Topological dimension. =#
-  units::Ptr{Ptr{Uint8}}#[3]    #= Units for variable, e.g, 'mm/ms' =#
-  labels::Ptr{Ptr{Uint8}}#[3]   #= Label associated with each dimension =#
+  units::Ptr{Ptr{UInt8}}#[3]    #= Units for variable, e.g, 'mm/ms' =#
+  labels::Ptr{Ptr{UInt8}}#[3]   #= Label associated with each dimension =#
   coords::Ptr{Ptr{DB_DTPTR}}#[3]   #= Mesh node coordinates =#
   datatype::Cint    #= Type of coordinate arrays (double,float) =#
   time::Cfloat        #= Problem time =#
@@ -1064,7 +1064,7 @@ type DBucdmesh_
   #=--------- Optional polyhedral zonelist ---------=#
   phzones::Ptr{DBphzonelist}     #= Data structure describing mesh zones =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-  mrgtree_name::Ptr{Uint8} #= optional name of assoc. mrgtree object =#
+  mrgtree_name::Ptr{UInt8} #= optional name of assoc. mrgtree object =#
   tv_connectivity::Cint
   disjoint_mode::Cint
   gnznodtype::Cint  #= datatype for global node/zone ids =#
@@ -1079,9 +1079,9 @@ typealias DBucdmesh DBucdmesh_
 type DBquadvar_
   #=----------- Quad Variable -----------=#
   id::Cint          #= Identifier for this object =#
-  name::Ptr{Uint8}        #= Name of variable =#
-  units::Ptr{Uint8}       #= Units for variable, e.g, 'mm/ms' =#
-  label::Ptr{Uint8}       #= Label (perhaps for editing purposes) =#
+  name::Ptr{UInt8}        #= Name of variable =#
+  units::Ptr{UInt8}       #= Units for variable, e.g, 'mm/ms' =#
+  label::Ptr{UInt8}       #= Label (perhaps for editing purposes) =#
   cycle::Cint       #= Problem cycle number =#
   meshid::Cint      #= Identifier for associated mesh (Deprecated Sep2005) =#
   vals::Ptr{Ptr{DB_DTPTR}}        #= Array of pointers to data arrays =#
@@ -1113,9 +1113,9 @@ type DBquadvar_
   ascii_labels::Cint#= Treat variable values as ASCII values
                                    by rounding to the nearest integer in
                                    the range [0, 255] =#
-  meshname::Ptr{Uint8}    #= Name of associated mesh =#
+  meshname::Ptr{UInt8}    #= Name of associated mesh =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-  region_pnames::Ptr{Ptr{Uint8}}
+  region_pnames::Ptr{Ptr{UInt8}}
   conserved::Cint   #= indicates if the variable should be conserved
                                    under various operations such as interp. =#
   extensive::Cint   #= indicates if the variable reprsents an extensiv
@@ -1129,10 +1129,10 @@ typealias DBquadvar DBquadvar_
 type DBucdvar_
   #=----------- Unstructured Cell Data (UCD) Variable -----------=#
   id::Cint          #= Identifier for this object =#
-  name::Ptr{Uint8}        #= Name of variable =#
+  name::Ptr{UInt8}        #= Name of variable =#
   cycle::Cint       #= Problem cycle number =#
-  units::Ptr{Uint8}       #= Units for variable, e.g, 'mm/ms' =#
-  label::Ptr{Uint8}       #= Label (perhaps for editing purposes) =#
+  units::Ptr{UInt8}       #= Units for variable, e.g, 'mm/ms' =#
+  label::Ptr{UInt8}       #= Label (perhaps for editing purposes) =#
   time::Cfloat        #= Problem time =#
   dtime::Cdouble       #= Problem time, double data type =#
   meshid::Cint      #= Identifier for associated mesh (Deprecated Sep2005) =#
@@ -1151,9 +1151,9 @@ type DBucdvar_
   ascii_labels::Cint#= Treat variable values as ASCII values
                                    by rounding to the nearest integer in
                                    the range [0, 255] =#
-  meshname::Ptr{Uint8}    #= Name of associated mesh =#
+  meshname::Ptr{UInt8}    #= Name of associated mesh =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-  region_pnames::Ptr{Ptr{Uint8}}
+  region_pnames::Ptr{Ptr{UInt8}}
   conserved::Cint   #= indicates if the variable should be conserved
                                    under various operations such as interp. =#
   extensive::Cint   #= indicates if the variable reprsents an extensiv
@@ -1165,9 +1165,9 @@ typealias DBucdvar DBucdvar_
 type DBmeshvar_
   #=----------- Generic Mesh-Data Variable -----------=#
   id::Cint          #= Identifier for this object =#
-  name::Ptr{Uint8}        #= Name of variable =#
-  units::Ptr{Uint8}       #= Units for variable, e.g, 'mm/ms' =#
-  label::Ptr{Uint8}       #= Label (perhaps for editing purposes) =#
+  name::Ptr{UInt8}        #= Name of variable =#
+  units::Ptr{UInt8}       #= Units for variable, e.g, 'mm/ms' =#
+  label::Ptr{UInt8}       #= Label (perhaps for editing purposes) =#
   cycle::Cint       #= Problem cycle number =#
   meshid::Cint      #= Identifier for associated mesh (Deprecated Sep2005) =#
   vals::Ptr{Ptr{DB_DTPTR}}        #= Array of pointers to data arrays =#
@@ -1204,9 +1204,9 @@ type DBmeshvar_
   ascii_labels::Cint#= Treat variable values as ASCII values
                                    by rounding to the nearest integer in
                                    the range [0, 255] =#
-  meshname::Ptr{Uint8}      #= Name of associated mesh =#
+  meshname::Ptr{UInt8}      #= Name of associated mesh =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-  region_pnames::Ptr{Ptr{Uint8}}
+  region_pnames::Ptr{Ptr{UInt8}}
   conserved::Cint   #= indicates if the variable should be conserved
                                    under various operations such as interp. =#
   extensive::Cint   #= indicates if the variable reprsents an extensiv
@@ -1220,7 +1220,7 @@ typealias DBpointvar DBmeshvar
 type DBmaterial_
   #=----------- Material Information -----------=#
   id::Cint          #= Identifier =#
-  name::Ptr{Uint8}        #= Name of this material information block =#
+  name::Ptr{UInt8}        #= Name of this material information block =#
   ndims::Cint       #= Rank of 'matlist' variable =#
   origin::Cint      #= '0' or '1' =#
   dims::Ptr{Cint}#[3]     #= Number of elements in each dimension =#
@@ -1228,7 +1228,7 @@ type DBmaterial_
   stride::Ptr{Cint}#[3]   #= Offsets to adjacent elements in matlist =#
   nmat::Cint        #= Number of materials =#
   matnos::Ptr{Cint}      #= Array [nmat] of valid material numbers =#
-  matnames::Ptr{Ptr{Uint8}}
+  matnames::Ptr{Ptr{UInt8}}
   matlist::Ptr{Cint}     #= Array[nzone] w/ mat. number or mix index =#
   mixlen::Cint      #= Length of mixed data arrays (mix_xxx) =#
   datatype::Cint    #= Type of volume-fractions (double,float) =#
@@ -1237,8 +1237,8 @@ type DBmaterial_
   mix_mat::Ptr{Cint}     #= Array [mixlen] of material numbers =#
   mix_zone::Ptr{Cint}    #= Array [mixlen] of back pointers to mesh =#
 
-  matcolors::Ptr{Ptr{Uint8}}
-  meshname::Ptr{Uint8}    #= Name of associated mesh =#
+  matcolors::Ptr{Ptr{UInt8}}
+  meshname::Ptr{UInt8}    #= Name of associated mesh =#
   allowmat0::Cint   #= Flag to allow material "0" =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
 end #type
@@ -1248,8 +1248,8 @@ typealias DBmaterial DBmaterial_
 type DBmatspecies_
   #=----------- Species Information -----------=#
   id::Cint          #= Identifier =#
-  name::Ptr{Uint8}        #= Name of this matspecies information block =#
-  matname::Ptr{Uint8}     #= Name of material object with which the
+  name::Ptr{UInt8}        #= Name of this matspecies information block =#
+  matname::Ptr{UInt8}     #= Name of material object with which the
 #                                  * material species object is associated. =#
   nmat::Cint        #= Number of materials =#
   nmatspec::Ptr{Cint}    #= Array of lngth nmat of the num of material
@@ -1285,8 +1285,8 @@ type DBmatspecies_
                                    * mix_mat[j]. =#
   datatype::Cint    #= Datatype of mass fraction data. =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-  specnames::Ptr{Ptr{Uint8}}
-  speccolors::Ptr{Ptr{Uint8}}
+  specnames::Ptr{Ptr{UInt8}}
+  speccolors::Ptr{Ptr{UInt8}}
 end #type DBmatspecies
 typealias DBmatspecies DBmatspecies_
 
@@ -1307,8 +1307,8 @@ type DBcsgzonelist_
   max_index::Cint   #= Index of last real zone =#
 
   #=--------- Optional zone attributes ---------=#
-  regnames::Ptr{Ptr{Uint8}}
-  zonenames::Ptr{Ptr{Uint8}}
+  regnames::Ptr{Ptr{UInt8}}
+  zonenames::Ptr{Ptr{UInt8}}
 end #type DBcsgzonelist
 typealias DBcsgzonelist DBcsgzonelist_
 
@@ -1317,10 +1317,10 @@ type DBcsgmesh_
   #=----------- CSG Mesh -----------=#
   block_no::Cint    #= Block number for this mesh =#
   group_no::Cint    #= Block group number for this mesh =#
-  name::Ptr{Uint8}        #= Name associated with mesh =#
+  name::Ptr{UInt8}        #= Name associated with mesh =#
   cycle::Cint       #= Problem cycle number =#
-  units::Ptr{Ptr{Uint8}}#[3]    #= Units for variable, e.g, 'mm/ms' =#
-  labels::Ptr{Ptr{Uint8}}#[3]   #= Label associated with each dimension =#
+  units::Ptr{Ptr{UInt8}}#[3]    #= Units for variable, e.g, 'mm/ms' =#
+  labels::Ptr{Ptr{UInt8}}#[3]   #= Label associated with each dimension =#
   nbounds::Cint     #= Total number of boundaries =#
   typeflags::Ptr{Cint}   #= nbounds boundary type info flags =#
   bndids::Ptr{Cint}      #= optional, nbounds explicit ids =#
@@ -1339,9 +1339,9 @@ type DBcsgmesh_
   zones::Ptr{DBcsgzonelist}       #= Data structure describing mesh zones =#
 
   #=--------- Optional boundary attributes ---------=#
-  bndnames::Ptr{Ptr{Uint8}}
+  bndnames::Ptr{Ptr{UInt8}}
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-  mrgtree_name::Ptr{Uint8} #= optional name of assoc. mrgtree object =#
+  mrgtree_name::Ptr{UInt8} #= optional name of assoc. mrgtree object =#
   tv_connectivity::Cint
   disjoint_mode::Cint
 end #type DBcsgmesh
@@ -1350,10 +1350,10 @@ typealias DBcsgmesh DBcsgmesh_
 
 type DBcsgvar_
   #=----------- CSG Variable -----------=#
-  name::Ptr{Uint8}        #= Name of variable =#
+  name::Ptr{UInt8}        #= Name of variable =#
   cycle::Cint       #= Problem cycle number =#
-  units::Ptr{Uint8}       #= Units for variable, e.g, 'mm/ms' =#
-  label::Ptr{Uint8}       #= Label (perhaps for editing purposes) =#
+  units::Ptr{UInt8}       #= Units for variable, e.g, 'mm/ms' =#
+  label::Ptr{UInt8}       #= Label (perhaps for editing purposes) =#
   time::Cfloat        #= Problem time =#
   dtime::Cdouble       #= Problem time, double data type =#
   vals::Ptr{Ptr{Void}}        #= Array of pointers to data arrays =#
@@ -1366,9 +1366,9 @@ type DBcsgvar_
   ascii_labels::Cint#= Treat variable values as ASCII values
                                    by rounding to the nearest integer in
                                    the range [0, 255] =#
-  meshname::Ptr{Uint8}    #= Name of associated mesh =#
+  meshname::Ptr{UInt8}    #= Name of associated mesh =#
   guihide::Cint     #= Flag to hide from post-processor's GUI =#
-  region_pnames::Ptr{Ptr{Uint8}}
+  region_pnames::Ptr{Ptr{UInt8}}
   conserved::Cint   #= indicates if the variable should be conserved
                                    under various operations such as interp. =#
   extensive::Cint   #= indicates if the variable reprsents an extensiv
@@ -1387,8 +1387,8 @@ typealias DBcsgvar DBcsgvar_
 
 type DBcompoundarray_
   id::Cint          #=identifier of the compound array =#
-  name::Ptr{Uint8}        #=name of te compound array  =#
-  elemnames::Ptr{Ptr{Uint8}}
+  name::Ptr{UInt8}        #=name of te compound array  =#
+  elemnames::Ptr{Ptr{UInt8}}
   elemlengths::Ptr{Cint} #=lengths of the simple arrays  =#
   nelems::Cint      #=number of simple arrays  =#
   values::Ptr{Void}      #=simple array values   =#
@@ -1408,10 +1408,10 @@ typealias DBoptlist DBoptlist_
 
 
 type DBobject_
-  name::Ptr{Uint8}
-  dtype::Ptr{Uint8}        #= Type of group/object. Note: Original field name is type =#
-  comp_names::Ptr{Ptr{Uint8}}
-  pdb_names::Ptr{Ptr{Uint8}}
+  name::Ptr{UInt8}
+  dtype::Ptr{UInt8}        #= Type of group/object. Note: Original field name is type =#
+  comp_names::Ptr{Ptr{UInt8}}
+  pdb_names::Ptr{Ptr{UInt8}}
   ncomponents::Cint #= Number of components =#
   maxcomponents::Cint  #= Max number of components =#
 end #type DBobject_
@@ -1420,12 +1420,12 @@ typealias DBobject DBobject_
 warn("In objects of type DBobject, internal field \"type\" is called \"dtype\" in Julia.")
 
 type _DBmrgtnode
-  name::Ptr{Uint8}
+  name::Ptr{UInt8}
   narray::Cint
-  names::Ptr{Ptr{Uint8}}
+  names::Ptr{Ptr{UInt8}}
   type_info_bits::Cint
   max_children::Cint
-  maps_name::Ptr{Uint8}
+  maps_name::Ptr{UInt8}
   nsegs::Cint
   seg_ids::Ptr{Cint}
   seg_lens::Ptr{Cint}
@@ -1445,27 +1445,27 @@ typedef void (*DBmrgwalkcb)(DBmrgtnode *tnode, int nat_node_num, void *data)
 =#
 
 type _DBmrgtree
-  name::Ptr{Uint8}
-  src_mesh_name::Ptr{Uint8}
+  name::Ptr{UInt8}
+  src_mesh_name::Ptr{UInt8}
   src_mesh_type::Cint
   type_info_bits::Cint
   num_nodes::Cint
   root::Ptr{DBmrgtnode}
   cwr::Ptr{DBmrgtnode}
 
-  mrgvar_onames::Ptr{Ptr{Uint8}}
-  mrgvar_rnames::Ptr{Ptr{Uint8}}
+  mrgvar_onames::Ptr{Ptr{UInt8}}
+  mrgvar_rnames::Ptr{Ptr{UInt8}}
 end #type DBmrgtree
 typealias DBmrgtree _DBmrgtree
 
 
 type _DBmrgvar
-  name::Ptr{Uint8}
-  mrgt_name::Ptr{Uint8}
+  name::Ptr{UInt8}
+  mrgt_name::Ptr{UInt8}
   ncomps::Cint
-  compnames::Ptr{Ptr{Uint8}}
+  compnames::Ptr{Ptr{UInt8}}
   nregns::Cint
-  reg_pnames::Ptr{Ptr{Uint8}}
+  reg_pnames::Ptr{Ptr{UInt8}}
   datatype::Cint
   data::Ptr{Ptr{Void}}
 end #type DBmrgvar
@@ -1473,7 +1473,7 @@ typealias DBmrgvar _DBmrgvar
 
 
 type _DBgroupelmap
-  name::Ptr{Uint8}
+  name::Ptr{UInt8}
   num_segments::Cint
   groupel_types::Ptr{Cint}
   segment_lengths::Ptr{Cint}
@@ -1487,22 +1487,22 @@ typealias DBgroupelmap _DBgroupelmap
 const DB_MAX_EXPSTRS = 8 #= NO_FORTRAN_DEFINE =#
 
 type _DBnamescheme
-  fmt::Ptr{Uint8}              #= orig. format string =#
+  fmt::Ptr{UInt8}              #= orig. format string =#
   #     char const **
-  fmtptrs::Ptr{Ptr{Uint8}}
+  fmtptrs::Ptr{Ptr{UInt8}}
   #= ptrs into first (printf) part of fmt for each conversion spec. =#
   fmtlen::Cint             #= len of first part of fmt =#
   ncspecs::Cint            #= # of conversion specs in first part of fmt =#
   #     char
-  delim::Uint8             #= delimiter char used for parts of fmt =#
+  delim::UInt8             #= delimiter char used for parts of fmt =#
   nembed::Cint             #= number of last embedded string encountered =#
-  embedstrs::Ptr{Ptr{Uint8}}#[DB_MAX_EXPSTRS] #= ptrs to copies of embedded strings =#
+  embedstrs::Ptr{Ptr{UInt8}}#[DB_MAX_EXPSTRS] #= ptrs to copies of embedded strings =#
   arralloc::Cint           #= flag indicating if Silo allocated the arrays or not =#
   narrefs::Cint            #= number of array refs in conversion specs =#
-  arrnames::Ptr{Ptr{Uint8}}
+  arrnames::Ptr{Ptr{UInt8}}
   arrvals::Ptr{Ptr{Void}}         #= pointer to actual array data assoc. with each name =#
   arrsizes::Ptr{Cint}         #= size of each array (only needed for deallocating external arrays of strings) =#
-  exprstrs::Ptr{Ptr{Uint8}}
+  exprstrs::Ptr{Ptr{UInt8}}
 end #type DBnamescheme
 typealias DBnamescheme _DBnamescheme
 
@@ -1519,7 +1519,7 @@ typedef struct DBfile *___DUMMY_TYPE  #= Satisfy ANSI scope rules =#
 type DBfile_pub
 
   #= Public Properties =#
-  name::Ptr{Uint8}        #=name of file    =#
+  name::Ptr{UInt8}        #=name of file    =#
   dtype::Cint        #=file type.     =#
   #     DBtoc         *
   toc::Ptr{DBtoc}         #=table of contents   =#
@@ -1528,7 +1528,7 @@ type DBfile_pub
   pathok::Cint      #=driver handles paths in names =#
   Grab::Cint        #=drive has access to low-level interface =#
   GrabId::Ptr{Void}      #=pointer to low-level driver descriptor =#
-  file_lib_version::Ptr{Uint8} #= version of lib file was created with =#
+  file_lib_version::Ptr{UInt8} #= version of lib file was created with =#
 
   #     #= Public Methods =#
   #     int            (*close)(struct DBfile *)
@@ -1669,8 +1669,8 @@ type DBfile_pub
   #     DBgroupelmap  *(*g_grplm)(struct DBfile *dbfile, char const *name)
   #     int            (*p_mrgv)(struct DBfile *dbfile, char const *name,
   #                              char const *mrgt_name,
-  #   ncomps::Cint, compnames::Ptr{Ptr{Uint8}}
-  #   nregns::Cint, reg_pnames::Ptr{Ptr{Uint8}}
+  #   ncomps::Cint, compnames::Ptr{Ptr{UInt8}}
+  #   nregns::Cint, reg_pnames::Ptr{Ptr{UInt8}}
   #   datatype::Cint, void **data, DBoptlist *opts)
   #     DBmrgvar      *(*g_mrgv)(struct DBfile *dbfile, char const *name)
   #     int            (*free_z)(struct DBfile *, char const *)
