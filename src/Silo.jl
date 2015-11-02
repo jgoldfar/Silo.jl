@@ -1,10 +1,13 @@
 # Silo.jl: Wrapper around the Silo library (https://wci.llnl.gov/simulation/computer-codes/silo)
 module Silo
-if isfile(joinpath(dirname(dirname(@__FILE__)), "deps", "deps.jl"))
-  include(joinpath(dirname(dirname(@__FILE__)), "deps", "deps.jl"))
+const depsfile = joinpath(dirname(dirname(@__FILE__)), "deps", "deps.jl")
+if isfile(depsfile)
+  include(depsfile)
 else
   error("Silo not properly installed. Please run Pkg.build(\"Silo\")")
 end
+
+using Compat
 
 # "Sections" of code based on documentation
 include("libsilo_h.jl")
@@ -43,7 +46,7 @@ Base.convert(::Type{Ptr}, f::silofile) = f.dbfile
 Base.show(io::IO, f::silofile) = isvalid(f) ? print(io, "Silo file: ", f.file_name, " open with mode ", f.filemode) : print(io, "Closed Silo file: ", f.file_name)
 
 # Checks whether passed path points to valid silo file
-function silo_is_silofile{T1<:AbstractString}(file_name::T1)
+function silo_is_silofile(file_name::AbstractString)
   return DBInqFile(file_name)>0
 end
 
@@ -94,11 +97,7 @@ end
 
 
 ## Functionality related to file names introspection
-if VERSION < v"0.4-"
-  include("JTocv0.3.jl")
-else
-  include("JTocv0.4.jl")
-end
+include("JToc.jl")
 function Base.show(io::IO, tocin::JToc)
   for name in values(tocin.namemapping)
     print(io, "Has $(length(tocin.name)) $(name): ", join(tocin.(name), ", "))
