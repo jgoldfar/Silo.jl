@@ -3,16 +3,16 @@
 export siloread
 
 function siloread{T1<:AbstractString}(file::silofile, name::T1)
-  curve_int = unsafe_load(DBGetCurve(file.dbfile, name))
+  const curve_int = unsafe_load(DBGetCurve(file.dbfile, name))
 #   dump(curve_int)
-  npts = curve_int.npts
+  const npts = curve_int.npts
 #   println("Importing $npts points from ", bytestring(curve_int.title))
 #   dump(curve_int.x)
-  y_values_eltype = curve_int.datatype
+  const y_values_eltype = curve_int.datatype
 #   println(y_values_eltype)
 #   datatype = Float32
   if haskey(DBdatatype.SiloJuliatypemap, y_values_eltype)
-    datatype=DBdatatype.SiloJuliatypemap[y_values_eltype]
+    datatype = DBdatatype.SiloJuliatypemap[y_values_eltype]
   else
     error("Datatype $y_values_eltype currently unsupported.")
   end

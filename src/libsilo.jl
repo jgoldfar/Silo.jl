@@ -471,7 +471,8 @@ function DBAddOption(arg1::Ptr{DBoptlist},arg2::Cint,arg3::Ptr{Void})
   ccall((:DBAddOption,libsilo),Cint,(Ptr{DBoptlist},Cint,Ptr{Void}),arg1,arg2,arg3)
 end
 function DBAddOption(optlist::Ptr{DBoptlist},option_id::Int, value)
-  ccall((:DBAddOption,libsilo),Cint,(Ptr{DBoptlist},Cint,Ptr{Void}),optlist,option_id,&value)
+  v = [value]
+  ccall((:DBAddOption,libsilo),Cint,(Ptr{DBoptlist},Cint,Ptr{Void}),optlist,option_id,v)
 end
 
 function DBGetOption(arg1::Ptr{DBoptlist},arg2::Cint)

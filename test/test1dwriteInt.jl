@@ -21,11 +21,11 @@ title = @sprintf "time: %lf" 1e-4
 Silo.DBAddOption(dbopt, Silo.DBOPT_LABEL, title)
 
 # Test data
-N=20
-x=linspace(0,1,N)
-y1=linspace(4,5,N)
-y2=linspace(10,11,N)
-y3=y1-y2
+N = 20
+x = collect(linspace(0,1,N))
+y1 = collect(linspace(4,5,N))
+y2 = collect(linspace(10,11,N))
+y3 = y1 - y2
 
 #     DBPutCurve(dbfile,"Numerical_Solution",x,y1,DB_FLOAT,N+1,NULL);
 Silo.DBPutCurve(dbfile, "Numerical_Solution", x, y1, Silo.DBdatatype.DB_FLOAT, N + 1, dbopt) # or C_NULL

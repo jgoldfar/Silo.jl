@@ -1,8 +1,8 @@
 # test1dreadwrite.jl: Writing of 1D curves to Silo files
 
 dbfile = Silo.siloopen(joinpath(dirname(@__FILE__),"test1dreadwrite.silo"), "w")
-xin = linspace(0, 1, 10)
-yin = linspace(1, 2, 10)
+xin = collect(linspace(0, 1, 10))
+yin = collect(linspace(1, 2, 10))
 
 Silo.silowrite(dbfile, "Test_Curve", xin, yin)
 # @show dbfile
