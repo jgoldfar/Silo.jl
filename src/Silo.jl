@@ -15,7 +15,7 @@ println("Silo version ", _VERSION, " loaded.")
 
 type silooption
   id::Int
-  data::String
+  data::AbstractString
 end
 typealias silooptions Vector{silooption}
 
@@ -26,13 +26,13 @@ export silofile, isvalid, silo_is_silofile, siloopen, siloclose
 ## Thin Julia type wrapper around the internal DBfile pointer
 # tracks whether pointer is internally allocated, and the associated
 # filename.
-type silofile{T1<:String}
+type silofile{T1<:AbstractString}
   dbfile::Ptr{DBfile}
   filemode::T1
   file_name::T1
   ptropen::Bool
 end
-# function silofile{T1<:String}(dbfile::Ptr{DBfile}, filemode::T1, file_name::T1, ptropen::Bool, toclose::Bool)
+# function silofile{T1<:AbstractString}(dbfile::Ptr{DBfile}, filemode::T1, file_name::T1, ptropen::Bool, toclose::Bool)
 #   f = silofile(dbfile, filemode, file_name, ptropen)
 #   toclose && finalizer(f, siloclose)
 #   return f
@@ -43,16 +43,16 @@ Base.convert(::Type{Ptr}, f::silofile) = f.dbfile
 Base.show(io::IO, f::silofile) = isvalid(f) ? print(io, "Silo file: ", f.file_name, " open with mode ", f.filemode) : print(io, "Closed Silo file: ", f.file_name)
 
 # Checks whether passed path points to valid silo file
-function silo_is_silofile{T1<:String}(file_name::T1)
+function silo_is_silofile{T1<:AbstractString}(file_name::T1)
   return DBInqFile(file_name)>0
 end
 
 
 ## High-level Julia open/close functionality
-function siloopen(file_name::String,
-                  mode::String;
+function siloopen(file_name::AbstractString,
+                  mode::AbstractString;
                   filetype::Int = DB_PDB,
-                  fileinfo::String = "",
+                  fileinfo::AbstractString = "",
                   filecreatemode::Int = DB_CLOBBER,
                   filecreatetarget::Int = DB_LOCAL,)
   file_name = convert(ASCIIString, file_name)
@@ -118,7 +118,7 @@ function Base.names(dbfile::silofile)
     error("Passed silofile object is not valid.")
   end
 end
-function Base.names{T1<:String}(file_name::T1)
+function Base.names{T1<:AbstractString}(file_name::T1)
   dbfile = siloopen(file_name, "r")
   namesarr = names(dbfile)
   siloclose(dbfile)

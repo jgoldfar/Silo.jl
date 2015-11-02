@@ -1,4 +1,4 @@
-type JToc{T1<:String}
+type JToc{T1<:AbstractString}
   curve_names::Vector{T1}
   multimesh_names::Vector{T1}
   multimeshadj_names::Vector{T1}

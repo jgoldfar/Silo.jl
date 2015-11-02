@@ -5,7 +5,7 @@
 function DBOpenReal(arg1::Ptr{UInt8},arg2::Cint,arg3::Cint)
   ccall((:DBOpenReal,libsilo),Ptr{DBfile},(Ptr{UInt8},Cint,Cint),arg1,arg2,arg3)
 end
-function DBOpen{T1<:String}(name::T1, target::Int, mode::Int)
+function DBOpen{T1<:AbstractString}(name::T1, target::Int, mode::Int)
   ccall((:DBOpenReal,libsilo),Ptr{DBfile},(Ptr{UInt8},Cint,Cint),name,target,mode)
 end
 
@@ -19,7 +19,7 @@ end
 function DBInqFileReal(arg1::Ptr{UInt8})
   ccall((:DBInqFileReal,libsilo),Cint,(Ptr{UInt8},),arg1)
 end
-function DBInqFile{T1<:String}(name::T1)
+function DBInqFile{T1<:AbstractString}(name::T1)
   ccall((:DBInqFileReal,libsilo),Cint,(Ptr{UInt8},),name)
 end
 
@@ -779,7 +779,7 @@ end
 function DBPutCurve(arg1::Ptr{DBfile},arg2::Ptr{UInt8},arg3::Ptr{Void},arg4::Ptr{Void},arg5::Cint,arg6::Cint,arg7::Ptr{DBoptlist})
   ccall((:DBPutCurve,libsilo),Cint,(Ptr{DBfile},Ptr{UInt8},Ptr{Void},Ptr{Void},Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7)
 end
-function DBPutCurve{T1<:String}(dbfile::Ptr{DBfile},curvename::T1,xvals::Vector,yvals::Vector,datatype::Int,npoints::Int,optlist::Ptr{DBoptlist})
+function DBPutCurve{T1<:AbstractString}(dbfile::Ptr{DBfile},curvename::T1,xvals::Vector,yvals::Vector,datatype::Int,npoints::Int,optlist::Ptr{DBoptlist})
   ccall((:DBPutCurve,libsilo),Cint,(Ptr{DBfile},Ptr{UInt8},Ptr{Void},Ptr{Void},Cint,Cint,Ptr{DBoptlist}),dbfile,curvename,xvals,yvals,datatype,npoints,optlist)
 end
 

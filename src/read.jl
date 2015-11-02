@@ -2,7 +2,7 @@
 
 export siloread
 
-function siloread{T1<:String}(file::silofile, name::T1)
+function siloread{T1<:AbstractString}(file::silofile, name::T1)
   curve_int = unsafe_load(DBGetCurve(file.dbfile, name))
 #   dump(curve_int)
   npts = curve_int.npts
