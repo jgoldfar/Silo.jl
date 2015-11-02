@@ -27,12 +27,13 @@ type JToc{T1<:AbstractString}
   namemapping::Dict{Symbol,Symbol}
   function JToc(dbfile::Ptr{DBfile})
     inttoc = new()
-    thesevecnames = Dict(:ncurve => :curve_names,:nmultimesh=>:multimesh_names,:nmultimeshadj=>:multimeshadj_names,:nmultivar=>:multivar_names,:nmultimat=>:multimat_names,:nmultimatspecies=>:multimatspecies_names,:ncsgmesh=>:csgmesh_names,:ncsgvar=>:csgvar_names,:ndefvars=>:defvars_names, :nqmesh=>:qmesh_names,:nqvar=>:qvar_names,:nucdmesh=>:ucdmesh_names,:nucdvar=>:ucdvar_names,:nptmesh=>:ptmesh_names,:nptvar=>:ptvar_names,:nmat=>:mat_names, :nmatspecies=>:matspecies_names,:nvar=>:var_names,:nobj=>:obj_names,:ndir=>:dir_names,:narray=>:array_names,:nmrgtree=>:mrgtree_names,:ngroupelmap=>:groupelmap_names,:nmrgvar=>:mrgvar_names)
-    rawnames = unsafe_load(DBGetToc(dbfile))
-    thesenums = [keyname=>int32(rawnames.(keyname)) for keyname in keys(thesevecnames)]
+    const thesevecnames = @compat Dict(:ncurve => :curve_names,:nmultimesh=>:multimesh_names,:nmultimeshadj=>:multimeshadj_names,:nmultivar=>:multivar_names,:nmultimat=>:multimat_names,:nmultimatspecies=>:multimatspecies_names,:ncsgmesh=>:csgmesh_names,:ncsgvar=>:csgvar_names,:ndefvars=>:defvars_names, :nqmesh=>:qmesh_names,:nqvar=>:qvar_names,:nucdmesh=>:ucdmesh_names,:nucdvar=>:ucdvar_names,:nptmesh=>:ptmesh_names,:nptvar=>:ptvar_names,:nmat=>:mat_names, :nmatspecies=>:matspecies_names,:nvar=>:var_names,:nobj=>:obj_names,:ndir=>:dir_names,:narray=>:array_names,:nmrgtree=>:mrgtree_names,:ngroupelmap=>:groupelmap_names,:nmrgvar=>:mrgvar_names)
+
+    const rawnames = unsafe_load(DBGetToc(dbfile))
+    const thesenums = [keyname => Int32(rawnames.(keyname)) for keyname in keys(thesevecnames)]
 
     for keyname in keys(thesevecnames)
-      if thesenums[keyname]==0
+      if thesenums[keyname] == 0
         inttoc.(thesevecnames[keyname]) = Array(ASCIIString, 0,)
       else
         inttoc.(thesevecnames[keyname]) = map(bytestring,pointer_to_array(rawnames.(thesevecnames[keyname]), thesenums[keyname]))
