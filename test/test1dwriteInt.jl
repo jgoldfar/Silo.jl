@@ -18,7 +18,7 @@ dbfile = Silo.DBCreate(fn, Silo.DB_CLOBBER, Silo.DB_LOCAL, "Line Output", Silo.D
 #     sprintf(title,"time: %lf",ndp->time);
 #     DBAddOption(dbopt, DBOPT_LABEL, &title);
 title = @sprintf "time: %lf" 1e-4
-Silo.DBAddOption(dbopt, Silo.DBOPT_LABEL, title)
+Silo.DBAddOption(dbopt, Silo.DBOPT_LABEL, pointer_from_objref(title))
 
 # Test data
 N = 20
@@ -28,19 +28,19 @@ y2 = collect(linspace(10,11,N))
 y3 = y1 - y2
 
 #     DBPutCurve(dbfile,"Numerical_Solution",x,y1,DB_FLOAT,N+1,NULL);
-Silo.DBPutCurve(dbfile, "Numerical_Solution", x, y1, Silo.DBdatatype.DB_FLOAT, N + 1, dbopt) # or C_NULL
+Silo.DBPutCurve(dbfile, "Numerical_Solution", x, y1, Silo.DB_FLOAT, N + 1, dbopt) # or C_NULL
 #     DBPutCurve(dbfile,"Analytical_Solution",x,y2,DB_FLOAT,N+1,NULL);
-Silo.DBPutCurve(dbfile, "Analytical_Solution", x, y2, Silo.DBdatatype.DB_FLOAT, N + 1, dbopt)
+Silo.DBPutCurve(dbfile, "Analytical_Solution", x, y2, Silo.DB_FLOAT, N + 1, dbopt)
 #     DBPutCurve(dbfile,"Error",x,y3,DB_FLOAT,N+1,NULL);
-Silo.DBPutCurve(dbfile, "Error", x, y1, Silo.DBdatatype.DB_FLOAT, N + 1, dbopt)
+Silo.DBPutCurve(dbfile, "Error", x, y1, Silo.DB_FLOAT, N + 1, dbopt)
 #     DBClose(dbfile);
 Silo.DBClose(dbfile)
 
 # 	DBFreeOptlist(dbopt);
 Silo.DBFreeOptlist(dbopt)
 
-@test Silo.silo_is_silofile(fn)
+@test Silo.is_silofile(fn)
 
-contnames = names(fn)
-@test issubset(["Numerical_Solution", "Analytical_Solution", "Error"],
-               contnames)
+# contnames = names(fn)
+# @test issubset(["Numerical_Solution", "Analytical_Solution", "Error"],
+#                contnames)
