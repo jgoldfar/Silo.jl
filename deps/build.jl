@@ -4,7 +4,7 @@ using Compat
 @BinDeps.setup
 
 const libsilo = library_dependency("libsilo", aliases=["libsilo"])
-const silover = "4.9.1"
+const silover = "4.10.2"
 const silofilebase = "silo-$(silover)-bsd"
 
 provides(Sources,
