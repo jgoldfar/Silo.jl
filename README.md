@@ -7,17 +7,17 @@ Silo.jl
 [![Silo](http://pkg.julialang.org/badges/Silo_release.svg)](http://pkg.julialang.org/?pkg=Silo&ver=release)
 ### What is this repository for? ###
 
-* Wrapper for the [Silo file format](https://wci.llnl.gov/simulation/computer-codes/silo) in [Julia](http://julialang.org/), generated using [`Clang.jl`](https://github.com/ihnorton/Clang.jl). Inspiration for the generation scripts was taken from [Eglib.jl](https://github.com/ihnorton/Eglib.jl/blob/master/util/wrap.jl) (Thanks!).
+* Wrapper for the [Silo file format](https://wci.llnl.gov/simulation/computer-codes/silo) (version 4.10.2) in [Julia](http://julialang.org/), generated using [`Clang.jl`](https://github.com/ihnorton/Clang.jl).
 
 * Though I will continue to update this when I have time and interest, the very basic use case (in terms of high-level functionality) exemplified in the code and tests is typical for my needs. I welcome the extension of this package to the package's full generality on the high-level interface. Though it hasn't been extensively tested, the C-level wrappers output by Clang.jl should work fine for any "advanced" functionality you need from silo.
 
-* v0.1.0
+* v0.2.0
 
 ### How do I get set up? ###
 
 * For installation/building of the silo library, [`BinDeps.jl`](https://github.com/JuliaLang/BinDeps.jl). package is required.
 
-* To contribute, please make an issue or pull request. As a general guideline, modifications or additional low-level wrappers can be added to libsilo.jl, and helpers (only) can be added (only) to libsilo_h.jl. High-level wrappers go in the appropriate file(s).
+* To contribute, please make an issue or pull request. As a general guideline, modifications or additional low-level wrappers can be added to libsilo.jl. High-level wrappers go in the appropriate file(s).
 
 ### Who do I talk to? ###
 
@@ -27,7 +27,7 @@ Silo.jl
 
 - [0.x.0]
     - Windows support
-    - Julia v0.4 support
+    - Julia v0.4-v0.6 support
 
 - [1.0.0]
 
