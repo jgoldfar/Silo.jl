@@ -1,7 +1,7 @@
 # Run package tests
 println("Testing Silo.jl in Julia version ", VERSION)
 
-if VERSION >= v"0.5-"
+if VERSION >= v"0.5"
   using Base.Test
 else
   using BaseTestNext
