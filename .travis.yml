@@ -14,6 +14,11 @@ addons:
     packages:
     - gfortran
 
+before_install:
+  - test $(uname) = "Darwin" && brew update || true
+  - test $(uname) = "Darwin" && brew install gcc@4.9 || true
+  - test $(uname) = "Darwin" && brew install gcc || true
+
 # uncomment the following lines to override the default test script
 # script:
 #   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
