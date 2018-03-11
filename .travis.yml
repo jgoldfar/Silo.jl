@@ -16,6 +16,7 @@ addons:
 
 before_install:
   - test $(uname) = "Darwin" && brew update || true
+  - test $(uname) = "Darwin" && brew cask uninstall --force oclint || true
   - test $(uname) = "Darwin" && brew install gcc || true
 
 # uncomment the following lines to override the default test script
