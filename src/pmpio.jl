@@ -2,8 +2,8 @@
 # Automatically generated using Clang.jl wrap_c, version 0.0.0
 
 
-# function signal(arg1::Cint,arg2,arg3::Void)
-#     ccall((:signal,libsilo),Ptr{Void},(Cint,Ptr{Void},Void),arg1,arg2,arg3)
+# function signal(arg1::Cint,arg2,arg3::Nothing)
+#     ccall((:signal,libsilo),Ptr{Nothing},(Cint,Ptr{Nothing},Nothing),arg1,arg2,arg3)
 # end
 #
 # function getpriority(arg1::Cint,arg2::id_t)
@@ -15,11 +15,11 @@
 # end
 #
 # function getrlimit(arg1::Cint,arg2)
-#     ccall((:getrlimit,libsilo),Cint,(Cint,Ptr{Void}),arg1,arg2)
+#     ccall((:getrlimit,libsilo),Cint,(Cint,Ptr{Nothing}),arg1,arg2)
 # end
 #
 # function getrusage(arg1::Cint,arg2)
-#     ccall((:getrusage,libsilo),Cint,(Cint,Ptr{Void}),arg1,arg2)
+#     ccall((:getrusage,libsilo),Cint,(Cint,Ptr{Nothing}),arg1,arg2)
 # end
 #
 # function setpriority(arg1::Cint,arg2::id_t,arg3::Cint)
@@ -31,7 +31,7 @@
 # end
 #
 # function setrlimit(arg1::Cint,arg2)
-#     ccall((:setrlimit,libsilo),Cint,(Cint,Ptr{Void}),arg1,arg2)
+#     ccall((:setrlimit,libsilo),Cint,(Cint,Ptr{Nothing}),arg1,arg2)
 # end
 #
 # function _OSSwapInt16(_data::__uint16_t)
@@ -59,19 +59,19 @@
 # end
 #
 # function wait3(arg1,arg2::Cint,arg3)
-#     ccall((:wait3,libsilo),pid_t,(Ptr{Cint},Cint,Ptr{Void}),arg1,arg2,arg3)
+#     ccall((:wait3,libsilo),pid_t,(Ptr{Cint},Cint,Ptr{Nothing}),arg1,arg2,arg3)
 # end
 #
 # function wait4(arg1::pid_t,arg2,arg3::Cint,arg4)
-#     ccall((:wait4,libsilo),pid_t,(pid_t,Ptr{Cint},Cint,Ptr{Void}),arg1,arg2,arg3,arg4)
+#     ccall((:wait4,libsilo),pid_t,(pid_t,Ptr{Cint},Cint,Ptr{Nothing}),arg1,arg2,arg3,arg4)
 # end
 #
 # function alloca(arg1::Culong)
-#     ccall((:alloca,libsilo),Ptr{Void},(Culong,),arg1)
+#     ccall((:alloca,libsilo),Ptr{Nothing},(Culong,),arg1)
 # end
 #
 # function abort()
-#     ccall((:abort,libsilo),Void,())
+#     ccall((:abort,libsilo),Nothing,())
 # end
 #
 # function abs(arg1::Cint)
@@ -79,7 +79,7 @@
 # end
 #
 # function atexit(arg1)
-#     ccall((:atexit,libsilo),Cint,(Ptr{Void},),arg1)
+#     ccall((:atexit,libsilo),Cint,(Ptr{Nothing},),arg1)
 # end
 #
 # function atof(arg1)
@@ -99,11 +99,11 @@
 # end
 #
 # function bsearch(__key,__base,__nel::Csize_t,__width::Csize_t,__compar)
-#     ccall((:bsearch,libsilo),Ptr{Void},(Ptr{Void},Ptr{Void},Csize_t,Csize_t,Ptr{Void}),__key,__base,__nel,__width,__compar)
+#     ccall((:bsearch,libsilo),Ptr{Nothing},(Ptr{Nothing},Ptr{Nothing},Csize_t,Csize_t,Ptr{Nothing}),__key,__base,__nel,__width,__compar)
 # end
 #
 # function calloc(__count::Culong,__size::Culong)
-#     ccall((:calloc,libsilo),Ptr{Void},(Culong,Culong),__count,__size)
+#     ccall((:calloc,libsilo),Ptr{Nothing},(Culong,Culong),__count,__size)
 # end
 #
 # function div(arg1::Cint,arg2::Cint)
@@ -111,11 +111,11 @@
 # end
 #
 # function exit(arg1::Cint)
-#     ccall((:exit,libsilo),Void,(Cint,),arg1)
+#     ccall((:exit,libsilo),Nothing,(Cint,),arg1)
 # end
 #
 # function free(arg1)
-#     ccall((:free,libsilo),Void,(Ptr{Void},),arg1)
+#     ccall((:free,libsilo),Nothing,(Ptr{Nothing},),arg1)
 # end
 #
 # function getenv(arg1)
@@ -139,7 +139,7 @@
 # end
 #
 # function malloc(__size::Culong)
-#     ccall((:malloc,libsilo),Ptr{Void},(Culong,),__size)
+#     ccall((:malloc,libsilo),Ptr{Nothing},(Culong,),__size)
 # end
 #
 # function mblen(__s,__n::Csize_t)
@@ -155,11 +155,11 @@
 # end
 #
 # function posix_memalign(__memptr,__alignment::Csize_t,__size::Csize_t)
-#     ccall((:posix_memalign,libsilo),Cint,(Ptr{Ptr{Void}},Csize_t,Csize_t),__memptr,__alignment,__size)
+#     ccall((:posix_memalign,libsilo),Cint,(Ptr{Ptr{Nothing}},Csize_t,Csize_t),__memptr,__alignment,__size)
 # end
 #
 # function qsort(__base,__nel::Csize_t,__width::Csize_t,__compar)
-#     ccall((:qsort,libsilo),Void,(Ptr{Void},Csize_t,Csize_t,Ptr{Void}),__base,__nel,__width,__compar)
+#     ccall((:qsort,libsilo),Nothing,(Ptr{Nothing},Csize_t,Csize_t,Ptr{Nothing}),__base,__nel,__width,__compar)
 # end
 #
 # function rand()
@@ -167,11 +167,11 @@
 # end
 #
 # function realloc(__ptr,__size::Culong)
-#     ccall((:realloc,libsilo),Ptr{Void},(Ptr{Void},Culong),__ptr,__size)
+#     ccall((:realloc,libsilo),Ptr{Nothing},(Ptr{Nothing},Culong),__ptr,__size)
 # end
 #
 # function srand(arg1::UInt32)
-#     ccall((:srand,libsilo),Void,(UInt32,),arg1)
+#     ccall((:srand,libsilo),Nothing,(UInt32,),arg1)
 # end
 #
 # function strtod(arg1,arg2)
@@ -215,7 +215,7 @@
 # end
 #
 # function _Exit(arg1::Cint)
-#     ccall((:_Exit,libsilo),Void,(Cint,),arg1)
+#     ccall((:_Exit,libsilo),Nothing,(Cint,),arg1)
 # end
 #
 # function a64l(arg1)
@@ -263,7 +263,7 @@
 # end
 #
 # function lcong48(arg1::NTuple{7,UInt16})
-#     ccall((:lcong48,libsilo),Void,(NTuple{7,UInt16},),arg1)
+#     ccall((:lcong48,libsilo),Nothing,(NTuple{7,UInt16},),arg1)
 # end
 #
 # function lrand48()
@@ -319,7 +319,7 @@
 # end
 #
 # function setkey(arg1)
-#     ccall((:setkey,libsilo),Void,(Cstring,),arg1)
+#     ccall((:setkey,libsilo),Nothing,(Cstring,),arg1)
 # end
 #
 # function setstate(arg1)
@@ -327,11 +327,11 @@
 # end
 #
 # function srand48(arg1::Clong)
-#     ccall((:srand48,libsilo),Void,(Clong,),arg1)
+#     ccall((:srand48,libsilo),Nothing,(Clong,),arg1)
 # end
 #
 # function srandom(arg1::UInt32)
-#     ccall((:srandom,libsilo),Void,(UInt32,),arg1)
+#     ccall((:srandom,libsilo),Nothing,(UInt32,),arg1)
 # end
 #
 # function unlockpt(arg1::Cint)
@@ -347,27 +347,27 @@
 # end
 #
 # function arc4random_addrandom(arg1,arg2::Cint)
-#     ccall((:arc4random_addrandom,libsilo),Void,(Ptr{Cuchar},Cint),arg1,arg2)
+#     ccall((:arc4random_addrandom,libsilo),Nothing,(Ptr{Cuchar},Cint),arg1,arg2)
 # end
 #
 # function arc4random_buf(__buf,__nbytes::Csize_t)
-#     ccall((:arc4random_buf,libsilo),Void,(Ptr{Void},Csize_t),__buf,__nbytes)
+#     ccall((:arc4random_buf,libsilo),Nothing,(Ptr{Nothing},Csize_t),__buf,__nbytes)
 # end
 #
 # function arc4random_stir()
-#     ccall((:arc4random_stir,libsilo),Void,())
+#     ccall((:arc4random_stir,libsilo),Nothing,())
 # end
 #
 # function arc4random_uniform(__upper_bound::UInt32)
 #     ccall((:arc4random_uniform,libsilo),UInt32,(UInt32,),__upper_bound)
 # end
 #
-# function atexit_b(arg1::Void)
-#     ccall((:atexit_b,libsilo),Cint,(Void,),arg1)
+# function atexit_b(arg1::Nothing)
+#     ccall((:atexit_b,libsilo),Cint,(Nothing,),arg1)
 # end
 #
-# function bsearch_b(__key,__base,__nel::Csize_t,__width::Csize_t,__compar::Void)
-#     ccall((:bsearch_b,libsilo),Ptr{Void},(Ptr{Void},Ptr{Void},Csize_t,Csize_t,Void),__key,__base,__nel,__width,__compar)
+# function bsearch_b(__key,__base,__nel::Csize_t,__width::Csize_t,__compar::Nothing)
+#     ccall((:bsearch_b,libsilo),Ptr{Nothing},(Ptr{Nothing},Ptr{Nothing},Csize_t,Csize_t,Nothing),__key,__base,__nel,__width,__compar)
 # end
 #
 # function cgetcap(arg1,arg2,arg3::Cint)
@@ -435,39 +435,39 @@
 # end
 #
 # function heapsort(__base,__nel::Csize_t,__width::Csize_t,__compar)
-#     ccall((:heapsort,libsilo),Cint,(Ptr{Void},Csize_t,Csize_t,Ptr{Void}),__base,__nel,__width,__compar)
+#     ccall((:heapsort,libsilo),Cint,(Ptr{Nothing},Csize_t,Csize_t,Ptr{Nothing}),__base,__nel,__width,__compar)
 # end
 #
-# function heapsort_b(__base,__nel::Csize_t,__width::Csize_t,__compar::Void)
-#     ccall((:heapsort_b,libsilo),Cint,(Ptr{Void},Csize_t,Csize_t,Void),__base,__nel,__width,__compar)
+# function heapsort_b(__base,__nel::Csize_t,__width::Csize_t,__compar::Nothing)
+#     ccall((:heapsort_b,libsilo),Cint,(Ptr{Nothing},Csize_t,Csize_t,Nothing),__base,__nel,__width,__compar)
 # end
 #
 # function mergesort(__base,__nel::Csize_t,__width::Csize_t,__compar)
-#     ccall((:mergesort,libsilo),Cint,(Ptr{Void},Csize_t,Csize_t,Ptr{Void}),__base,__nel,__width,__compar)
+#     ccall((:mergesort,libsilo),Cint,(Ptr{Nothing},Csize_t,Csize_t,Ptr{Nothing}),__base,__nel,__width,__compar)
 # end
 #
-# function mergesort_b(__base,__nel::Csize_t,__width::Csize_t,__compar::Void)
-#     ccall((:mergesort_b,libsilo),Cint,(Ptr{Void},Csize_t,Csize_t,Void),__base,__nel,__width,__compar)
+# function mergesort_b(__base,__nel::Csize_t,__width::Csize_t,__compar::Nothing)
+#     ccall((:mergesort_b,libsilo),Cint,(Ptr{Nothing},Csize_t,Csize_t,Nothing),__base,__nel,__width,__compar)
 # end
 #
 # function psort(__base,__nel::Csize_t,__width::Csize_t,__compar)
-#     ccall((:psort,libsilo),Void,(Ptr{Void},Csize_t,Csize_t,Ptr{Void}),__base,__nel,__width,__compar)
+#     ccall((:psort,libsilo),Nothing,(Ptr{Nothing},Csize_t,Csize_t,Ptr{Nothing}),__base,__nel,__width,__compar)
 # end
 #
-# function psort_b(__base,__nel::Csize_t,__width::Csize_t,__compar::Void)
-#     ccall((:psort_b,libsilo),Void,(Ptr{Void},Csize_t,Csize_t,Void),__base,__nel,__width,__compar)
+# function psort_b(__base,__nel::Csize_t,__width::Csize_t,__compar::Nothing)
+#     ccall((:psort_b,libsilo),Nothing,(Ptr{Nothing},Csize_t,Csize_t,Nothing),__base,__nel,__width,__compar)
 # end
 #
 # function psort_r(__base,__nel::Csize_t,__width::Csize_t,arg1,__compar)
-#     ccall((:psort_r,libsilo),Void,(Ptr{Void},Csize_t,Csize_t,Ptr{Void},Ptr{Void}),__base,__nel,__width,arg1,__compar)
+#     ccall((:psort_r,libsilo),Nothing,(Ptr{Nothing},Csize_t,Csize_t,Ptr{Nothing},Ptr{Nothing}),__base,__nel,__width,arg1,__compar)
 # end
 #
-# function qsort_b(__base,__nel::Csize_t,__width::Csize_t,__compar::Void)
-#     ccall((:qsort_b,libsilo),Void,(Ptr{Void},Csize_t,Csize_t,Void),__base,__nel,__width,__compar)
+# function qsort_b(__base,__nel::Csize_t,__width::Csize_t,__compar::Nothing)
+#     ccall((:qsort_b,libsilo),Nothing,(Ptr{Nothing},Csize_t,Csize_t,Nothing),__base,__nel,__width,__compar)
 # end
 #
 # function qsort_r(__base,__nel::Csize_t,__width::Csize_t,arg1,__compar)
-#     ccall((:qsort_r,libsilo),Void,(Ptr{Void},Csize_t,Csize_t,Ptr{Void},Ptr{Void}),__base,__nel,__width,arg1,__compar)
+#     ccall((:qsort_r,libsilo),Nothing,(Ptr{Nothing},Csize_t,Csize_t,Ptr{Nothing},Ptr{Nothing}),__base,__nel,__width,arg1,__compar)
 # end
 #
 # function radixsort(__base,__nel::Cint,__table,__endbyte::UInt32)
@@ -475,7 +475,7 @@
 # end
 #
 # function setprogname(arg1)
-#     ccall((:setprogname,libsilo),Void,(Cstring,),arg1)
+#     ccall((:setprogname,libsilo),Nothing,(Cstring,),arg1)
 # end
 #
 # function sradixsort(__base,__nel::Cint,__table,__endbyte::UInt32)
@@ -483,15 +483,15 @@
 # end
 #
 # function sranddev()
-#     ccall((:sranddev,libsilo),Void,())
+#     ccall((:sranddev,libsilo),Nothing,())
 # end
 #
 # function srandomdev()
-#     ccall((:srandomdev,libsilo),Void,())
+#     ccall((:srandomdev,libsilo),Nothing,())
 # end
 #
 # function reallocf(__ptr,__size::Csize_t)
-#     ccall((:reallocf,libsilo),Ptr{Void},(Ptr{Void},Csize_t),__ptr,__size)
+#     ccall((:reallocf,libsilo),Ptr{Nothing},(Ptr{Nothing},Csize_t),__ptr,__size)
 # end
 #
 # function strtoq(__str,__endptr,__base::Cint)
@@ -503,23 +503,23 @@
 # end
 #
 # function valloc(arg1::Csize_t)
-#     ccall((:valloc,libsilo),Ptr{Void},(Csize_t,),arg1)
+#     ccall((:valloc,libsilo),Ptr{Nothing},(Csize_t,),arg1)
 # end
 
 function PMPIO_Init(numFiles::Cint,ioMode::PMPIO_iomode_t,mpiComm::Cint,mpiTag::Cint,createCb::PMPIO_CreateFileCallBack,openCb::PMPIO_OpenFileCallBack,closeCb::PMPIO_CloseFileCallBack,userData)
-    ccall((:PMPIO_Init,libsilo),Ptr{PMPIO_baton_t},(Cint,PMPIO_iomode_t,Cint,Cint,PMPIO_CreateFileCallBack,PMPIO_OpenFileCallBack,PMPIO_CloseFileCallBack,Ptr{Void}),numFiles,ioMode,mpiComm,mpiTag,createCb,openCb,closeCb,userData)
+    ccall((:PMPIO_Init,libsilo),Ptr{PMPIO_baton_t},(Cint,PMPIO_iomode_t,Cint,Cint,PMPIO_CreateFileCallBack,PMPIO_OpenFileCallBack,PMPIO_CloseFileCallBack,Ptr{Nothing}),numFiles,ioMode,mpiComm,mpiTag,createCb,openCb,closeCb,userData)
 end
 
 function PMPIO_Finish(bat)
-    ccall((:PMPIO_Finish,libsilo),Void,(Ptr{PMPIO_baton_t},),bat)
+    ccall((:PMPIO_Finish,libsilo),Nothing,(Ptr{PMPIO_baton_t},),bat)
 end
 
 function PMPIO_WaitForBaton(Bat,fname,nsname)
-    ccall((:PMPIO_WaitForBaton,libsilo),Ptr{Void},(Ptr{PMPIO_baton_t},Cstring,Cstring),Bat,fname,nsname)
+    ccall((:PMPIO_WaitForBaton,libsilo),Ptr{Nothing},(Ptr{PMPIO_baton_t},Cstring,Cstring),Bat,fname,nsname)
 end
 
 function PMPIO_HandOffBaton(Bat,file)
-    ccall((:PMPIO_HandOffBaton,libsilo),Void,(Ptr{PMPIO_baton_t},Ptr{Void}),Bat,file)
+    ccall((:PMPIO_HandOffBaton,libsilo),Nothing,(Ptr{PMPIO_baton_t},Ptr{Nothing}),Bat,file)
 end
 
 function PMPIO_GroupRank(Bat,rankInComm::Cint)

@@ -93,23 +93,23 @@ using Compat
 #
 # type _opaque_pthread_t
 #     __sig::Clong
-#     __cleanup_stack::Ptr{Void}
+#     __cleanup_stack::Ptr{Nothing}
 #     __opaque::NTuple{8176,UInt8}
 # end
 
-# typealias va_list __darwin_va_list
-# typealias size_t __darwin_size_t
-# typealias fpos_t __darwin_off_t
-typealias FILE Void
-# typealias off_t __darwin_off_t
-# typealias ssize_t __darwin_ssize_t
-typealias DBVCP1_t Ptr{Void}
-typealias DBVCP2_t Ptr{Void}
-typealias DBVCP3_t Ptr{Void}
-typealias DBCAS_t Ptr{Cstring}
+# const va_list = __darwin_va_list
+# const size_t = __darwin_size_t
+# const fpos_t = __darwin_off_t
+# const FILE = Nothing
+# const off_t = __darwin_off_t
+# const ssize_t = __darwin_ssize_t
+# const DBVCP1_t = Ptr{Nothing}
+# const DBVCP2_t = Ptr{Nothing}
+# const DBVCP3_t = Ptr{Nothing}
+# const DBCAS_t = Ptr{Cstring}
 
 # begin enum ANONYMOUS_1
-typealias ANONYMOUS_1 Cint
+const ANONYMOUS_1 = Cint
 const DB_INVALID_OBJECT = (Int32)(-1)
 const DB_QUADRECT = (Int32)(130)
 const DB_QUADCURV = (Int32)(131)
@@ -146,10 +146,10 @@ const DB_MRGVAR = (Int32)(613)
 const DB_USERDEF = (Int32)(700)
 # end enum ANONYMOUS_1
 
-typealias DBObjectType Void
+const DBObjectType = Nothing
 
 # begin enum ANONYMOUS_2
-typealias ANONYMOUS_2 UInt32
+const ANONYMOUS_2 = UInt32
 const DB_INT = (UInt32)(16)
 const DB_SHORT = (UInt32)(17)
 const DB_LONG = (UInt32)(18)
@@ -160,7 +160,7 @@ const DB_LONG_LONG = (UInt32)(22)
 const DB_NOTYPE = (UInt32)(25)
 # end enum ANONYMOUS_2
 
-typealias DBdatatype Void
+const DBdatatype = Nothing
 
 type DBtoc_
     curve_names::Ptr{Cstring}
@@ -213,7 +213,7 @@ type DBtoc_
     nmrgvar::Cint
 end
 
-typealias DBtoc Void
+const DBtoc = Nothing
 
 type DBcurve_
     id::Cint
@@ -226,8 +226,8 @@ type DBcurve_
     ylabel::Cstring
     xunits::Cstring
     yunits::Cstring
-    x::Ptr{Void}
-    y::Ptr{Void}
+    x::Ptr{Nothing}
+    y::Ptr{Nothing}
     npts::Cint
     guihide::Cint
     reference::Cstring
@@ -235,7 +235,7 @@ type DBcurve_
     missing_value::Cdouble
 end
 
-typealias DBcurve Void
+const DBcurve = Nothing
 
 type DBdefvars_
     ndefs::Cint
@@ -245,7 +245,7 @@ type DBdefvars_
     guihides::Ptr{Cint}
 end
 
-typealias DBdefvars Void
+const DBdefvars = Nothing
 
 type DBpointmesh_
     id::Cint
@@ -256,7 +256,7 @@ type DBpointmesh_
     units::NTuple{3,Cstring}
     labels::NTuple{3,Cstring}
     title::Cstring
-    coords::NTuple{3,Ptr{Void}}
+    coords::NTuple{3,Ptr{Nothing}}
     time::Cfloat
     dtime::Cdouble
     min_extents::NTuple{6,Cfloat}
@@ -266,14 +266,14 @@ type DBpointmesh_
     nels::Cint
     origin::Cint
     guihide::Cint
-    gnodeno::Ptr{Void}
+    gnodeno::Ptr{Nothing}
     mrgtree_name::Cstring
     gnznodtype::Cint
     ghost_node_labels::Cstring
     alt_nodenum_vars::Ptr{Cstring}
 end
 
-typealias DBpointmesh Void
+const DBpointmesh = Nothing
 
 type DBmultimesh_
     id::Cint
@@ -308,7 +308,7 @@ type DBmultimesh_
     meshnames_alloc::Cstring
 end
 
-typealias DBmultimesh Void
+const DBmultimesh = Nothing
 
 type DBmultimeshadj_
     nblocks::Cint
@@ -326,7 +326,7 @@ type DBmultimeshadj_
     zonelists::Ptr{Ptr{Cint}}
 end
 
-typealias DBmultimeshadj Void
+const DBmultimeshadj = Nothing
 
 type DBmultivar_
     id::Cint
@@ -354,7 +354,7 @@ type DBmultivar_
     varnames_alloc::Cstring
 end
 
-typealias DBmultivar Void
+const DBmultivar = Nothing
 
 type DBmultimat_
     id::Cint
@@ -381,7 +381,7 @@ type DBmultimat_
     matnames_alloc::Cstring
 end
 
-typealias DBmultimat Void
+const DBmultimat = Nothing
 
 type DBmultimatspecies_
     id::Cint
@@ -403,7 +403,7 @@ type DBmultimatspecies_
     specnames_alloc::Cstring
 end
 
-typealias DBmultimatspecies Void
+const DBmultimatspecies = Nothing
 
 type DBzonelist_
     ndims::Cint
@@ -418,13 +418,13 @@ type DBzonelist_
     min_index::Cint
     max_index::Cint
     zoneno::Ptr{Cint}
-    gzoneno::Ptr{Void}
+    gzoneno::Ptr{Nothing}
     gnznodtype::Cint
     ghost_zone_labels::Cstring
     alt_zonenum_vars::Ptr{Cstring}
 end
 
-typealias DBzonelist Void
+const DBzonelist = Nothing
 
 type DBphzonelist_
     nfaces::Cint
@@ -440,13 +440,13 @@ type DBphzonelist_
     lo_offset::Cint
     hi_offset::Cint
     zoneno::Ptr{Cint}
-    gzoneno::Ptr{Void}
+    gzoneno::Ptr{Nothing}
     gnznodtype::Cint
     ghost_zone_labels::Cstring
     alt_zonenum_vars::Ptr{Cstring}
 end
 
-typealias DBphzonelist Void
+const DBphzonelist = Nothing
 
 type DBfacelist_
     ndims::Cint
@@ -464,7 +464,7 @@ type DBfacelist_
     zoneno::Ptr{Cint}
 end
 
-typealias DBfacelist Void
+const DBfacelist = Nothing
 
 type DBedgelist_
     ndims::Cint
@@ -474,7 +474,7 @@ type DBedgelist_
     origin::Cint
 end
 
-typealias DBedgelist Void
+const DBedgelist = Nothing
 
 type DBquadmesh_
     id::Cint
@@ -488,7 +488,7 @@ type DBquadmesh_
     coordtype::Cint
     facetype::Cint
     planar::Cint
-    coords::NTuple{3,Ptr{Void}}
+    coords::NTuple{3,Ptr{Nothing}}
     datatype::Cint
     time::Cfloat
     dtime::Cdouble
@@ -514,7 +514,7 @@ type DBquadmesh_
     alt_zonenum_vars::Ptr{Cstring}
 end
 
-typealias DBquadmesh Void
+const DBquadmesh = Nothing
 
 type DBucdmesh_
     id::Cint
@@ -526,7 +526,7 @@ type DBucdmesh_
     topo_dim::Cint
     units::NTuple{3,Cstring}
     labels::NTuple{3,Cstring}
-    coords::NTuple{3,Ptr{Void}}
+    coords::NTuple{3,Ptr{Nothing}}
     datatype::Cint
     time::Cfloat
     dtime::Cdouble
@@ -538,7 +538,7 @@ type DBucdmesh_
     faces::Ptr{DBfacelist}
     zones::Ptr{DBzonelist}
     edges::Ptr{DBedgelist}
-    gnodeno::Ptr{Void}
+    gnodeno::Ptr{Nothing}
     nodeno::Ptr{Cint}
     phzones::Ptr{DBphzonelist}
     guihide::Cint
@@ -550,7 +550,7 @@ type DBucdmesh_
     alt_nodenum_vars::Ptr{Cstring}
 end
 
-typealias DBucdmesh Void
+const DBucdmesh = Nothing
 
 type DBquadvar_
     id::Cint
@@ -559,7 +559,7 @@ type DBquadvar_
     label::Cstring
     cycle::Cint
     meshid::Cint
-    vals::Ptr{Ptr{Void}}
+    vals::Ptr{Ptr{Nothing}}
     datatype::Cint
     nels::Cint
     nvals::Cint
@@ -573,7 +573,7 @@ type DBquadvar_
     time::Cfloat
     dtime::Cdouble
     align::NTuple{6,Cfloat}
-    mixvals::Ptr{Ptr{Void}}
+    mixvals::Ptr{Ptr{Nothing}}
     mixlen::Cint
     use_specmf::Cint
     ascii_labels::Cint
@@ -586,7 +586,7 @@ type DBquadvar_
     missing_value::Cdouble
 end
 
-typealias DBquadvar Void
+const DBquadvar = Nothing
 
 type DBucdvar_
     id::Cint
@@ -597,14 +597,14 @@ type DBucdvar_
     time::Cfloat
     dtime::Cdouble
     meshid::Cint
-    vals::Ptr{Ptr{Void}}
+    vals::Ptr{Ptr{Nothing}}
     datatype::Cint
     nels::Cint
     nvals::Cint
     ndims::Cint
     origin::Cint
     centering::Cint
-    mixvals::Ptr{Ptr{Void}}
+    mixvals::Ptr{Ptr{Nothing}}
     mixlen::Cint
     use_specmf::Cint
     ascii_labels::Cint
@@ -616,7 +616,7 @@ type DBucdvar_
     missing_value::Cdouble
 end
 
-typealias DBucdvar Void
+const DBucdvar = Nothing
 
 type DBmeshvar_
     id::Cint
@@ -625,7 +625,7 @@ type DBmeshvar_
     label::Cstring
     cycle::Cint
     meshid::Cint
-    vals::Ptr{Ptr{Void}}
+    vals::Ptr{Ptr{Nothing}}
     datatype::Cint
     nels::Cint
     nvals::Cint
@@ -650,8 +650,8 @@ type DBmeshvar_
     missing_value::Cdouble
 end
 
-typealias DBmeshvar Void
-typealias DBpointvar DBmeshvar
+const DBmeshvar = Nothing
+const DBpointvar = DBmeshvar
 
 type DBmaterial_
     id::Cint
@@ -667,7 +667,7 @@ type DBmaterial_
     matlist::Ptr{Cint}
     mixlen::Cint
     datatype::Cint
-    mix_vf::Ptr{Void}
+    mix_vf::Ptr{Nothing}
     mix_next::Ptr{Cint}
     mix_mat::Ptr{Cint}
     mix_zone::Ptr{Cint}
@@ -677,7 +677,7 @@ type DBmaterial_
     guihide::Cint
 end
 
-typealias DBmaterial Void
+const DBmaterial = Nothing
 
 type DBmatspecies_
     id::Cint
@@ -690,7 +690,7 @@ type DBmatspecies_
     major_order::Cint
     stride::NTuple{3,Cint}
     nspecies_mf::Cint
-    species_mf::Ptr{Void}
+    species_mf::Ptr{Nothing}
     speclist::Ptr{Cint}
     mixlen::Cint
     mix_speclist::Ptr{Cint}
@@ -700,7 +700,7 @@ type DBmatspecies_
     speccolors::Ptr{Cstring}
 end
 
-typealias DBmatspecies Void
+const DBmatspecies = Nothing
 
 type DBcsgzonelist_
     nregs::Cint
@@ -708,7 +708,7 @@ type DBcsgzonelist_
     typeflags::Ptr{Cint}
     leftids::Ptr{Cint}
     rightids::Ptr{Cint}
-    xform::Ptr{Void}
+    xform::Ptr{Nothing}
     lxform::Cint
     datatype::Cint
     nzones::Cint
@@ -720,7 +720,7 @@ type DBcsgzonelist_
     alt_zonenum_vars::Ptr{Cstring}
 end
 
-typealias DBcsgzonelist Void
+const DBcsgzonelist = Nothing
 
 type DBcsgmesh_
     block_no::Cint
@@ -732,7 +732,7 @@ type DBcsgmesh_
     nbounds::Cint
     typeflags::Ptr{Cint}
     bndids::Ptr{Cint}
-    coeffs::Ptr{Void}
+    coeffs::Ptr{Nothing}
     lcoeffs::Cint
     coeffidx::Ptr{Cint}
     datatype::Cint
@@ -751,7 +751,7 @@ type DBcsgmesh_
     alt_nodenum_vars::Ptr{Cstring}
 end
 
-typealias DBcsgmesh Void
+const DBcsgmesh = Nothing
 
 type DBcsgvar_
     name::Cstring
@@ -760,7 +760,7 @@ type DBcsgvar_
     label::Cstring
     time::Cfloat
     dtime::Cdouble
-    vals::Ptr{Ptr{Void}}
+    vals::Ptr{Ptr{Nothing}}
     datatype::Cint
     nels::Cint
     nvals::Cint
@@ -775,7 +775,7 @@ type DBcsgvar_
     missing_value::Cdouble
 end
 
-typealias DBcsgvar Void
+const DBcsgvar = Nothing
 
 type DBcompoundarray_
     id::Cint
@@ -783,21 +783,21 @@ type DBcompoundarray_
     elemnames::Ptr{Cstring}
     elemlengths::Ptr{Cint}
     nelems::Cint
-    values::Ptr{Void}
+    values::Ptr{Nothing}
     nvalues::Cint
     datatype::Cint
 end
 
-typealias DBcompoundarray Void
+const DBcompoundarray = Nothing
 
 type DBoptlist_
     options::Ptr{Cint}
-    values::Ptr{Ptr{Void}}
+    values::Ptr{Ptr{Nothing}}
     numopts::Cint
     maxopts::Cint
 end
 
-typealias DBoptlist Void
+const DBoptlist = Nothing
 
 type DBobject_
     name::Cstring
@@ -813,7 +813,7 @@ type DBobject_
     h5_names::NTuple{64,Cstring}
 end
 
-typealias DBobject Void
+const DBobject = Nothing
 
 type _DBmrgtnode
     name::Cstring
@@ -827,13 +827,13 @@ type _DBmrgtnode
     seg_lens::Ptr{Cint}
     seg_types::Ptr{Cint}
     num_children::Cint
-    children::Ptr{Ptr{Void}}
+    children::Ptr{Ptr{Nothing}}
     walk_order::Cint
-    parent::Ptr{Void}
+    parent::Ptr{Nothing}
 end
 
-typealias DBmrgtnode Void
-typealias DBmrgwalkcb Ptr{Void}
+const DBmrgtnode = Nothing
+const DBmrgwalkcb = Ptr{Nothing}
 
 type _DBmrgtree
     name::Cstring
@@ -847,7 +847,7 @@ type _DBmrgtree
     mrgvar_rnames::Ptr{Cstring}
 end
 
-typealias DBmrgtree Void
+const DBmrgtree = Nothing
 
 type _DBmrgvar
     name::Cstring
@@ -857,10 +857,10 @@ type _DBmrgvar
     nregns::Cint
     reg_pnames::Ptr{Cstring}
     datatype::Cint
-    data::Ptr{Ptr{Void}}
+    data::Ptr{Ptr{Nothing}}
 end
 
-typealias DBmrgvar Void
+const DBmrgvar = Nothing
 
 type _DBgroupelmap
     name::Cstring
@@ -869,11 +869,11 @@ type _DBgroupelmap
     segment_lengths::Ptr{Cint}
     segment_ids::Ptr{Cint}
     segment_data::Ptr{Ptr{Cint}}
-    segment_fracs::Ptr{Ptr{Void}}
+    segment_fracs::Ptr{Ptr{Nothing}}
     fracs_data_type::Cint
 end
 
-typealias DBgroupelmap Void
+const DBgroupelmap = Nothing
 
 type _DBnamescheme
     fmt::Cstring
@@ -886,12 +886,12 @@ type _DBnamescheme
     arralloc::Cint
     narrefs::Cint
     arrnames::Ptr{Cstring}
-    arrvals::Ptr{Ptr{Void}}
+    arrvals::Ptr{Ptr{Nothing}}
     arrsizes::Ptr{Cint}
     exprstrs::Ptr{Cstring}
 end
 
-typealias DBnamescheme Void
+const DBnamescheme = Nothing
 
 type DBfile_pub
     name::Cstring
@@ -901,97 +901,97 @@ type DBfile_pub
     fileid::Cint
     pathok::Cint
     Grab::Cint
-    GrabId::Ptr{Void}
+    GrabId::Ptr{Nothing}
     file_lib_version::Cstring
-    close::Ptr{Void}
-    exist::Ptr{Void}
-    newtoc::Ptr{Void}
-    inqvartype::Ptr{Void}
-    uninstall::Ptr{Void}
-    g_obj::Ptr{Void}
-    c_obj::Ptr{Void}
-    w_obj::Ptr{Void}
-    g_comp::Ptr{Void}
-    g_comptyp::Ptr{Void}
-    w_comp::Ptr{Void}
-    write::Ptr{Void}
-    writeslice::Ptr{Void}
-    g_dir::Ptr{Void}
-    mkdir::Ptr{Void}
-    cd::Ptr{Void}
-    r_var::Ptr{Void}
-    _module::Ptr{Void}
-    r_varslice::Ptr{Void}
-    g_compnames::Ptr{Void}
-    g_ca::Ptr{Void}
-    g_cu::Ptr{Void}
-    g_defv::Ptr{Void}
-    g_ma::Ptr{Void}
-    g_ms::Ptr{Void}
-    g_mm::Ptr{Void}
-    g_mv::Ptr{Void}
-    g_mt::Ptr{Void}
-    g_mms::Ptr{Void}
-    g_pm::Ptr{Void}
-    g_pv::Ptr{Void}
-    g_qm::Ptr{Void}
-    g_qv::Ptr{Void}
-    g_um::Ptr{Void}
-    g_uv::Ptr{Void}
-    g_fl::Ptr{Void}
-    g_zl::Ptr{Void}
-    g_var::Ptr{Void}
-    g_varbl::Ptr{Void}
-    g_varlen::Ptr{Void}
-    g_vardims::Ptr{Void}
-    g_vartype::Ptr{Void}
-    i_meshname::Ptr{Void}
-    i_meshtype::Ptr{Void}
-    p_ca::Ptr{Void}
-    p_cu::Ptr{Void}
-    p_defv::Ptr{Void}
-    p_fl::Ptr{Void}
-    p_ma::Ptr{Void}
-    p_ms::Ptr{Void}
-    p_mm::Ptr{Void}
-    p_mv::Ptr{Void}
-    p_mt::Ptr{Void}
-    p_mms::Ptr{Void}
-    p_pm::Ptr{Void}
-    p_pv::Ptr{Void}
-    p_qm::Ptr{Void}
-    p_qv::Ptr{Void}
-    p_um::Ptr{Void}
-    p_sm::Ptr{Void}
-    p_uv::Ptr{Void}
-    p_zl::Ptr{Void}
-    p_zl2::Ptr{Void}
-    g_phzl::Ptr{Void}
-    p_phzl::Ptr{Void}
-    p_csgzl::Ptr{Void}
-    g_csgzl::Ptr{Void}
-    p_csgm::Ptr{Void}
-    g_csgm::Ptr{Void}
-    p_csgv::Ptr{Void}
-    g_csgv::Ptr{Void}
-    g_mmadj::Ptr{Void}
-    p_mmadj::Ptr{Void}
-    p_mrgt::Ptr{Void}
-    g_mrgt::Ptr{Void}
-    p_grplm::Ptr{Void}
-    g_grplm::Ptr{Void}
-    p_mrgv::Ptr{Void}
-    g_mrgv::Ptr{Void}
-    free_z::Ptr{Void}
-    cpdir::Ptr{Void}
-    sort_obo::Ptr{Void}
+    close::Ptr{Nothing}
+    exist::Ptr{Nothing}
+    newtoc::Ptr{Nothing}
+    inqvartype::Ptr{Nothing}
+    uninstall::Ptr{Nothing}
+    g_obj::Ptr{Nothing}
+    c_obj::Ptr{Nothing}
+    w_obj::Ptr{Nothing}
+    g_comp::Ptr{Nothing}
+    g_comptyp::Ptr{Nothing}
+    w_comp::Ptr{Nothing}
+    write::Ptr{Nothing}
+    writeslice::Ptr{Nothing}
+    g_dir::Ptr{Nothing}
+    mkdir::Ptr{Nothing}
+    cd::Ptr{Nothing}
+    r_var::Ptr{Nothing}
+    _module::Ptr{Nothing}
+    r_varslice::Ptr{Nothing}
+    g_compnames::Ptr{Nothing}
+    g_ca::Ptr{Nothing}
+    g_cu::Ptr{Nothing}
+    g_defv::Ptr{Nothing}
+    g_ma::Ptr{Nothing}
+    g_ms::Ptr{Nothing}
+    g_mm::Ptr{Nothing}
+    g_mv::Ptr{Nothing}
+    g_mt::Ptr{Nothing}
+    g_mms::Ptr{Nothing}
+    g_pm::Ptr{Nothing}
+    g_pv::Ptr{Nothing}
+    g_qm::Ptr{Nothing}
+    g_qv::Ptr{Nothing}
+    g_um::Ptr{Nothing}
+    g_uv::Ptr{Nothing}
+    g_fl::Ptr{Nothing}
+    g_zl::Ptr{Nothing}
+    g_var::Ptr{Nothing}
+    g_varbl::Ptr{Nothing}
+    g_varlen::Ptr{Nothing}
+    g_vardims::Ptr{Nothing}
+    g_vartype::Ptr{Nothing}
+    i_meshname::Ptr{Nothing}
+    i_meshtype::Ptr{Nothing}
+    p_ca::Ptr{Nothing}
+    p_cu::Ptr{Nothing}
+    p_defv::Ptr{Nothing}
+    p_fl::Ptr{Nothing}
+    p_ma::Ptr{Nothing}
+    p_ms::Ptr{Nothing}
+    p_mm::Ptr{Nothing}
+    p_mv::Ptr{Nothing}
+    p_mt::Ptr{Nothing}
+    p_mms::Ptr{Nothing}
+    p_pm::Ptr{Nothing}
+    p_pv::Ptr{Nothing}
+    p_qm::Ptr{Nothing}
+    p_qv::Ptr{Nothing}
+    p_um::Ptr{Nothing}
+    p_sm::Ptr{Nothing}
+    p_uv::Ptr{Nothing}
+    p_zl::Ptr{Nothing}
+    p_zl2::Ptr{Nothing}
+    g_phzl::Ptr{Nothing}
+    p_phzl::Ptr{Nothing}
+    p_csgzl::Ptr{Nothing}
+    g_csgzl::Ptr{Nothing}
+    p_csgm::Ptr{Nothing}
+    g_csgm::Ptr{Nothing}
+    p_csgv::Ptr{Nothing}
+    g_csgv::Ptr{Nothing}
+    g_mmadj::Ptr{Nothing}
+    p_mmadj::Ptr{Nothing}
+    p_mrgt::Ptr{Nothing}
+    g_mrgt::Ptr{Nothing}
+    p_grplm::Ptr{Nothing}
+    g_grplm::Ptr{Nothing}
+    p_mrgv::Ptr{Nothing}
+    g_mrgv::Ptr{Nothing}
+    free_z::Ptr{Nothing}
+    cpdir::Ptr{Nothing}
+    sort_obo::Ptr{Nothing}
 end
 
 type DBfile
     pub::DBfile_pub
 end
 
-typealias DBErrFunc_t Ptr{Void}
+const DBErrFunc_t = Ptr{Nothing}
 
 # Skipping MacroDefinition: SIG_DFL ( void ( * ) ( int ) )
 # Skipping MacroDefinition: SIG_IGN ( void ( * ) ( int ) )
@@ -1061,22 +1061,22 @@ typealias DBErrFunc_t Ptr{Void}
 # Skipping MacroDefinition: CAST_USER_ADDR_T ( a_ptr ) ( ( user_addr_t ) ( ( uintptr_t ) ( a_ptr ) )
 
 # begin enum ANONYMOUS_3
-typealias ANONYMOUS_3 UInt32
+const ANONYMOUS_3 = UInt32
 const P_ALL = (UInt32)(0)
 const P_PID = (UInt32)(1)
 const P_PGID = (UInt32)(2)
 # end enum ANONYMOUS_3
 
-# typealias idtype_t Void
-# typealias pid_t Cint
-# typealias id_t Cint
-# typealias sig_atomic_t Cint
-# typealias mcontext_t Ptr{Void}
-# typealias pthread_attr_t __darwin_pthread_attr_t
-# typealias stack_t Void
-# typealias ucontext_t Void
-# typealias sigset_t __darwin_sigset_t
-# typealias uid_t __darwin_uid_t
+# const idtype_t = Nothing
+# const pid_t = Cint
+# const id_t = Cint
+# const sig_atomic_t = Cint
+# const mcontext_t = Ptr{Nothing}
+# const pthread_attr_t = __darwin_pthread_attr_t
+# const stack_t = Nothing
+# const ucontext_t = Nothing
+# const sigset_t = __darwin_sigset_t
+# const uid_t = __darwin_uid_t
 #
 # type sigval
 #     _sigval::Cint
@@ -1085,23 +1085,23 @@ const P_PGID = (UInt32)(2)
 # type sigevent
 #     sigev_notify::Cint
 #     sigev_signo::Cint
-#     sigev_value::Void
-#     sigev_notify_function::Ptr{Void}
+#     sigev_value::Nothing
+#     sigev_notify_function::Ptr{Nothing}
 #     sigev_notify_attributes::Ptr{pthread_attr_t}
 # end
 #
-# typealias siginfo_t Void
+# const siginfo_t = Nothing
 #
 # type sigaction
-#     __sigaction_u::Void
+#     __sigaction_u::Nothing
 #     sa_mask::sigset_t
 #     sa_flags::Cint
 # end
 #
-# typealias sig_t Ptr{Void}
+# const sig_t = Ptr{Nothing}
 #
 # type sigvec
-#     sv_handler::Ptr{Void}
+#     sv_handler::Ptr{Nothing}
 #     sv_mask::Cint
 #     sv_flags::Cint
 # end
@@ -1111,45 +1111,45 @@ const P_PGID = (UInt32)(2)
 #     ss_onstack::Cint
 # end
 
-typealias int8_t UInt8
-typealias int16_t Int16
-typealias int32_t Cint
-typealias int64_t Clonglong
-typealias uint8_t Cuchar
-typealias uint16_t UInt16
-typealias uint32_t UInt32
-typealias uint64_t Culonglong
-typealias int_least8_t Int8
-typealias int_least16_t Int16
-typealias int_least32_t Int32
-typealias int_least64_t Int64
-typealias uint_least8_t UInt8
-typealias uint_least16_t UInt16
-typealias uint_least32_t UInt32
-typealias uint_least64_t UInt64
-typealias int_fast8_t Int8
-typealias int_fast16_t Int16
-typealias int_fast32_t Int32
-typealias int_fast64_t Int64
-typealias uint_fast8_t UInt8
-typealias uint_fast16_t UInt16
-typealias uint_fast32_t UInt32
-typealias uint_fast64_t UInt64
-# typealias intptr_t __darwin_intptr_t
-typealias uintptr_t Culong
-typealias intmax_t Clong
-typealias uintmax_t Culong
+const int8_t = UInt8
+const int16_t = Int16
+const int32_t = Cint
+const int64_t = Clonglong
+const uint8_t = Cuchar
+const uint16_t = UInt16
+const uint32_t = UInt32
+const uint64_t = Culonglong
+const int_least8_t = Int8
+const int_least16_t = Int16
+const int_least32_t = Int32
+const int_least64_t = Int64
+const uint_least8_t = UInt8
+const uint_least16_t = UInt16
+const uint_least32_t = UInt32
+const uint_least64_t = UInt64
+const int_fast8_t = Int8
+const int_fast16_t = Int16
+const int_fast32_t = Int32
+const int_fast64_t = Int64
+const uint_fast8_t = UInt8
+const uint_fast16_t = UInt16
+const uint_fast32_t = UInt32
+const uint_fast64_t = UInt64
+# const intptr_t = __darwin_intptr_t
+const uintptr_t = Culong
+const intmax_t = Clong
+const uintmax_t = Culong
 
 # type timeval
 #     tv_sec::__darwin_time_t
 #     tv_usec::__darwin_suseconds_t
 # end
 
-# typealias rlim_t __uint64_t
+# const rlim_t = __uint64_t
 
 type rusage
-    ru_utime::Void
-    ru_stime::Void
+    ru_utime::Nothing
+    ru_stime::Nothing
     ru_maxrss::Clong
     ru_ixrss::Clong
     ru_idrss::Clong
@@ -1166,7 +1166,7 @@ type rusage
     ru_nivcsw::Clong
 end
 
-typealias rusage_info_t Ptr{Void}
+const rusage_info_t = Ptr{Nothing}
 
 type rusage_info_v0
     ri_uuid::NTuple{16,UInt8}
@@ -1255,7 +1255,7 @@ type rusage_info_v3
     ri_serviced_system_time::UInt64
 end
 
-typealias rusage_info_current Void
+const rusage_info_current = Nothing
 
 # type rlimit
 #     rlim_cur::rlim_t
@@ -1271,38 +1271,38 @@ type wait
     _wait::Cint
 end
 
-# typealias ct_rune_t __darwin_ct_rune_t
-# typealias rune_t __darwin_rune_t
-# typealias wchar_t __darwin_wchar_t
-typealias div_t Void
-typealias ldiv_t Void
-typealias lldiv_t Void
-typealias u_int8_t Cuchar
-typealias u_int16_t UInt16
-typealias u_int32_t UInt32
-typealias u_int64_t Culonglong
-typealias register_t Int64
-typealias user_addr_t u_int64_t
-typealias user_size_t u_int64_t
-typealias user_ssize_t Int64
-typealias user_long_t Int64
-typealias user_ulong_t u_int64_t
-typealias user_time_t Int64
-typealias user_off_t Int64
-typealias syscall_arg_t u_int64_t
-# typealias dev_t __darwin_dev_t
-# typealias mode_t __darwin_mode_t
+# const ct_rune_t = __darwin_ct_rune_t
+# const rune_t = __darwin_rune_t
+# const wchar_t = __darwin_wchar_t
+const div_t = Nothing
+const ldiv_t = Nothing
+const lldiv_t = Nothing
+const u_int8_t = Cuchar
+const u_int16_t = UInt16
+const u_int32_t = UInt32
+const u_int64_t = Culonglong
+const register_t = Int64
+const user_addr_t = u_int64_t
+const user_size_t = u_int64_t
+const user_ssize_t = Int64
+const user_long_t = Int64
+const user_ulong_t = u_int64_t
+const user_time_t = Int64
+const user_off_t = Int64
+# const syscall_arg_t = u_int64_t
+# const dev_t = __darwin_dev_t
+# const mode_t = __darwin_mode_t
 
 # begin enum ANONYMOUS_4
-typealias ANONYMOUS_4 UInt32
+const ANONYMOUS_4 = UInt32
 const PMPIO_READ = (UInt32)(1)
 const PMPIO_WRITE = (UInt32)(3)
 # end enum ANONYMOUS_4
 
-typealias PMPIO_iomode_t Void
-typealias PMPIO_CreateFileCallBack Ptr{Void}
-typealias PMPIO_OpenFileCallBack Ptr{Void}
-typealias PMPIO_CloseFileCallBack Ptr{Void}
+const PMPIO_iomode_t = Nothing
+const PMPIO_CreateFileCallBack = Ptr{Nothing}
+const PMPIO_OpenFileCallBack = Ptr{Nothing}
+const PMPIO_CloseFileCallBack = Ptr{Nothing}
 
 type _PMPIO_baton_t
     ioMode::PMPIO_iomode_t
@@ -1322,7 +1322,7 @@ type _PMPIO_baton_t
     createCb::PMPIO_CreateFileCallBack
     openCb::PMPIO_OpenFileCallBack
     closeCb::PMPIO_CloseFileCallBack
-    userData::Ptr{Void}
+    userData::Ptr{Nothing}
 end
 
-typealias PMPIO_baton_t Void
+const PMPIO_baton_t = Nothing

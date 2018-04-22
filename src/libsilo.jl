@@ -15,7 +15,7 @@
 # end
 #
 # function clearerr(arg1)
-#     ccall((:clearerr,libsilo),Void,(Ptr{FILE},),arg1)
+#     ccall((:clearerr,libsilo),Nothing,(Ptr{FILE},),arg1)
 # end
 #
 # function fclose(arg1)
@@ -59,7 +59,7 @@
 # end
 #
 # function fread(__ptr,__size::Csize_t,__nitems::Csize_t,__stream)
-#     ccall((:fread,libsilo),Csize_t,(Ptr{Void},Csize_t,Csize_t,Ptr{FILE}),__ptr,__size,__nitems,__stream)
+#     ccall((:fread,libsilo),Csize_t,(Ptr{Nothing},Csize_t,Csize_t,Ptr{FILE}),__ptr,__size,__nitems,__stream)
 # end
 #
 # function freopen(arg1,arg2,arg3)
@@ -79,7 +79,7 @@
 # end
 #
 # function fwrite(__ptr,__size::Csize_t,__nitems::Csize_t,__stream)
-#     ccall((:fwrite,libsilo),Csize_t,(Ptr{Void},Csize_t,Csize_t,Ptr{FILE}),__ptr,__size,__nitems,__stream)
+#     ccall((:fwrite,libsilo),Csize_t,(Ptr{Nothing},Csize_t,Csize_t,Ptr{FILE}),__ptr,__size,__nitems,__stream)
 # end
 #
 # function getc(arg1)
@@ -95,7 +95,7 @@
 # end
 #
 # function perror(arg1)
-#     ccall((:perror,libsilo),Void,(Cstring,),arg1)
+#     ccall((:perror,libsilo),Nothing,(Cstring,),arg1)
 # end
 #
 # function putc(arg1,arg2)
@@ -119,11 +119,11 @@
 # end
 #
 # function rewind(arg1)
-#     ccall((:rewind,libsilo),Void,(Ptr{FILE},),arg1)
+#     ccall((:rewind,libsilo),Nothing,(Ptr{FILE},),arg1)
 # end
 #
 # function setbuf(arg1,arg2)
-#     ccall((:setbuf,libsilo),Void,(Ptr{FILE},Cstring),arg1,arg2)
+#     ccall((:setbuf,libsilo),Nothing,(Ptr{FILE},Cstring),arg1,arg2)
 # end
 #
 # function setvbuf(arg1,arg2,arg3,arg4::Csize_t)
@@ -175,7 +175,7 @@
 # end
 #
 # function flockfile(arg1)
-#     ccall((:flockfile,libsilo),Void,(Ptr{FILE},),arg1)
+#     ccall((:flockfile,libsilo),Nothing,(Ptr{FILE},),arg1)
 # end
 #
 # function ftrylockfile(arg1)
@@ -183,7 +183,7 @@
 # end
 #
 # function funlockfile(arg1)
-#     ccall((:funlockfile,libsilo),Void,(Ptr{FILE},),arg1)
+#     ccall((:funlockfile,libsilo),Nothing,(Ptr{FILE},),arg1)
 # end
 #
 # function getc_unlocked(arg1)
@@ -267,7 +267,7 @@
 # end
 #
 # function setbuffer(arg1,arg2,arg3)
-#     ccall((:setbuffer,libsilo),Void,(Ptr{FILE},Cstring,Cint),arg1,arg2,arg3)
+#     ccall((:setbuffer,libsilo),Nothing,(Ptr{FILE},Cstring,Cint),arg1,arg2,arg3)
 # end
 #
 # function setlinebuf(arg1)
@@ -283,11 +283,11 @@
 # end
 #
 # function funopen(arg1,arg2,arg3,arg4,arg5)
-#     ccall((:funopen,libsilo),Ptr{FILE},(Ptr{Void},Ptr{Void},Ptr{Void},Ptr{Void},Ptr{Void}),arg1,arg2,arg3,arg4,arg5)
+#     ccall((:funopen,libsilo),Ptr{FILE},(Ptr{Nothing},Ptr{Nothing},Ptr{Nothing},Ptr{Nothing},Ptr{Nothing}),arg1,arg2,arg3,arg4,arg5)
 # end
 
 function DBShowErrors(arg1,arg2::DBErrFunc_t)
-    ccall((:DBShowErrors,libsilo),Void,(Cint,DBErrFunc_t),arg1,arg2)
+    ccall((:DBShowErrors,libsilo),Nothing,(Cint,DBErrFunc_t),arg1,arg2)
 end
 
 function DBErrString()
@@ -347,7 +347,7 @@ function DBGetEnableChecksums()
 end
 
 function DBSetCompression(arg1)
-    ccall((:DBSetCompression,libsilo),Void,(Cstring,),arg1)
+    ccall((:DBSetCompression,libsilo),Nothing,(Cstring,),arg1)
 end
 
 function DBGetCompression()
@@ -387,7 +387,7 @@ function DBUnregisterFileOptionsSet(opts_set_id)
 end
 
 function DBUnregisterAllFileOptionsSets()
-    ccall((:DBUnregisterAllFileOptionsSets,libsilo),Void,())
+    ccall((:DBUnregisterAllFileOptionsSets,libsilo),Nothing,())
 end
 
 function DBVersion()
@@ -435,11 +435,11 @@ function DBNewToc(arg1)
 end
 
 function DBGrabDriver(arg1)
-    ccall((:DBGrabDriver,libsilo),Ptr{Void},(Ptr{DBfile},),arg1)
+    ccall((:DBGrabDriver,libsilo),Ptr{Nothing},(Ptr{DBfile},),arg1)
 end
 
 function DBUngrabDriver(arg1,arg2)
-    ccall((:DBUngrabDriver,libsilo),Cint,(Ptr{DBfile},Ptr{Void}),arg1,arg2)
+    ccall((:DBUngrabDriver,libsilo),Cint,(Ptr{DBfile},Ptr{Nothing}),arg1,arg2)
 end
 
 function DBGetDriverType(arg1)
@@ -502,12 +502,13 @@ function DBSortObjectsByOffset(arg1,nobjs,obj_names,ranks)
     ccall((:DBSortObjectsByOffset,libsilo),Cint,(Ptr{DBfile},Cint,Ptr{Cstring},Ptr{Cint}),arg1,nobjs,obj_names,ranks)
 end
 
-function DBFilters(arg1,arg2)
-    ccall((:DBFilters,libsilo),Cint,(Ptr{DBfile},Ptr{FILE}),arg1,arg2)
-end
+#TODO: Re-enable or wrap using native Julia type
+# function DBFilters(arg1,arg2)
+#     ccall((:DBFilters,libsilo),Cint,(Ptr{DBfile},Ptr{FILE}),arg1,arg2)
+# end
 
 function DBFilterRegistration(arg1,init,open)
-    ccall((:DBFilterRegistration,libsilo),Cint,(Cstring,Ptr{Void},Ptr{Void}),arg1,init,open)
+    ccall((:DBFilterRegistration,libsilo),Cint,(Cstring,Ptr{Nothing},Ptr{Nothing}),arg1,init,open)
 end
 
 function DBInqFileHasObjects(arg1)
@@ -615,123 +616,123 @@ function DBAllocGroupelmap(arg1,arg2::DBdatatype)
 end
 
 function DBFreeMatspecies(arg1)
-    ccall((:DBFreeMatspecies,libsilo),Void,(Ptr{DBmatspecies},),arg1)
+    ccall((:DBFreeMatspecies,libsilo),Nothing,(Ptr{DBmatspecies},),arg1)
 end
 
 function DBFreeMaterial(arg1)
-    ccall((:DBFreeMaterial,libsilo),Void,(Ptr{DBmaterial},),arg1)
+    ccall((:DBFreeMaterial,libsilo),Nothing,(Ptr{DBmaterial},),arg1)
 end
 
 function DBFreeFacelist(arg1)
-    ccall((:DBFreeFacelist,libsilo),Void,(Ptr{DBfacelist},),arg1)
+    ccall((:DBFreeFacelist,libsilo),Nothing,(Ptr{DBfacelist},),arg1)
 end
 
 function DBFreeEdgelist(arg1)
-    ccall((:DBFreeEdgelist,libsilo),Void,(Ptr{DBedgelist},),arg1)
+    ccall((:DBFreeEdgelist,libsilo),Nothing,(Ptr{DBedgelist},),arg1)
 end
 
 function DBFreeZonelist(arg1)
-    ccall((:DBFreeZonelist,libsilo),Void,(Ptr{DBzonelist},),arg1)
+    ccall((:DBFreeZonelist,libsilo),Nothing,(Ptr{DBzonelist},),arg1)
 end
 
 function DBFreePHZonelist(arg1)
-    ccall((:DBFreePHZonelist,libsilo),Void,(Ptr{DBphzonelist},),arg1)
+    ccall((:DBFreePHZonelist,libsilo),Nothing,(Ptr{DBphzonelist},),arg1)
 end
 
 function DBFreeCSGZonelist(arg1)
-    ccall((:DBFreeCSGZonelist,libsilo),Void,(Ptr{DBcsgzonelist},),arg1)
+    ccall((:DBFreeCSGZonelist,libsilo),Nothing,(Ptr{DBcsgzonelist},),arg1)
 end
 
 function DBResetUcdvar(arg1)
-    ccall((:DBResetUcdvar,libsilo),Void,(Ptr{DBucdvar},),arg1)
+    ccall((:DBResetUcdvar,libsilo),Nothing,(Ptr{DBucdvar},),arg1)
 end
 
 function DBFreeUcdvar(arg1)
-    ccall((:DBFreeUcdvar,libsilo),Void,(Ptr{DBucdvar},),arg1)
+    ccall((:DBFreeUcdvar,libsilo),Nothing,(Ptr{DBucdvar},),arg1)
 end
 
 function DBResetQuadvar(arg1)
-    ccall((:DBResetQuadvar,libsilo),Void,(Ptr{DBquadvar},),arg1)
+    ccall((:DBResetQuadvar,libsilo),Nothing,(Ptr{DBquadvar},),arg1)
 end
 
 function DBFreeCsgvar(arg1)
-    ccall((:DBFreeCsgvar,libsilo),Void,(Ptr{DBcsgvar},),arg1)
+    ccall((:DBFreeCsgvar,libsilo),Nothing,(Ptr{DBcsgvar},),arg1)
 end
 
 function DBFreeQuadvar(arg1)
-    ccall((:DBFreeQuadvar,libsilo),Void,(Ptr{DBquadvar},),arg1)
+    ccall((:DBFreeQuadvar,libsilo),Nothing,(Ptr{DBquadvar},),arg1)
 end
 
 function DBFreeUcdmesh(arg1)
-    ccall((:DBFreeUcdmesh,libsilo),Void,(Ptr{DBucdmesh},),arg1)
+    ccall((:DBFreeUcdmesh,libsilo),Nothing,(Ptr{DBucdmesh},),arg1)
 end
 
 function DBFreeMeshvar(arg1)
-    ccall((:DBFreeMeshvar,libsilo),Void,(Ptr{DBmeshvar},),arg1)
+    ccall((:DBFreeMeshvar,libsilo),Nothing,(Ptr{DBmeshvar},),arg1)
 end
 
 function DBFreePointvar(arg1)
-    ccall((:DBFreePointvar,libsilo),Void,(Ptr{DBpointvar},),arg1)
+    ccall((:DBFreePointvar,libsilo),Nothing,(Ptr{DBpointvar},),arg1)
 end
 
 function DBFreePointmesh(arg1)
-    ccall((:DBFreePointmesh,libsilo),Void,(Ptr{DBpointmesh},),arg1)
+    ccall((:DBFreePointmesh,libsilo),Nothing,(Ptr{DBpointmesh},),arg1)
 end
 
 function DBFreeQuadmesh(arg1)
-    ccall((:DBFreeQuadmesh,libsilo),Void,(Ptr{DBquadmesh},),arg1)
+    ccall((:DBFreeQuadmesh,libsilo),Nothing,(Ptr{DBquadmesh},),arg1)
 end
 
 function DBFreeCsgmesh(arg1)
-    ccall((:DBFreeCsgmesh,libsilo),Void,(Ptr{DBcsgmesh},),arg1)
+    ccall((:DBFreeCsgmesh,libsilo),Nothing,(Ptr{DBcsgmesh},),arg1)
 end
 
 function DBFreeDefvars(arg1)
-    ccall((:DBFreeDefvars,libsilo),Void,(Ptr{DBdefvars},),arg1)
+    ccall((:DBFreeDefvars,libsilo),Nothing,(Ptr{DBdefvars},),arg1)
 end
 
 function DBFreeMultimesh(arg1)
-    ccall((:DBFreeMultimesh,libsilo),Void,(Ptr{DBmultimesh},),arg1)
+    ccall((:DBFreeMultimesh,libsilo),Nothing,(Ptr{DBmultimesh},),arg1)
 end
 
 function DBFreeMultimeshadj(arg1)
-    ccall((:DBFreeMultimeshadj,libsilo),Void,(Ptr{DBmultimeshadj},),arg1)
+    ccall((:DBFreeMultimeshadj,libsilo),Nothing,(Ptr{DBmultimeshadj},),arg1)
 end
 
 function DBFreeMultivar(arg1)
-    ccall((:DBFreeMultivar,libsilo),Void,(Ptr{DBmultivar},),arg1)
+    ccall((:DBFreeMultivar,libsilo),Nothing,(Ptr{DBmultivar},),arg1)
 end
 
 function DBFreeMultimat(arg1)
-    ccall((:DBFreeMultimat,libsilo),Void,(Ptr{DBmultimat},),arg1)
+    ccall((:DBFreeMultimat,libsilo),Nothing,(Ptr{DBmultimat},),arg1)
 end
 
 function DBFreeMultimatspecies(arg1)
-    ccall((:DBFreeMultimatspecies,libsilo),Void,(Ptr{DBmultimatspecies},),arg1)
+    ccall((:DBFreeMultimatspecies,libsilo),Nothing,(Ptr{DBmultimatspecies},),arg1)
 end
 
 function DBFreeCompoundarray(arg1)
-    ccall((:DBFreeCompoundarray,libsilo),Void,(Ptr{DBcompoundarray},),arg1)
+    ccall((:DBFreeCompoundarray,libsilo),Nothing,(Ptr{DBcompoundarray},),arg1)
 end
 
 function DBFreeCurve(arg1)
-    ccall((:DBFreeCurve,libsilo),Void,(Ptr{DBcurve},),arg1)
+    ccall((:DBFreeCurve,libsilo),Nothing,(Ptr{DBcurve},),arg1)
 end
 
 function DBFreeNamescheme(arg1)
-    ccall((:DBFreeNamescheme,libsilo),Void,(Ptr{DBnamescheme},),arg1)
+    ccall((:DBFreeNamescheme,libsilo),Nothing,(Ptr{DBnamescheme},),arg1)
 end
 
 function DBFreeMrgvar(mrgv)
-    ccall((:DBFreeMrgvar,libsilo),Void,(Ptr{DBmrgvar},),mrgv)
+    ccall((:DBFreeMrgvar,libsilo),Nothing,(Ptr{DBmrgvar},),mrgv)
 end
 
 function DBFreeMrgtree(tree)
-    ccall((:DBFreeMrgtree,libsilo),Void,(Ptr{DBmrgtree},),tree)
+    ccall((:DBFreeMrgtree,libsilo),Nothing,(Ptr{DBmrgtree},),tree)
 end
 
 function DBFreeGroupelmap(map)
-    ccall((:DBFreeGroupelmap,libsilo),Void,(Ptr{DBgroupelmap},),map)
+    ccall((:DBFreeGroupelmap,libsilo),Nothing,(Ptr{DBgroupelmap},),map)
 end
 
 function DBIsEmptyCurve(curve)
@@ -851,7 +852,7 @@ function DBWriteObject(arg1,arg2,arg3)
 end
 
 function DBGetComponent(arg1,arg2,arg3)
-    ccall((:DBGetComponent,libsilo),Ptr{Void},(Ptr{DBfile},Cstring,Cstring),arg1,arg2,arg3)
+    ccall((:DBGetComponent,libsilo),Ptr{Nothing},(Ptr{DBfile},Cstring,Cstring),arg1,arg2,arg3)
 end
 
 function DBGetComponentType(arg1,arg2,arg3)
@@ -859,27 +860,27 @@ function DBGetComponentType(arg1,arg2,arg3)
 end
 
 function DBWriteComponent(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
-    ccall((:DBWriteComponent,libsilo),Cint,(Ptr{DBfile},Ptr{DBobject},Cstring,Cstring,Cstring,Ptr{Void},Cint,Ptr{Clong}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
+    ccall((:DBWriteComponent,libsilo),Cint,(Ptr{DBfile},Ptr{DBobject},Cstring,Cstring,Cstring,Ptr{Nothing},Cint,Ptr{Clong}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
 end
 
 function DBWrite(arg1,arg2,arg3,arg4,arg5,arg6)
-    ccall((:DBWrite,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Void},Ptr{Cint},Cint,Cint),arg1,arg2,arg3,arg4,arg5,arg6)
+    ccall((:DBWrite,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Nothing},Ptr{Cint},Cint,Cint),arg1,arg2,arg3,arg4,arg5,arg6)
 end
 
 function DBWriteSlice(dbfile,array_name,data,datatype,offsets,lengths,strides,dims,ndims)
-    ccall((:DBWriteSlice,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Void},Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},Ptr{Cint},Cint),dbfile,array_name,data,datatype,offsets,lengths,strides,dims,ndims)
+    ccall((:DBWriteSlice,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Nothing},Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},Ptr{Cint},Cint),dbfile,array_name,data,datatype,offsets,lengths,strides,dims,ndims)
 end
 
 function DBRead(arg1,arg2,arg3)
-    ccall((:DBRead,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Void}),arg1,arg2,arg3)
+    ccall((:DBRead,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Nothing}),arg1,arg2,arg3)
 end
 
 function DBReadVar(arg1,arg2,arg3)
-    ccall((:DBReadVar,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Void}),arg1,arg2,arg3)
+    ccall((:DBReadVar,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Nothing}),arg1,arg2,arg3)
 end
 
 function DBReadVarSlice(arg1,arg2,arg3,arg4,arg5,arg6,arg7)
-    ccall((:DBReadVarSlice,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Cint},Ptr{Cint},Ptr{Cint},Cint,Ptr{Void}),arg1,arg2,arg3,arg4,arg5,arg6,arg7)
+    ccall((:DBReadVarSlice,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Cint},Ptr{Cint},Ptr{Cint},Cint,Ptr{Nothing}),arg1,arg2,arg3,arg4,arg5,arg6,arg7)
 end
 
 function DBGetCompoundarray(arg1,arg2)
@@ -891,7 +892,7 @@ function DBInqCompoundarray(arg1,arg2,arg3,arg4,arg5,arg6,arg7)
 end
 
 function DBGetVar(arg1,arg2)
-    ccall((:DBGetVar,libsilo),Ptr{Void},(Ptr{DBfile},Cstring),arg1,arg2)
+    ccall((:DBGetVar,libsilo),Ptr{Nothing},(Ptr{DBfile},Cstring),arg1,arg2)
 end
 
 function DBGetVarByteLength(arg1,arg2)
@@ -987,11 +988,11 @@ function DBInqMeshtype(arg1,arg2)
 end
 
 function DBPutCompoundarray(dbfile,name,elemnames,elemlens,nelems,values,nvalues,datatype,arg1)
-    ccall((:DBPutCompoundarray,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Cstring},Ptr{Cint},Cint,Ptr{Void},Cint,Cint,Ptr{DBoptlist}),dbfile,name,elemnames,elemlens,nelems,values,nvalues,datatype,arg1)
+    ccall((:DBPutCompoundarray,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Cstring},Ptr{Cint},Cint,Ptr{Nothing},Cint,Cint,Ptr{DBoptlist}),dbfile,name,elemnames,elemlens,nelems,values,nvalues,datatype,arg1)
 end
 
 function DBPutCurve(dbfile,name,xvals,yvals,datatype,npts,opts)
-    ccall((:DBPutCurve,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Void},Ptr{Void},Cint,Cint,Ptr{DBoptlist}),dbfile,name,xvals,yvals,datatype,npts,opts)
+    ccall((:DBPutCurve,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Nothing},Ptr{Nothing},Cint,Cint,Ptr{DBoptlist}),dbfile,name,xvals,yvals,datatype,npts,opts)
 end
 
 function DBPutDefvars(dbfile,name,arg1,names,types,defns,opts)
@@ -1002,53 +1003,54 @@ function DBPutFacelist(dbfile,arg1,nfaces,ndims,nodelist,lnodelist,origin,zoneno
     ccall((:DBPutFacelist,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,Cint,Ptr{Cint},Cint,Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},Cint,Ptr{Cint},Ptr{Cint},Cint),dbfile,arg1,nfaces,ndims,nodelist,lnodelist,origin,zoneno,shapesize,shapecnt,nshapes,types,typelist,ntypes)
 end
 
-function DBPutMaterial(dbfile,name,meshname,nmat,matnos,matlist,dims,ndims,mix_next,mix_mat,mix_zone,mix_vf::DBVCP1_t,mixlen,datatype,opts)
-    ccall((:DBPutMaterial,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},DBVCP1_t,Cint,Cint,Ptr{DBoptlist}),dbfile,name,meshname,nmat,matnos,matlist,dims,ndims,mix_next,mix_mat,mix_zone,mix_vf,mixlen,datatype,opts)
-end
+#TODO: Re-wrap functions below
+# function DBPutMaterial(dbfile,name,meshname,nmat,matnos,matlist,dims,ndims,mix_next,mix_mat,mix_zone,mix_vf::DBVCP1_t,mixlen,datatype,opts)
+#     ccall((:DBPutMaterial,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},DBVCP1_t,Cint,Cint,Ptr{DBoptlist}),dbfile,name,meshname,nmat,matnos,matlist,dims,ndims,mix_next,mix_mat,mix_zone,mix_vf,mixlen,datatype,opts)
+# end
 
-function DBPutMatspecies(dbfile,name,matnam,nmat,nmatspec,speclist,dims,ndims,nspecies_mf,species_mf::DBVCP1_t,mix_speclist,mixlen,datatype,optlist)
-    ccall((:DBPutMatspecies,libsilo),Cint,(Ptr{Void},Cstring,Cstring,Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},Cint,Cint,DBVCP1_t,Ptr{Cint},Cint,Cint,Ptr{DBoptlist}),dbfile,name,matnam,nmat,nmatspec,speclist,dims,ndims,nspecies_mf,species_mf,mix_speclist,mixlen,datatype,optlist)
-end
+# function DBPutMatspecies(dbfile,name,matnam,nmat,nmatspec,speclist,dims,ndims,nspecies_mf,species_mf::DBVCP1_t,mix_speclist,mixlen,datatype,optlist)
+#     ccall((:DBPutMatspecies,libsilo),Cint,(Ptr{Nothing},Cstring,Cstring,Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},Cint,Cint,DBVCP1_t,Ptr{Cint},Cint,Cint,Ptr{DBoptlist}),dbfile,name,matnam,nmat,nmatspec,speclist,dims,ndims,nspecies_mf,species_mf,mix_speclist,mixlen,datatype,optlist)
+# end
 
-function DBPutPointmesh(arg1,arg2,arg3,arg4::DBVCP2_t,arg5,arg6,arg7)
-    ccall((:DBPutPointmesh,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,DBVCP2_t,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7)
-end
+# function DBPutPointmesh(arg1,arg2,arg3,arg4::DBVCP2_t,arg5,arg6,arg7)
+#     ccall((:DBPutPointmesh,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,DBVCP2_t,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7)
+# end
 
-function DBPutPointvar(arg1,arg2,arg3,arg4,arg5::DBVCP2_t,arg6,arg7,arg8)
-    ccall((:DBPutPointvar,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,DBVCP2_t,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
-end
+# function DBPutPointvar(arg1,arg2,arg3,arg4,arg5::DBVCP2_t,arg6,arg7,arg8)
+#     ccall((:DBPutPointvar,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,DBVCP2_t,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
+# end
 
-function DBPutPointvar1(arg1,arg2,arg3,arg4::DBVCP1_t,arg5,arg6,arg7)
-    ccall((:DBPutPointvar1,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,DBVCP1_t,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7)
-end
+# function DBPutPointvar1(arg1,arg2,arg3,arg4::DBVCP1_t,arg5,arg6,arg7)
+#     ccall((:DBPutPointvar1,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,DBVCP1_t,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7)
+# end
 
-function DBPutQuadmesh(arg1,arg2,arg3,arg4::DBVCP2_t,arg5,arg6,arg7,arg8,arg9)
-    ccall((:DBPutQuadmesh,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Cstring},DBVCP2_t,Ptr{Cint},Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9)
-end
+# function DBPutQuadmesh(arg1,arg2,arg3,arg4::DBVCP2_t,arg5,arg6,arg7,arg8,arg9)
+#     ccall((:DBPutQuadmesh,libsilo),Cint,(Ptr{DBfile},Cstring,Ptr{Cstring},DBVCP2_t,Ptr{Cint},Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9)
+# end
 
-function DBPutQuadvar(arg1,arg2,arg3,arg4,arg5,arg6::DBVCP2_t,arg7,arg8,arg9::DBVCP2_t,arg10,arg11,arg12,arg13)
-    ccall((:DBPutQuadvar,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,Ptr{Cstring},DBVCP2_t,Ptr{Cint},Cint,DBVCP2_t,Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13)
-end
+# function DBPutQuadvar(arg1,arg2,arg3,arg4,arg5,arg6::DBVCP2_t,arg7,arg8,arg9::DBVCP2_t,arg10,arg11,arg12,arg13)
+#     ccall((:DBPutQuadvar,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,Ptr{Cstring},DBVCP2_t,Ptr{Cint},Cint,DBVCP2_t,Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13)
+# end
 
-function DBPutQuadvar1(arg1,arg2,arg3,arg4::DBVCP1_t,arg5,arg6,arg7::DBVCP1_t,arg8,arg9,arg10,arg11)
-    ccall((:DBPutQuadvar1,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,DBVCP1_t,Ptr{Cint},Cint,DBVCP1_t,Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11)
-end
+# function DBPutQuadvar1(arg1,arg2,arg3,arg4::DBVCP1_t,arg5,arg6,arg7::DBVCP1_t,arg8,arg9,arg10,arg11)
+#     ccall((:DBPutQuadvar1,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,DBVCP1_t,Ptr{Cint},Cint,DBVCP1_t,Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11)
+# end
 
-function DBPutUcdmesh(arg1,arg2,arg3,arg4,arg5::DBVCP2_t,arg6,arg7,arg8,arg9,arg10,arg11)
-    ccall((:DBPutUcdmesh,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,Ptr{Cstring},DBVCP2_t,Cint,Cint,Cstring,Cstring,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11)
-end
+# function DBPutUcdmesh(arg1,arg2,arg3,arg4,arg5::DBVCP2_t,arg6,arg7,arg8,arg9,arg10,arg11)
+#     ccall((:DBPutUcdmesh,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,Ptr{Cstring},DBVCP2_t,Cint,Cint,Cstring,Cstring,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11)
+# end
 
 function DBPutUcdsubmesh(arg1,arg2,arg3,arg4,arg5,arg6,arg7)
     ccall((:DBPutUcdsubmesh,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,Cstring,Cstring,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7)
 end
 
-function DBPutUcdvar(arg1,arg2,arg3,arg4,arg5,arg6::DBVCP2_t,arg7,arg8::DBVCP2_t,arg9,arg10,arg11,arg12)
-    ccall((:DBPutUcdvar,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,Ptr{Cstring},DBVCP2_t,Cint,DBVCP2_t,Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12)
-end
+# function DBPutUcdvar(arg1,arg2,arg3,arg4,arg5,arg6::DBVCP2_t,arg7,arg8::DBVCP2_t,arg9,arg10,arg11,arg12)
+#     ccall((:DBPutUcdvar,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,Ptr{Cstring},DBVCP2_t,Cint,DBVCP2_t,Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12)
+# end
 
-function DBPutUcdvar1(arg1,arg2,arg3,arg4::DBVCP1_t,arg5,arg6::DBVCP1_t,arg7,arg8,arg9,arg10)
-    ccall((:DBPutUcdvar1,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,DBVCP1_t,Cint,DBVCP1_t,Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10)
-end
+# function DBPutUcdvar1(arg1,arg2,arg3,arg4::DBVCP1_t,arg5,arg6::DBVCP1_t,arg7,arg8,arg9,arg10)
+#     ccall((:DBPutUcdvar1,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,DBVCP1_t,Cint,DBVCP1_t,Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10)
+# end
 
 function DBPutZonelist(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10)
     ccall((:DBPutZonelist,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,Cint,Ptr{Cint},Cint,Cint,Ptr{Cint},Ptr{Cint},Cint),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10)
@@ -1063,27 +1065,27 @@ function DBPutPHZonelist(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg1
 end
 
 function DBPutCsgmesh(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12)
-    ccall((:DBPutCsgmesh,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,Cint,Ptr{Cint},Ptr{Cint},Ptr{Void},Cint,Cint,Ptr{Cdouble},Cstring,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12)
+    ccall((:DBPutCsgmesh,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,Cint,Ptr{Cint},Ptr{Cint},Ptr{Nothing},Cint,Cint,Ptr{Cdouble},Cstring,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12)
 end
 
 function DBPutCSGZonelist(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12)
-    ccall((:DBPutCSGZonelist,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},Ptr{Void},Cint,Cint,Cint,Ptr{Cint},Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12)
+    ccall((:DBPutCSGZonelist,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},Ptr{Nothing},Cint,Cint,Cint,Ptr{Cint},Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12)
 end
 
-function DBPutCsgvar(arg1,arg2,arg3,arg4,arg5,arg6::DBVCP2_t,arg7,arg8,arg9,arg10)
-    ccall((:DBPutCsgvar,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,Ptr{Cstring},DBVCP2_t,Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10)
-end
+# function DBPutCsgvar(arg1,arg2,arg3,arg4,arg5,arg6::DBVCP2_t,arg7,arg8,arg9,arg10)
+#     ccall((:DBPutCsgvar,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,Ptr{Cstring},DBVCP2_t,Cint,Cint,Cint,Ptr{DBoptlist}),arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10)
+# end
 
 function DBPrintMrgtree(tnode,walk_order,data)
-    ccall((:DBPrintMrgtree,libsilo),Void,(Ptr{DBmrgtnode},Cint,Ptr{Void}),tnode,walk_order,data)
+    ccall((:DBPrintMrgtree,libsilo),Nothing,(Ptr{DBmrgtnode},Cint,Ptr{Nothing}),tnode,walk_order,data)
 end
 
 function DBLinearizeMrgtree(tnode,walk_order,data)
-    ccall((:DBLinearizeMrgtree,libsilo),Void,(Ptr{DBmrgtnode},Cint,Ptr{Void}),tnode,walk_order,data)
+    ccall((:DBLinearizeMrgtree,libsilo),Nothing,(Ptr{DBmrgtnode},Cint,Ptr{Nothing}),tnode,walk_order,data)
 end
 
 function DBWalkMrgtree(tree,cb::DBmrgwalkcb,wdata,traversal_order)
-    ccall((:DBWalkMrgtree,libsilo),Void,(Ptr{DBmrgtree},DBmrgwalkcb,Ptr{Void},Cint),tree,cb,wdata,traversal_order)
+    ccall((:DBWalkMrgtree,libsilo),Nothing,(Ptr{DBmrgtree},DBmrgwalkcb,Ptr{Nothing},Cint),tree,cb,wdata,traversal_order)
 end
 
 function DBMakeMrgtree(source_mesh_type,mrgtree_info,max_root_descendents,opts)
@@ -1110,13 +1112,13 @@ function DBPutMrgtree(dbfile,mrg_tree_name,mesh_name,tree,opts)
     ccall((:DBPutMrgtree,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Ptr{DBmrgtree},Ptr{DBoptlist}),dbfile,mrg_tree_name,mesh_name,tree,opts)
 end
 
-function DBPutMrgvar(dbfile,name,mrgt_name,ncomps,compnames,nregns,reg_pnames,datatype,data::DBVCP2_t,opts)
-    ccall((:DBPutMrgvar,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,Ptr{Cstring},Cint,Ptr{Cstring},Cint,DBVCP2_t,Ptr{DBoptlist}),dbfile,name,mrgt_name,ncomps,compnames,nregns,reg_pnames,datatype,data,opts)
-end
+# function DBPutMrgvar(dbfile,name,mrgt_name,ncomps,compnames,nregns,reg_pnames,datatype,data::DBVCP2_t,opts)
+#     ccall((:DBPutMrgvar,libsilo),Cint,(Ptr{DBfile},Cstring,Cstring,Cint,Ptr{Cstring},Cint,Ptr{Cstring},Cint,DBVCP2_t,Ptr{DBoptlist}),dbfile,name,mrgt_name,ncomps,compnames,nregns,reg_pnames,datatype,data,opts)
+# end
 
-function DBPutGroupelmap(dbfile,map_name,num_segments,groupel_types,segment_lengths,segment_ids,segment_data,segment_fracs::DBVCP2_t,fracs_data_type,opts)
-    ccall((:DBPutGroupelmap,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},Ptr{Ptr{Cint}},DBVCP2_t,Cint,Ptr{DBoptlist}),dbfile,map_name,num_segments,groupel_types,segment_lengths,segment_ids,segment_data,segment_fracs,fracs_data_type,opts)
-end
+# function DBPutGroupelmap(dbfile,map_name,num_segments,groupel_types,segment_lengths,segment_ids,segment_data,segment_fracs::DBVCP2_t,fracs_data_type,opts)
+#     ccall((:DBPutGroupelmap,libsilo),Cint,(Ptr{DBfile},Cstring,Cint,Ptr{Cint},Ptr{Cint},Ptr{Cint},Ptr{Ptr{Cint}},DBVCP2_t,Cint,Ptr{DBoptlist}),dbfile,map_name,num_segments,groupel_types,segment_lengths,segment_ids,segment_data,segment_fracs,fracs_data_type,opts)
+# end
 
 function DBGetMrgtree(dbfile,mrg_tree_name)
     ccall((:DBGetMrgtree,libsilo),Ptr{DBmrgtree},(Ptr{DBfile},Cstring),dbfile,mrg_tree_name)
@@ -1187,11 +1189,11 @@ function DBFreeOptlist(arg1)
 end
 
 function DBAddOption(arg1,arg2,arg3)
-    ccall((:DBAddOption,libsilo),Cint,(Ptr{DBoptlist},Cint,Ptr{Void}),arg1,arg2,arg3)
+    ccall((:DBAddOption,libsilo),Cint,(Ptr{DBoptlist},Cint,Ptr{Nothing}),arg1,arg2,arg3)
 end
 
 function DBGetOption(arg1,arg2)
-    ccall((:DBGetOption,libsilo),Ptr{Void},(Ptr{DBoptlist},Cint),arg1,arg2)
+    ccall((:DBGetOption,libsilo),Ptr{Nothing},(Ptr{DBoptlist},Cint),arg1,arg2)
 end
 
 function DBClearOption(arg1,arg2)
@@ -1215,7 +1217,7 @@ function DBJoinPath(arg1,arg2)
 end
 
 function DBStringArrayToStringList(strArray,n,strList,m)
-    ccall((:DBStringArrayToStringList,libsilo),Void,(Ptr{Cstring},Cint,Ptr{Cstring},Ptr{Cint}),strArray,n,strList,m)
+    ccall((:DBStringArrayToStringList,libsilo),Nothing,(Ptr{Cstring},Cint,Ptr{Cstring},Ptr{Cint}),strArray,n,strList,m)
 end
 
 function DBStringListToStringArray(strList,n,skipSemicolonAtIndexZero)
@@ -1231,15 +1233,15 @@ function DBIsDifferentLongLong(a::Clonglong,b::Clonglong,abstol::Cdouble,reltol:
 end
 
 function DBFortranAccessPointer(value)
-    ccall((:DBFortranAccessPointer,libsilo),Ptr{Void},(Cint,),value)
+    ccall((:DBFortranAccessPointer,libsilo),Ptr{Nothing},(Cint,),value)
 end
 
 function DBFortranAllocPointer(pointer)
-    ccall((:DBFortranAllocPointer,libsilo),Cint,(Ptr{Void},),pointer)
+    ccall((:DBFortranAllocPointer,libsilo),Cint,(Ptr{Nothing},),pointer)
 end
 
 function DBFortranRemovePointer(value)
-    ccall((:DBFortranRemovePointer,libsilo),Void,(Cint,),value)
+    ccall((:DBFortranRemovePointer,libsilo),Nothing,(Cint,),value)
 end
 
 function _db_safe_strdup(arg1)

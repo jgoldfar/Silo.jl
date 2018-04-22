@@ -1,4 +1,7 @@
 # test/example for writing 1D arrays to a Silo file.
+@static if VERSION >= v"0.7-"
+    using Printf
+end
 
 dbopt = Silo.DBMakeOptlist(1)
 #     DBoptlist	*dbopt = DBMakeOptlist(1);
@@ -22,9 +25,9 @@ Silo.DBAddOption(dbopt, Silo.DBOPT_LABEL, pointer_from_objref(title))
 
 # Test data
 N = 20
-x = collect(linspace(0,1,N))
-y1 = collect(linspace(4,5,N))
-y2 = collect(linspace(10,11,N))
+x = collect(range(0,stop=1,length=N))
+y1 = collect(range(4,stop=5,length=N))
+y2 = collect(range(10,stop=11,length=N))
 y3 = y1 - y2
 
 #     DBPutCurve(dbfile,"Numerical_Solution",x,y1,DB_FLOAT,N+1,NULL);
