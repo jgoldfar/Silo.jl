@@ -27,7 +27,7 @@ Silo.jl
 
 - [0.x.0]
     - Windows support
-    - Julia v0.4-v0.6 support
+    - Julia v0.6+ support
 
 - [1.0.0]
 
